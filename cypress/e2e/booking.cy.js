@@ -1,19 +1,14 @@
 /// <reference types="Cypress" />
 
-describe('Login page', () => {
+describe('Booking tickets', () => {
 
     const MANAGER = Cypress.env('manager');
     const AGENT = Cypress.env('agent');
     const CLEAN = Cypress.env('clean');
+    const CI = Cypress.env('CI');
 
-    before(() => {
-        cy.visit('https://ci.qatest.site');
-        cy.login(MANAGER.email, MANAGER.password);
-
-        cy.wait(5000);
-
-        cy.clean(CLEAN.url, CLEAN.password);
-        cy.logout();
+    beforeEach(() => {
+        cy.cleanCiData(MANAGER.email, MANAGER.password, CLEAN.url, CLEAN.password, CI)
     })
 
     it('verify agent can book a ticket', () => {
@@ -24,7 +19,7 @@ describe('Login page', () => {
 
         cy.get('div.trip span.availability').each(($el) => {
             const statusText = $el.text();
-            if(statusText !== 'Overdue'){
+            if (statusText !== 'Overdue') {
                 cy.wrap($el).click();
                 return false;
             }
@@ -34,7 +29,7 @@ describe('Login page', () => {
 
         cy.get('div.trip span.availability').each(($el) => {
             const statusText = $el.text();
-            if(statusText !== 'Overdue'){
+            if (statusText !== 'Overdue') {
                 cy.wrap($el).click();
                 return false;
             }
@@ -50,7 +45,6 @@ describe('Login page', () => {
         cy.get('a[href="/orders/"]').click({ force: true });
         cy.get('#reportrange').click();
         cy.get('li[data-range-key="Next 7 Days"]').click();
-        cy.wait(5000);
 
         cy.get('#data tbody tr td:nth-child(2) div').then(($id) => {
             expect($id.text()).to.be.equal(expectedTextId);
