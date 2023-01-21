@@ -22,8 +22,12 @@ describe('US_02.02 header burger menu functionality', () => {
         header.clickBurgerMenu();
 
         leftMenuPanel.getBookingNameLink().should('be.visible')
-        leftMenuPanel.getBookingManagementNameLink().should('be.visible');
-        leftMenuPanel.getAccountManagementNameLink().should('be.visible');
-        leftMenuPanel.getContactUsNameLink().should('be.visible');        
+                     .and('have.text', 'Booking');
+        leftMenuPanel.getBookingManagementNameLink().should('be.visible')
+                     .and('have.text', 'Bookings management');
+        leftMenuPanel.getAccountManagementNameLink().should('be.visible')
+                     .and('have.text', 'Account management');
+        leftMenuPanel.getContactUsNameLink().should('be.visible')
+                     .and('have.text', 'Contact us');        
     })
 })
