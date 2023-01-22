@@ -15,4 +15,4 @@ class LeftMenuPanel {
     //Methods  
 
 }
-export default LeftMenuPanel
+export default LeftMenuPanel;
