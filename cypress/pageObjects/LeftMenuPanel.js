@@ -1,8 +1,7 @@
-export default class LeftMenuPanel {
-    elements = {
-        getMainElements: () => cy.get('.main-sidebar i'),
-        getMainElementsNames: () => cy.get('.main-sidebar span')
-    }
+class LeftMenuPanel {
+    getMainElements = () => cy.get('.main-sidebar i');
+    getBookingManagement = () => cy.get('a[href="/orders/"] i');
+    getMainElementsNames = () => cy.get('.main-sidebar span');
 
     getBookingIkonLink = () => cy.get('[href="/booking/"]');
     getBookingNameLink = () => cy.get('[href="/booking/"] span');
@@ -16,3 +15,4 @@ export default class LeftMenuPanel {
     //Methods  
 
 }
+export default LeftMenuPanel

@@ -1,4 +1,4 @@
-export default class Header {
+class Header {
     
     getBurgerMenu = ()=> cy.get('.navbar > [href="#"]');
     
@@ -7,3 +7,4 @@ export default class Header {
         this.getBurgerMenu().click();
     }
 }
+export default Header;
