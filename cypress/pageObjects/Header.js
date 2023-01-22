@@ -8,9 +8,9 @@ class Header {
     clickBurgerMenu() {
         this.getBurgerMenu().click();
     }
+
     clickUserDropDownMenu() {
         this.getUserDropDownMenu().click();
     }
-
 }
 export default Header;
