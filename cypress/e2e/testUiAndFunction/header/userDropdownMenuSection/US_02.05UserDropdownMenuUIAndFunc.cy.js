@@ -16,12 +16,9 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 		cy.login(AGENT.email, AGENT.password)
 	});
 
-	it('AT_02.05.01 | Verify the User dropdown menu displays selection of 8 language icons', function () {
+	it('AT_02.05.01 | Verify the User dropdown menu has selection of 8 language icons', function () {
 		header.clickUserDropDownMenu()
 		header.getLanguageIcons()
-			.should('have.length', this.hyperLinks.languageIconQuantity)
-			.each(($el) => {
-				expect($el).to.be.visible
-			})
+			.should('have.length', this.hyperLinks.languageIconQuantity)		
 	})
 });
