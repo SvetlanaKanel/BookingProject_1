@@ -6,14 +6,14 @@ import {RegisterPopup} from "../../../../pageObjects/StartPage.js";
 const startPage = new StartPage();
 const registerPopup = new RegisterPopup();
 
-describe('US_01.15 | Start Page > Register Agent Negative', function() {
+describe('US_01.15 Register Agent Negative', function() {
     
     beforeEach(function() {
-        cy.visit('https://qatest.site/');
+        cy.visit('/');
         startPage.clickRegisterAccountLink();
 
-        cy.fixture('startPage/registerAgent').then(newAgent => {
-            this.newAgent = newAgent
+        cy.fixture('startPage/inputField').then(inputField => {
+            this.inputField = inputField
         });
         cy.fixture('startPage/alert').then(errorMessage => {
             this.errorMessage = errorMessage
@@ -21,9 +21,9 @@ describe('US_01.15 | Start Page > Register Agent Negative', function() {
     });
 
     it('AT_01.15.01 | Error message is displayed when trying to register without entering name', function()  {
-        registerPopup.enterCompanyName(this.newAgent.companyName)
-        registerPopup.enterEmail(this.newAgent.email)
-        registerPopup.enterPhoneNumber(this.newAgent.phone)
+        registerPopup.enterCompanyName(this.inputField['Company name'])
+        registerPopup.enterEmail(this.inputField.Email)
+        registerPopup.enterPhoneNumber(this.inputField['Phone number'])
         registerPopup.clickRegisterButton()
         registerPopup.getErrorMessage()
                      .should('be.visible')
