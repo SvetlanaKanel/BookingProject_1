@@ -20,6 +20,8 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 		header.clickUserDropDownMenu()
 		header.getLanguageIcons()
 			.should('have.length', this.hyperLinks.languageIconQuantity)
-			.and('be.visible')
+			.each(($el) => {
+				expect($el).to.be.visible
+			})
 	})
 });
