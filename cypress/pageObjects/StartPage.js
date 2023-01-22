@@ -1,14 +1,20 @@
-class StartPage {
-    startPageElements = {
-        getLoginButton : () => cy.get(".login")
-    }
+export class StartPage {
+    //Elements
 
-    loginPopupElements = {
-        getLoginByEmailTab : () => cy.get('[href="#byemail"]')
-    }
+    getLoginButton = () => cy.get(".login")
 
+    //Methods
+    
     clickLoginButton() {
-        this.startPageElements.getLoginButton().click()
+        this.getLoginButton().click()
     }
 }
-export default StartPage;
+
+ export class LoginPopup {
+    //Elements
+    
+    getLoginByEmailTab = () => cy.get('[href="#byemail"]')
+
+
+    // Methods
+ }
