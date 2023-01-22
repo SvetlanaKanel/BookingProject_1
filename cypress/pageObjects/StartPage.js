@@ -20,7 +20,8 @@ export class LoginPopup {
     
     getLoginByEmailTab = () => cy.get('[href="#byemail"]');
     getForgotYourPasswordLink = () => cy.get('#loginModal .pull-right a');
-    getHeaderTextElement = () => cy.get('.text-center')
+    getEmailInput = () => cy.get('#byemail input[placeholder="Email"]');
+    getHeaderTextElement = () => cy.get('.text-center');
 
 
     // Methods
