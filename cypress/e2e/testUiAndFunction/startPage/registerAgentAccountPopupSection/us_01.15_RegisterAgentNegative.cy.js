@@ -21,9 +21,9 @@ describe('US_01.15 Register Agent Negative', function() {
     });
 
     it('AT_01.15.01 | Error message is displayed when trying to register without entering name', function()  {
-        registerPopup.enterCompanyName(this.inputField['Company name'])
-        registerPopup.enterEmail(this.inputField.Email)
-        registerPopup.enterPhoneNumber(this.inputField['Phone number'])
+        registerPopup.enterCompanyName(this.inputField.registrationPopup.companyName)
+        registerPopup.enterEmail(this.inputField.registrationPopup.email)
+        registerPopup.enterPhoneNumber(this.inputField.registrationPopup.phoneNumber)
         registerPopup.clickRegisterButton()
         registerPopup.getErrorMessage()
                      .should('be.visible')
