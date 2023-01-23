@@ -2,7 +2,7 @@
 
 import {StartPage} from "../../../../pageObjects/StartPage.js";
 import {LoginPopup} from "../../../../pageObjects/StartPage.js";
-import {Header} from "../../../../pageObjects/Header.js";
+import Header from "../../../../pageObjects/Header.js";
 
 const startPage = new StartPage();
 const loginPopup = new LoginPopup();

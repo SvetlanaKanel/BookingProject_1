@@ -1,4 +1,4 @@
-export class Header {
+class Header {
 //Elements
 
     getBurgerMenu = () => cy.get('.navbar > [href="#"]');
