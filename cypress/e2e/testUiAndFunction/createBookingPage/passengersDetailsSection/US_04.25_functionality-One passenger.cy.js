@@ -8,7 +8,7 @@ describe('US_04.25 | functionality - One passenger', () => {
     const AGENT = Cypress.env('agent');
 
     beforeEach(function () {
-        cy.fixture('createBookingPage/PassengersDetails').then(passengers => {
+        cy.fixture('createBookingPage/inputField').then(passengers => {
             this.passengers = passengers;
         })
         cy.visit('/');
