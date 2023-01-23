@@ -1,11 +1,9 @@
 /// <reference types="Cypress" />
 
 import LeftMenuPanel from "../../../../pageObjects/LeftMenuPanel";
-
-const leftMenuPanel = new LeftMenuPanel();
-
 import BookingsListPage from "../../../../pageObjects/BookingsListPage";
 
+const leftMenuPanel = new LeftMenuPanel();
 const bookingsListPage = new BookingsListPage();
 
 describe('US_03.03 Bookings management link', () => {
@@ -16,10 +14,10 @@ describe('US_03.03 Bookings management link', () => {
         cy.fixture('leftMenuPanel/menuLinks').then(link => {
             this.link = link;
         });
-        cy.fixture('leftMenuPanel/url').then(url => {
+        cy.fixture('bookingsListPage/url').then(url => {
             this.url = url;
         });
-        cy.fixture('header/headers').then(header => {
+        cy.fixture('bookingsListPage/headers').then(header => {
             this.header = header;
         });
         cy.visit('/');
@@ -37,12 +35,10 @@ describe('US_03.03 Bookings management link', () => {
     });
 
     it('AT__03.03.03 Verify Clicking "Booking management" opening the page with heading "Booking list"', function () {
-        leftMenuPanel
-            .clickGetBookingManagementIconLink() 
+        leftMenuPanel.clickGetBookingManagementIconLink() 
         cy.url().should('eq', this.url.bookingsManagementUrl)
        
-        bookingsListPage
-            .getBookingListHeader()
+        bookingsListPage.getBookingListHeader()
             .should('include.text', this.header.bookingListHeader)
     });
 });
