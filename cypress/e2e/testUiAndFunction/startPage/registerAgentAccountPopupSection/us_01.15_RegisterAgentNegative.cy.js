@@ -15,8 +15,8 @@ describe('US_01.15 Register Agent Negative', function() {
         cy.fixture('startPage/inputField').then(inputField => {
             this.inputField = inputField
         });
-        cy.fixture('startPage/alert').then(errorMessage => {
-            this.errorMessage = errorMessage
+        cy.fixture('startPage/alert').then(alert => {
+            this.alert = alert
         });
     });
 
@@ -27,7 +27,7 @@ describe('US_01.15 Register Agent Negative', function() {
         registerPopup.clickRegisterButton()
         registerPopup.getErrorMessage()
                      .should('be.visible')
-                     .and('have.text',this.errorMessage.registerEmptyName)
+                     .and('have.text',this.alert.registerPopupErrorMessage.emptyNameField)
     });
 
 });
