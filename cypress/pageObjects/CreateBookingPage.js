@@ -22,7 +22,7 @@ export class DepartureDateSection {
 
 export class DepartureOnSection {
     //Elements
-   getFirstTripCard = () => cy.get('div .vehclass-bus');
+   getFirstTripCard = () => cy.get('div .trip');
 
 
     // Methods
