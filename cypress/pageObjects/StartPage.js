@@ -64,7 +64,7 @@ export class RegisterPopup {
     getCompanyInputField = () => cy.get('input[name="company"]')
     getEmailInputField = () => cy.get('input[placeholder="You will get your password by email"]')
     getPhoneInputField = () => cy.get('input[name="phone"]')
-    getErrorMessage = () => cy.get('input~div.help-block.error')
+    getErrorMessage = () => cy.get('#registerModal .help-block.error')
 
     // Methods
 
@@ -73,18 +73,18 @@ export class RegisterPopup {
     }
 
     enterName(name) {
-        this.enterName().clear().type(name)
+        this.getNameInputField().clear().type(name, {force:true})
     }
 
     enterCompanyName(companyName) {
-        this.getCompanyInputField().clear().type(companyName)
+        this.getCompanyInputField().clear().type(companyName, {force:true})
     }
 
     enterEmail(email) {
-        this.getEmailInputField().clear().type(email)
+        this.getEmailInputField().clear().type(email, {force:true})
     }
 
     enterPhoneNumber(phone) {
-        this.getPhoneInputField().clear().type(phone)
+        this.getPhoneInputField().clear().type(phone, {force:true})
     }
 }
