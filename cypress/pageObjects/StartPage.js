@@ -2,7 +2,11 @@ export class StartPage {
     //Elements
 
     getLoginButton = () => cy.get(".login")
+
+   
+
     getRegisterAccountLink = () => cy.get('a[title="Register as agent"]')
+    getBackgroungVideo = () => cy.get('video')
 
     //Methods
     
