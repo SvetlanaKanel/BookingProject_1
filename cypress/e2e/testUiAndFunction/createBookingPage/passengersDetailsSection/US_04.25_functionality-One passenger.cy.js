@@ -8,7 +8,7 @@ const passengersDetailsSection = new PassengersDetailsSection();
 const departureDateSection = new DepartureDateSection();
 const departureOnSection = new DepartureOnSection();
 
-describe('US_04.25 | functionality - One passenger', () => {
+describe('US_04.25 | Passengers details functionality - One passenger', () => {
     const AGENT = Cypress.env('agent');
 
     beforeEach(function () {
