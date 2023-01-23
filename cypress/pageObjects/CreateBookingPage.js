@@ -5,4 +5,28 @@ export class PassengersDetailsSection {
 
     // Methods
     
-}
+};
+
+
+export class DepartureDateSection {
+    //Elements
+   getCalendarNextButton = () => cy.get('div .calendar-week-next');
+
+
+    // Methods
+    clickCalendarNextButton() {
+        this.getCalendarNextButton().click()
+    };
+};
+
+
+export class DepartureOnSection {
+    //Elements
+   getFirstTripCard = () => cy.get('div .vehclass-bus');
+
+
+    // Methods
+    clickFirstTripCard() {
+        this.getFirstTripCard().click()
+    };
+};

@@ -1,8 +1,12 @@
 /// <reference types="Cypress" />
 
 import {PassengersDetailsSection} from "../../../../pageObjects/CreateBookingPage.js";
+import {DepartureDateSection} from "../../../../pageObjects/CreateBookingPage.js";
+import {DepartureOnSection} from "../../../../pageObjects/CreateBookingPage.js";
 
 const passengersDetailsSection = new PassengersDetailsSection();
+const departureDateSection = new DepartureDateSection();
+const departureOnSection = new DepartureOnSection();
 
 describe('US_04.25 | functionality - One passenger', () => {
     const AGENT = Cypress.env('agent');
@@ -16,8 +20,13 @@ describe('US_04.25 | functionality - One passenger', () => {
     })
 
     it('AT_04.25.01 | Verify the opportunity to fill main passengers name in "Passenger name" input field', function () {
+       departureDateSection.clickCalendarNextButton()
+       cy.wait(4000)
+       departureOnSection.clickFirstTripCard()
+       cy.wait(2000)
+
         passengersDetailsSection.getMainPassengerField()
             .type(this.passengers.main_passenger.name)
             .should('have.value', this.passengers.main_passenger.name)          
-    })
+    });
 })
