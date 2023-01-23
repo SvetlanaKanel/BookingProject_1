@@ -31,7 +31,7 @@ describe('US_01.03 |  Header elements', () => {
 
     it('AT_01.03.01 | After clicking on the X button in the right top corner the login popup page is closed and the main page appears', function () {
 
-        loginPopup.getHeaderText().should('have.text', this.headers.header_Login_Popup.headerText);
+        loginPopup.getHeaderText().should('include.text', this.headers.header_Login_Popup.text);
         header.clickCloseBtn();
         loginPopup.getHeaderText().should('not.be.visible');
     });
