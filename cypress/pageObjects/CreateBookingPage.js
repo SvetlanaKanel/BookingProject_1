@@ -1,31 +1,32 @@
-export class PassengersDetailsSection {
+class CreateBookingPage {
     //Elements
-    getMainPassengerField = () => cy.get('.form-control[name="passenger-name[]"]');
-
-
-    // Methods
+    getMainPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]');
+    getCalendarNextButton = () => cy.get('div .calendar-week-next');
+    getFirstTripCard = () => cy.get('div .trip:first-child');
+    getCreateBookingHeader = () => cy.get('div h1')
+    getCalendarDaySelectionWrapper = () => cy.get('.col-lg-12.calendar-day-selection-wrapper .day-wrapper');
+    getLabelDepartureOnDate = () => cy.get('#label-departure-on #trips-selected-date');
     
-};
-
-
-export class DepartureDateSection {
-    //Elements
-   getCalendarNextButton = () => cy.get('div .calendar-week-next');
-   getCalendarDaySelectionWrapper = () => cy.get('.col-lg-12.calendar-day-selection-wrapper .day-wrapper');
-
     // Methods
     clickCalendarNextButton() {
         this.getCalendarNextButton().click()
     };
 };
 
+
 export class DepartureOnSection {
     //Elements
-   getFirstTripCard = () => cy.get('div .trip:first-child');
-   getLabelDepartureOnDate = () => cy.get('#label-departure-on #trips-selected-date');
+    getFirstTripCard = () => cy.get('div .trip:first-child');
+   
 
-    // Methods
+
     clickFirstTripCard() {
         this.getFirstTripCard().click()
     };
-};
+
+    typeIntoMainPassengerNameField(name) {
+        this.getMainPassengerNameField().type(name)
+    }
+
+}
+export default CreateBookingPage;
