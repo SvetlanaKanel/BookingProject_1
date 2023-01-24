@@ -11,14 +11,6 @@ class CreateBookingPage {
     clickCalendarNextButton() {
         this.getCalendarNextButton().click()
     };
-};
-
-
-export class DepartureOnSection {
-    //Elements
-    getFirstTripCard = () => cy.get('div .trip:first-child');
-   
-
 
     clickFirstTripCard() {
         this.getFirstTripCard().click()
@@ -26,7 +18,7 @@ export class DepartureOnSection {
 
     typeIntoMainPassengerNameField(name) {
         this.getMainPassengerNameField().type(name)
-    }
+    };
 
 }
 export default CreateBookingPage;

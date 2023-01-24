@@ -1,10 +1,8 @@
 /// <reference types="Cypress" />
 
-import { DepartureOnSection } from "../../../../pageObjects/CreateBookingPage";
-import { DepartureDateSection } from "../../../../pageObjects/CreateBookingPage"
+import  CreateBookingPage from "../../../../pageObjects/CreateBookingPage";
 
-const departureOnSection = new DepartureOnSection();
-const departureDateSection = new DepartureDateSection();
+const createBookingPage = new CreateBookingPage();
 
 describe('US_04.11 | Calendar week functionality', () => {
 
@@ -19,9 +17,9 @@ describe('US_04.11 | Calendar week functionality', () => {
 		const current = new Date()
 		const thailandCurrentMonthAndYear = new Date(current).toLocaleString('en-GB', { month: 'short', year: 'numeric', timeZone: 'Asia/Ho_Chi_Minh' })
 
-		departureDateSection.getCalendarDaySelectionWrapper().not('.unavailable').first().click().then(($date) => {
+		createBookingPage.getCalendarDaySelectionWrapper().not('.unavailable').first().click().then(($date) => {
 			let dateChosen = $date.text()
-			departureOnSection.getLabelDepartureOnDate().then(($el) => {
+			createBookingPage.getLabelDepartureOnDate().then(($el) => {
 				let departureDateFullFormat = $el.text()
 
 				expect(departureDateFullFormat).to.deep.equal(dateChosen + " " + thailandCurrentMonthAndYear)
