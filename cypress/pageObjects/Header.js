@@ -6,6 +6,7 @@ class Header {
     getLanguageIcons = () => cy.get('.user-header .user-lang-selection li');
     getLogoImg = () => cy.get('.logo-mini > img');
     getCloseBtn = () => cy.get('div[style="padding: 15px;"] .close');
+    getContactUsIcon = () => cy.get('.sidebar-menu > :nth-child(4) > a');
     
 // methods
     clickBurgerMenu() {
@@ -19,9 +20,13 @@ class Header {
     clickLogoImg() {
         this.getLogoImg().click();
     }
-
+    
     clickCloseBtn() {
         this.getCloseBtn().click();
+    }
+
+    clickContactUsIcon() {
+        this.getContactUsIcon().click();
     }
 }
 export default Header;
