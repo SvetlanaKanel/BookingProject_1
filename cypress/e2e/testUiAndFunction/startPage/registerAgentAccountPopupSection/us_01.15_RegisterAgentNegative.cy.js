@@ -53,4 +53,16 @@ describe('US_01.15 | Register Agent Negative', function () {
             .and('have.text', this.alert.registerPopupErrorMessage.emptyEmailField)
     });
 
-});
+    it('AT_01.15.05 | Error message is displayed when trying to register with invalid email', function() {
+        registerPopup.enterName(this.inputField.registrationPopup.yourName)
+        registerPopup.enterCompanyName(this.inputField.registrationPopup.companyName)
+        registerPopup.enterEmail(this.inputField.registrationPopup.invaildEmail)
+        registerPopup.enterPhoneNumber(this.inputField.registrationPopup.phoneNumber)
+        registerPopup.clickRegisterButton()
+        registerPopup
+            .getErrorMessage()
+            .should('be.visible')
+            .and('have.text', this.alert.registerPopupErrorMessage.invalidEmailField)
+    })
+
+})
