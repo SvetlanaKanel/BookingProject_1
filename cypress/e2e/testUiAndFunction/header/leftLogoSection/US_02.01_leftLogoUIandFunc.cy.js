@@ -1,11 +1,11 @@
 /// <reference types="Cypress" />
 
 
-import { CreateBookingHeader } from "../../../../pageObjects/CreateBookingPage.js";
+import CreateBookingPage from "../../../../pageObjects/CreateBookingPage.js";
 import Header from "../../../../pageObjects/Header.js";
 
 const header = new Header();
-const createBookingHeader = new CreateBookingHeader();
+const createBookingPage = new CreateBookingPage();
 
 const AGENT = Cypress.env('agent');
 
@@ -29,6 +29,6 @@ describe('US_02.01 | Left Logo UI and functionality', function() {
     it('AT_02.01.02 | Verify logo is clickable and redirects to default page', function() {
         header.clickContactUsIcon();
         header.clickLogoImg();
-        createBookingHeader.getCreateBookingHeader().should('include.text', this.createBookingText.mainHeaderPage)
+        createBookingPage.getCreateBookingHeader().should('include.text', this.createBookingText.mainHeaderPage)
     });
 })

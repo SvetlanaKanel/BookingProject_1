@@ -1,37 +1,18 @@
-export class PassengersDetailsSection {
+class CreateBookingPage {
     //Elements
     getMainPassengerField = () => cy.get('.form-control[name="passenger-name[]"]');
-
-
-    // Methods
+    getCalendarNextButton = () => cy.get('div .calendar-week-next');
+    getFirstTripCard = () => cy.get('div .trip:first-child');
+    getCreateBookingHeader = () => cy.get('div h1')
     
-};
-
-
-export class DepartureDateSection {
-    //Elements
-   getCalendarNextButton = () => cy.get('div .calendar-week-next');
-
-
     // Methods
     clickCalendarNextButton() {
         this.getCalendarNextButton().click()
     };
-};
 
-
-export class DepartureOnSection {
-    //Elements
-   getFirstTripCard = () => cy.get('div .trip:first-child');
-
-
-    // Methods
     clickFirstTripCard() {
         this.getFirstTripCard().click()
     };
-};
 
-export class CreateBookingHeader {
-    //Elements
-   getCreateBookingHeader = () => cy.get('div h1');
-};
+}
+export default CreateBookingPage;
