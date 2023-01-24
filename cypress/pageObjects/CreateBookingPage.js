@@ -1,6 +1,5 @@
 class CreateBookingPage {
-    elements = {
-
-    }
+  
+    getCreateBooking = () => cy.get('div.content-header.booking-header');
 }
 export default CreateBookingPage;
