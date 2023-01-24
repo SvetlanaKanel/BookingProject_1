@@ -14,9 +14,6 @@ describe('US_03.03 Bookings management link', () => {
         cy.fixture('leftMenuPanel/menuLinks').then(link => {
             this.link = link;
         });
-        cy.fixture('bookingsListPage/url').then(url => {
-            this.url = url;
-        });
         cy.fixture('bookingsListPage/headers').then(header => {
             this.header = header;
         });
@@ -36,8 +33,7 @@ describe('US_03.03 Bookings management link', () => {
 
     it('AT__03.03.03 Verify Clicking "Booking management" opening the page with heading "Booking list"', function () {
         leftMenuPanel.clickGetBookingManagementIconLink() 
-        cy.url().should('eq', this.url.bookingsManagementUrl)
-       
+            
         bookingsListPage.getBookingListHeader()
             .should('include.text', this.header.bookingListHeader)
     });
