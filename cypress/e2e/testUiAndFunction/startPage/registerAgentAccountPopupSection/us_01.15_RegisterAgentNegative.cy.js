@@ -62,7 +62,7 @@ describe('US_01.15 | Register Agent Negative', function () {
         registerPopup
             .getErrorMessage()
             .should('be.visible')
-            .and('have.text', this.alert.registerPopupErrorMessage.invalidEmailField)
+            .and('have.text', this.alert.registerPopupErrorMessage.emptyEmailField)
     })
 
 })
