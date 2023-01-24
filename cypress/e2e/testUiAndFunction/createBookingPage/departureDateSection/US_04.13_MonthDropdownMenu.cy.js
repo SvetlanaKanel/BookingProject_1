@@ -13,7 +13,9 @@ describe('US_04.13 | Create booking page > Departure date > Month dropdown UI an
         createBookingPage.clickMonthBtn();
     })
 
-    it('AT_04.13.01 | Month dropdown menu (to the left of the Week button) has 13 months for selection', () => {
-       createBookingPage.getMonthDropdownList().should('have.length', 13);       
+    it('AT_04.13.01 | Month dropdown menu (to the left of the Week button) is visible and has 13 months for selection', () => {
+        createBookingPage.clickMonthDropdown();
+        createBookingPage.getMonthDropdownList().should('be.visible')
+            .and('have.length', 13);
     })
 })
