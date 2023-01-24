@@ -2,7 +2,11 @@ export class StartPage {
     //Elements
 
     getLoginButton = () => cy.get(".login")
+
+   
+
     getRegisterAccountLink = () => cy.get('a[title="Register as agent"]')
+    getBackgroungVideo = () => cy.get('video')
 
     //Methods
     
@@ -22,6 +26,12 @@ export class LoginPopup {
     getForgotYourPasswordLink = () => cy.get('#loginModal .pull-right a');
     getEmailInput = () => cy.get('#byemail input[placeholder="Email"]');
     getHeaderTextElement = () => cy.get('.text-center');
+    getPasswordLabel = () => cy.get('#byemail div:nth-last-of-type(2) label');
+    getHeaderText = () => cy.get('div[style*="padding: 15"] :nth-child(2)');
+    getEmailLabel = () => cy.get('#loginModal .tab-content #byemail form div label').first();
+    getPasswordInput = () => cy.get('#byemail input[name="password"]');
+    getSignInButton = () => cy.get('#byemail input[value="SIGN IN"]');
+    getMessageAlert = () => cy.get('div.alert');    
 
 
     // Methods
@@ -29,6 +39,9 @@ export class LoginPopup {
     clickForgotYourPasswordLink() {
         this.getForgotYourPasswordLink().click();
     };
+    clickSignInButton() {
+        this.getSignInButton().click();
+    };    
 }
 
 export class RestorePopup {
@@ -58,7 +71,7 @@ export class RegisterPopup {
     getCompanyInputField = () => cy.get('input[name="company"]')
     getEmailInputField = () => cy.get('input[placeholder="You will get your password by email"]')
     getPhoneInputField = () => cy.get('input[name="phone"]')
-    getErrorMessage = () => cy.get('input~div.help-block.error')
+    getErrorMessage = () => cy.get('#registerModal .help-block.error')
 
     // Methods
 
@@ -67,18 +80,18 @@ export class RegisterPopup {
     }
 
     enterName(name) {
-        this.enterName().clear().type(name)
+        this.getNameInputField().clear().type(name, {force:true})
     }
 
     enterCompanyName(companyName) {
-        this.getCompanyInputField().clear().type(companyName)
+        this.getCompanyInputField().clear().type(companyName, {force:true})
     }
 
     enterEmail(email) {
-        this.getEmailInputField().clear().type(email)
+        this.getEmailInputField().clear().type(email, {force:true})
     }
 
     enterPhoneNumber(phone) {
-        this.getPhoneInputField().clear().type(phone)
+        this.getPhoneInputField().clear().type(phone, {force:true})
     }
 }
