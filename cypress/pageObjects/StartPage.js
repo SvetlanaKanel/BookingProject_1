@@ -9,6 +9,10 @@ export class StartPage {
     getRussiaFlagIcon = () => cy.get('a[href="/ru"]')
     getLogo = () => cy.get('.logo')
 
+    //Flag icons
+    
+    getBritishFlagIcon = () => cy.get('.en')
+
     //Methods
     
     clickLoginButton() {
