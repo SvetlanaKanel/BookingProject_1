@@ -17,6 +17,6 @@ describe('US_01.06 | Login by email tub functionality', () => {
 
     it('AT_01.06.01 | Verify Sign In Button redirect to the Create Booking Page', function () {
         cy.login(AGENT.email, AGENT.password);
-        createBookingPage.getCreateBooking().should('include.text', this.header.mainHeaderPage)
+        createBookingPage.getCreateBookingHeader().should('include.text', this.header.mainHeaderPage)
     });
 });
