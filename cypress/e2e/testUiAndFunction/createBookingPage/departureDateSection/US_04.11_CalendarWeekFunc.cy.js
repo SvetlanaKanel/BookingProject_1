@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import  CreateBookingPage from "../../../../pageObjects/CreateBookingPage";
+import CreateBookingPage from "../../../../pageObjects/CreateBookingPage";
 
 const createBookingPage = new CreateBookingPage();
 
@@ -13,11 +13,24 @@ describe('US_04.11 | Calendar week functionality', () => {
 		cy.login(AGENT.email, AGENT.password)
 	});
 
+	it('AT_04.11.01|Verify that you can click on last date field if it has not expired', function() {
+
+        createBookingPage.getCalendarDays()
+            .not('unavailable')    
+            .last()
+            .click()
+			.then(($date) => {
+				let dayOfWeek = $date;
+
+				expect(dayOfWeek).to.have.class('selected')
+			});
+    });
+
 	it('AT_04.11.02 | Verify chosen date, current month and year are displayed in the Departure on section', function () {
 		const current = new Date()
 		const thailandCurrentMonthAndYear = new Date(current).toLocaleString('en-GB', { month: 'short', year: 'numeric', timeZone: 'Asia/Ho_Chi_Minh' })
 
-		createBookingPage.getCalendarDaySelectionWrapper().not('.unavailable').first().click().then(($date) => {
+		createBookingPage.getCalendarDays().not('.unavailable').first().click().then(($date) => {
 			let dateChosen = $date.text()
 			createBookingPage.getLabelDepartureOnDate().then(($el) => {
 				let departureDateFullFormat = $el.text()
