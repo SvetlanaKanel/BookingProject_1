@@ -17,7 +17,7 @@ describe('US_04.11 | Calendar week functionality', () => {
 		const current = new Date()
 		const thailandCurrentMonthAndYear = new Date(current).toLocaleString('en-GB', { month: 'short', year: 'numeric', timeZone: 'Asia/Ho_Chi_Minh' })
 
-		createBookingPage.getCalendarDaySelectionWrapper().not('.unavailable').first().click().then(($date) => {
+		createBookingPage.getCalendarDays().not('.unavailable').first().click().then(($date) => {
 			let dateChosen = $date.text()
 			createBookingPage.getLabelDepartureOnDate().then(($el) => {
 				let departureDateFullFormat = $el.text()

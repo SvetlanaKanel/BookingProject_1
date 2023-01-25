@@ -17,6 +17,6 @@ describe('US_04.08 | Calendar-selection block UI and functionality week view', (
     });
 
     it('AT_04.08.03 | Verify that Label is present for week view', () => {
-       createBookingPage.getLabelCalendarWeek().should('be.visible');
+       createBookingPage.getLabelCalendar().should('be.visible');
     });
 });
