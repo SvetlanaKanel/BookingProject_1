@@ -8,6 +8,14 @@ class CreateBookingPage {
     getCalendarDaySelectionWrapper = () => cy.get('.col-lg-12.calendar-day-selection-wrapper .day-wrapper');
     getLabelDepartureOnDate = () => cy.get('#label-departure-on #trips-selected-date');
     getLabelCalendarWeek = () => cy.get('.calendar-week-selection-wrapper #calendar-week');
+    getLabelCalendar = () => cy.get('div #calendar-week');
+    getLabelPassengerDetails = () => cy.get('.passenger-wrapper div.title label');
+    getMonthBtn = () => cy.get('.calendar-view-wrapper .calendar-view-month');
+    getMonthDropdownList = () => cy.get('.calendar-month-wrapper .form-control option');
+    getMonthDropdown = () => cy.get('.col-lg-12 .calendar-month-wrapper');
+    getFridayButton = () => cy.get('div .calendar-day-selection-wrapper :nth-child(5)');
+    getPassengersDetailsDropdown = () => cy.get('.passenger-wrapper .title select.passengers-amount');
+    getSeatSelectionDropdown = () => cy.get('.layout-wrapper .title select.passengers-amount');
     
     // Methods
     clickCalendarNextButton() {
@@ -26,5 +34,20 @@ class CreateBookingPage {
         this.getMainPassengerPhoneField().type(phone)
     };
 
+    clickMonthBtn() {
+        this.getMonthBtn().click({ forse: true });
+    }
+
+    selectMonthDropdownList() {
+        this.getMonthDropdownList().select(0);
+    }
+
+    clickMonthDropdown() {
+        this.getMonthDropdown();
+    }
+
+    clickFridayButton() {
+        this.getFridayButton().click();
+    }
 }
 export default CreateBookingPage;
