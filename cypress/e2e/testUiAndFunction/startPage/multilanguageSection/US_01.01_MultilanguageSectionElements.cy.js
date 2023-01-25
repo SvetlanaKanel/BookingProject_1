@@ -18,6 +18,10 @@ describe('US_01.01 | Multilanguage section elements UI and functionality', () =>
         .should('be.visible');
     }); 
     
+    it ('TC_01.01.05| Start page >Multilanguage Section > British flag icon is visible', ()=>{
+        startPage.getUKFlagIcon().should('be.visible');
+    });
+
     it('AT_01.01.06 | Britain flag icon is clickable and changing language to English', function () {
         startPage.clickThailandFlagIcon();
         startPage.getLoginButton().should('not.include.text', this.buttons.loginBtnText);

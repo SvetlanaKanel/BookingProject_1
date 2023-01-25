@@ -4,14 +4,13 @@ export class StartPage {
     getLoginButton = () => cy.get(".login")
     getRegisterAccountLink = () => cy.get('a[title="Register as agent"]')
     getBackgroungVideo = () => cy.get('video')
-    getThailandFlagIcon = () => cy.get('a[href="/th"]')
-    getUKFlagIcon = () => cy.get('a[href="/en"]')
-    getRussiaFlagIcon = () => cy.get('a[href="/ru"]')
     getLogo = () => cy.get('.logo')
 
     //Flag icons
     
-    getBritishFlagIcon = () => cy.get('.en')
+    getThailandFlagIcon = () => cy.get('a[href="/th"]')
+    getUKFlagIcon = () => cy.get('a[href="/en"]')
+    getRussiaFlagIcon = () => cy.get('a[href="/ru"]')
 
     //Methods
     
