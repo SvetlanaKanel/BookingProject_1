@@ -18,7 +18,7 @@ describe('US_01.01 | Multilanguage section elements UI and functionality', () =>
         .should('be.visible');
     }); 
     
-    it ('TC_01.01.05| Start page >Multilanguage Section > British flag icon is visible', ()=>{
+    it ('AT_01.01.05| British flag icon is visible', ()=>{
         startPage.getUKFlagIcon().should('be.visible');
     });
 
