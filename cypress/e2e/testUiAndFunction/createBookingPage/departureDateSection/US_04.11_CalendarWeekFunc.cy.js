@@ -15,7 +15,7 @@ describe('US_04.11 | Calendar week functionality', () => {
 
 	it('AT_04.11.01|Verify that you can click on last date field if it has not expired', function() {
 
-        createBookingPage.getCalendarDaySelectionWrapper()
+        createBookingPage.getCalendarDays()
             .not('unavailable')    
             .last()
             .click()
