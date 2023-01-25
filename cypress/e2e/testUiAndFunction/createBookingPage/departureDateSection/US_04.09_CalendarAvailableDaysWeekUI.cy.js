@@ -14,14 +14,14 @@ describe('US_04.09 | Calendar available days week UI', () => {
 	});
 
 	it('AT_04.09.01 | Verify calendar-day-selection-wrapper starts and ends with same dates as label calendar week', function () {
-		createBookingPage.getLabelCalendarWeek().then(($el) => {
+		createBookingPage.getLabelCalendar().then(($el) => {
 			let firstDayOfWeek = $el.text().split(" ")[0]
 			let lastDayOfWeek = $el.text().split(" ")[3]
 
-			createBookingPage.getCalendarDaySelectionWrapper().eq(0).then(($el) => {
+			createBookingPage.getCalendarDays().eq(0).then(($el) => {
 				expect($el.text()).to.eq(firstDayOfWeek)
 			})
-			createBookingPage.getCalendarDaySelectionWrapper().eq(6).then(($el) => {
+			createBookingPage.getCalendarDays().eq(6).then(($el) => {
 				expect($el.text()).to.eq(lastDayOfWeek)
 			})
 		})
