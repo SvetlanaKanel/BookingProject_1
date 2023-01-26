@@ -11,6 +11,8 @@ export class StartPage {
     getThailandFlagIcon = () => cy.get('a[href="/th"]')
     getUKFlagIcon = () => cy.get('a[href="/en"]')
     getRussiaFlagIcon = () => cy.get('a[href="/ru"]')
+    getLogo = () => cy.get('.logo')
+    getModalBackdrop = () => cy.get('.modal-backdrop')
 
     //Methods
     
@@ -63,7 +65,8 @@ export class RestorePopup {
     getRestoreButton = () => cy.get('#restoreModal input[type="submit"]');
     getMessageAlert = () => cy.get('#restoreModal div.alert');
     getRestorePasswordHeader = () => cy.get('#restoreModal h2');
-
+    getCloseButton = () => cy.get('div#restoreModal .modal-header .close');
+    getRestorePopup = () => cy.get('div#restoreModal')
 
     // Methods
 
@@ -74,6 +77,10 @@ export class RestorePopup {
     clickRestoreButton() {
         this.getRestoreButton().click();
     };
+
+    clickCloseButton(){
+        this.getCloseButton().click()
+    }
 }
 
 export class RegisterPopup {
