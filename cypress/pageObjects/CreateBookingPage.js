@@ -13,6 +13,7 @@ class CreateBookingPage {
     getLabelPassengerDetails = () => cy.get('.passenger-wrapper div.title label');
     getMonthBtn = () => cy.get('.calendar-view-wrapper .calendar-view-month');
     getMonthDropdownList = () => cy.get('select[name="calendar_month"] option');
+    getMonthDropdown = () => cy.get('select[name="calendar_month"]');
     getMonthDropdownSelect = () => cy.get('select[name="calendar_month"]');
     getFridayButton = () => cy.get('div .calendar-day-selection-wrapper :nth-child(5)');
     getPassengersDetailsDropdown = () => cy.get('.passenger-wrapper .title select.passengers-amount');
