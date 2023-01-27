@@ -23,7 +23,8 @@
             "color": "rgb(102, 102, 102)",
             "font_size": "30px",
             "headerText": "Enter QA Test OP"
-        }
+        },
+        "registerAgentAccount": "Register agent account"
     },
     "img": {
         "logoFileName": "logo-main.png"
@@ -44,9 +45,6 @@
     },
     "links": {
         "registerAccountNowEnglishText": "Register account now"
-    },
-
-    "header": {
-        "registerAgentAccount": "Register agent account"
     }
+
 }

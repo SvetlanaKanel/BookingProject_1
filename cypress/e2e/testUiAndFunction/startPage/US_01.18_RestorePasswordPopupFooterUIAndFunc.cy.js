@@ -21,6 +21,6 @@ describe ('US 01.18 | Restore password Popup > Footer UI and functionality', () 
         restorePopup.clickRegisterLink();
         registerPopup
             .getRegisterAgentAccountHeader()
-            .should('include.text', this.startPage.header.registerAgentAccount)
+            .should('include.text', this.startPage.headers.registerAgentAccount)
     })
 })
