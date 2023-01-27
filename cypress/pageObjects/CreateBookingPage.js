@@ -48,16 +48,6 @@ class CreateBookingPage {
     clickMonthBtn() {
         this.getMonthBtn().click({ forse: true });
     }
-/*
-    selectMonthDropdownList_1() {
-        this.getMonthDropdownList().select(1);
-    }
-*/
-    clickMonthDropdown() {
-        this.getMonthDropdownSelect().trigger('mousedown')
-
-
-    }
 
     clickFridayButton() {
         this.getFridayButton().click();
