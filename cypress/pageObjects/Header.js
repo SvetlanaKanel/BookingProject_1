@@ -10,6 +10,14 @@ class Header {
     getContactUsIcon = () => cy.get('.sidebar-menu > :nth-child(4) > a');
     getFlagIconEn = () => cy.get('a[href="/lang?l=en"');
     getEnvelopeIcon = () => cy.get('[href="/helpdesk"]');
+    getFlagIconFr = () => cy.get('a[href="/lang?l=fr"]');
+    getFlagIconDe = () => cy.get('a[href="/lang?l=de"]');
+    getFlagIconEs = () => cy.get('a[href="/lang?l=es"]');
+    getFlagIconRu = () => cy.get('a[href="/lang?l=ru"]');
+    getFlagIconCn = () => cy.get('a[href="/lang?l=cn"]');
+    getFlagIconVi = () => cy.get('a[href="/lang?l=vi"]');
+
+
 
 // methods
     clickBurgerMenu() {

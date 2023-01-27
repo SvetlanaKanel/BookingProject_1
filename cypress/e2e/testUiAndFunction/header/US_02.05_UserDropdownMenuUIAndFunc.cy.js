@@ -27,4 +27,10 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 		header.getFlagIconEn()
 			.should('be.visible')		
 	})
+
+	it('AT_02.05.09 |Verify FR flag" icon is displayed', function () {
+		header.clickUserDropDownMenu()
+		header.getFlagIconFr()
+			.should('be.visible')		
+	})
 });
