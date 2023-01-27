@@ -23,6 +23,8 @@ class CreateBookingPage {
     getWeekButton = () => cy.get('button.calendar-view-week');
     getArrivalStationDropdown = () => cy.get('#select2-destination-container');
     getArrivalStationList = () => cy.get('.select2-results .select2-results__options');
+    getPhoneNumberInputFild = () => cy.get('input#passenger-phone');
+
     
     // Methods
     clickCalendarNextButton() {

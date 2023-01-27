@@ -45,4 +45,11 @@ describe('US_01.05 | Login By Email Tab UI', () => {
         .getEmailLabel()
         .should('have.text', this.startPage.label.labelEmail.text)
     });
+
+    it('AT_01.05.07 | Verify the Password input field and it has text "Password"', function ()  {
+        loginPopup
+            .getPasswordInput()
+            .should('be.visible')
+            .and('have.attr', 'placeholder', this.startPage.inputField.loginPopup.passwordInputField);
+    });
 });
