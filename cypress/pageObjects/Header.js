@@ -6,8 +6,10 @@ class Header {
     getLanguageIcons = () => cy.get('.user-header .user-lang-selection li');
     getLogoImg = () => cy.get('.logo-mini > img');
     getCloseBtn = () => cy.get('div[style="padding: 15px;"] .close');
-    getFlagIconEn = () => cy.get('a[href="/lang?l=en"');
-    getEnvelopeIcon = () => cy.get('[href="/helpdesk"]');
+    getContactUsIcon = () => cy.get('.sidebar-menu > :nth-child(4) > a');
+    getFlagIconEn = () => cy.get('a[href="/lang?l=en"]');
+    getEnvelopeIcon = () => cy.get('[href="/helpdesk"]'); 
+    getFlagIconTh = () => cy.get('a[href="/lang?l=th"]');
 
 // methods
     clickBurgerMenu() {
@@ -24,6 +26,17 @@ class Header {
     
     clickCloseBtn() {
         this.getCloseBtn().click();
+    }
+     clickContactUsIcon() {
+        this.getContactUsIcon().click();
+    }
+
+    clickFlagIconTh() {
+        this.getFlagIconTh().click();
+    }
+
+    clickFlagIconEn() {
+        this.getFlagIconEn().click();
     }
 }
 export default Header;
