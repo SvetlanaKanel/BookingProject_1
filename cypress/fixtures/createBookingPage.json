@@ -23,5 +23,9 @@
             "phone": "291234567",
             "email": "hello@test.plus"
         }
-    }
+    },
+        "selectedDayField": {
+            "backgroundColor":"rgb(0, 166, 90)",
+            "color": "rgb(255, 255, 255)"
+        }
 }
