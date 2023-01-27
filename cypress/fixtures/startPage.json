@@ -44,5 +44,9 @@
     },
     "links": {
         "registerAccountNowEnglishText": "Register account now"
+    },
+
+    "header": {
+        "registerAgentAccount": "Register agent account"
     }
 }

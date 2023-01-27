@@ -71,7 +71,8 @@ export class RestorePopup {
     getMessageAlert = () => cy.get('#restoreModal div.alert');
     getRestorePasswordHeader = () => cy.get('#restoreModal h2');
     getCloseButton = () => cy.get('div#restoreModal .modal-header .close');
-    getRestorePopup = () => cy.get('div#restoreModal')
+    getRestorePopup = () => cy.get('div#restoreModal');
+    getRestorePopupRegisterLink = () => cy.get('.form-horizontal .modal-footer .pull-left a');
 
     // Methods
 
@@ -85,6 +86,10 @@ export class RestorePopup {
 
     clickCloseButton(){
         this.getCloseButton().click()
+    };
+
+    clickRestorePopupRegisterLink(){
+        this.getRestorePopupRegisterLink().click();
     }
 }
 
