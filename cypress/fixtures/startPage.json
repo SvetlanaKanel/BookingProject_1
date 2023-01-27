@@ -32,7 +32,8 @@
     },
     "inputField": {
         "loginPopup": {
-            "emailInputField": "Email"
+            "emailInputField": "Email",
+            "passwordInputField": "Password"
         }
     },
     "label": {
