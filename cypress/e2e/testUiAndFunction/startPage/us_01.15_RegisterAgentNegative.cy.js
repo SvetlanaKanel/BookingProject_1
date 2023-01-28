@@ -92,4 +92,12 @@ describe('US_01.15 | Register Agent Negative', function () {
             .and('have.text', this.startPage.alert.registerPopupErrorMessage.emailIsPreviouslyUsed)
     });
 
+    it('AT_01.15.06 | Error message is displayed when a user attempts to register with special characters in `Your name` field', function() {
+        registerPopup.enterName(this.startPage.data.specialCharacters)
+        registerPopup
+            .getErrorMessage()
+            .should('be.visible')
+            .and('contain', this.startPage.alert.registerPopupErrorMessage.nameFieldSpecialCharacters)
+    });
+
 })
