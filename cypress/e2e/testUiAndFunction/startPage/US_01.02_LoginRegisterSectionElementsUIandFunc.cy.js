@@ -1,9 +1,11 @@
 /// <reference types="Cypress" />
 
-import { StartPage, LoginPopup } from "../../../pageObjects/StartPage";
+import { StartPage, LoginPopup, RegisterPopup } from "../../../pageObjects/StartPage";
 
 const startPage = new StartPage();
 const loginPopup = new LoginPopup();
+const registerPopup = new RegisterPopup();
+
 
 describe('US_01.02 | Login-register section elements UI and functionality', () => {
 
@@ -51,4 +53,9 @@ describe('US_01.02 | Login-register section elements UI and functionality', () =
             .getLoginPopupHeader()
             .should('include.text', this.startPage.headers.header_Login_Popup.text)
     });
-})
+
+    it('AT_01.02.05 | Verify Link "Register account now" is visible and clickable', function() {
+        startPage.clickRegisterAccountLink();
+        registerPopup.getRegisterAgentAccountHeader().should('have.text', 'Register agent account');
+    });
+});
