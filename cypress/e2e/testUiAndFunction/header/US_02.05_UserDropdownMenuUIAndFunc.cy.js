@@ -39,9 +39,17 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 		createBookingPage.getPhoneNumberInputFild().should('have.attr', 'placeholder', this.createBookingPage.inputField.main_passenger.placeholderPhoneNumberEn)
 	})
 
+<<<<<<< HEAD
 	it('AT_02.05.09 |Verify FR flag" icon is displayed', function () {
 		header.clickUserDropDownMenu()
 		header.getFlagIconFr()
 			.should('be.visible')		
 	})
 });
+=======
+	it('AT_02.05.05 |Verify TH flag icon is displayed', function () {
+		header.getFlagIconTh()
+		.should('be.visible')	
+	})
+})
+>>>>>>> 5819a2605563722ae03df9144418f15acf7859d6

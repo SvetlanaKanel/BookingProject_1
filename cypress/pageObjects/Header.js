@@ -15,8 +15,6 @@ class Header {
     getFlagIconRu = () => cy.get('a[href="/lang?l=ru"]');
     getFlagIconCn = () => cy.get('a[href="/lang?l=cn"]');
     getFlagIconVi = () => cy.get('a[href="/lang?l=vi"]');
-    getFlagIconEn = () => cy.get('a[href="/lang?l=en"]');
-    getEnvelopeIcon = () => cy.get('[href="/helpdesk"]'); 
     getFlagIconTh = () => cy.get('a[href="/lang?l=th"]');
     
 
@@ -31,13 +29,6 @@ class Header {
 
     clickLogoImg() {
         this.getLogoImg().click();
-    }
-    
-    clickCloseBtn() {
-        this.getCloseBtn().click();
-    }
-     clickContactUsIcon() {
-        this.getContactUsIcon().click();
     }
 
     clickFlagIconTh() {
