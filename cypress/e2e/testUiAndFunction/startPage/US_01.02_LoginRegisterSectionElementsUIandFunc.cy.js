@@ -7,7 +7,7 @@ const loginPopup = new LoginPopup();
 const registerPopup = new RegisterPopup();
 
 
-describe('US_01.02 | Login-register section elements UI and functionality', () => {
+describe('US_01.02 | Login-register section elements UI and functionality | Login only', () => {
 
     before(() => {
         cy.visit('/');
@@ -53,9 +53,23 @@ describe('US_01.02 | Login-register section elements UI and functionality', () =
             .getLoginPopupHeader()
             .should('include.text', this.startPage.headers.header_Login_Popup.text)
     });
+});
 
-    it('AT_01.02.05 | Verify Link "Register account now" is visible and clickable', function() {
-        startPage.clickRegisterAccountLink();
-        registerPopup.getRegisterAgentAccountHeader().should('have.text', 'Register agent account');
+describe('US_01.02 | Login-register section elements UI and functionality | Registration only', () => {
+
+    before(() => {
+        cy.visit('/');
     });
+    
+    beforeEach(function () {
+        cy.fixture('startPage').then(startPage => {
+            this.startPage= startPage;
+        }); 
+	});
+
+    it('AT_01.02.05 | Verify Link "Register account now" is visible, clickable and opens registration pop up', function() {
+        startPage.clickRegisterAccountLink()
+        registerPopup.getRegisterAgentAccountHeader().should('have.text', this.startPage.headers.registerAgentAccount);
+    });
+
 });
