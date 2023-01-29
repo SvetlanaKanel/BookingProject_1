@@ -19,13 +19,6 @@ describe('US_01.02 | Login-register section elements UI and functionality | Logi
         }); 
 	});
 
-    it('AT_01.02.01 | Verify Link "Register account now": visible and have text "Register account now"', function () {
-        startPage
-            .getRegisterAccountLink()
-            .should('be.visible')
-            .and('have.text', this.startPage.links.registerAccountNowEnglishText);
-    });
-
     it('AT.01.02.03 | Login button has text “Login“', function () {
         startPage
             .getLoginButton()
@@ -54,7 +47,9 @@ describe('US_01.02 | Login-register section elements UI and functionality | Logi
             .should('include.text', this.startPage.headers.header_Login_Popup.text)
     });
 });
-
+/*
+    Login and registration tests are separated to avoid going to the "/" before each test.
+*/
 describe('US_01.02 | Login-register section elements UI and functionality | Registration only', () => {
 
     before(() => {
@@ -66,6 +61,13 @@ describe('US_01.02 | Login-register section elements UI and functionality | Regi
             this.startPage= startPage;
         }); 
 	});
+
+    it('AT_01.02.01 | Verify Link "Register account now": visible and have text "Register account now"', function () {
+        startPage
+            .getRegisterAccountLink()
+            .should('be.visible')
+            .and('have.text', this.startPage.links.registerAccountNowEnglishText);
+    });
 
     it('AT_01.02.05 | Verify Link "Register account now" is visible, clickable and opens registration pop up', function() {
         startPage.clickRegisterAccountLink()
