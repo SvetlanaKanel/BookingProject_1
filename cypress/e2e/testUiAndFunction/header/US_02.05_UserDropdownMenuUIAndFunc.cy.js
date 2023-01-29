@@ -49,14 +49,10 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 		header.getFlagIconTh()
 		.should('be.visible')	
 	})
-<<<<<<< HEAD
-});
-
-=======
 
 	it('AT_02.05.06 | Verify TH flag icon is clickable', function () {
 		header.clickFlagIconTh()
 		createBookingPage.getPhoneNumberInputFild().should('have.attr', 'placeholder', this.createBookingPage.inputField.main_passenger.placeholderPhoneNumberTh)
 	})
-})
->>>>>>> 13f69ef42cbb7119d09b2bd56a78780020822cd3
+});
+
