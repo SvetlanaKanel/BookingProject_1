@@ -24,7 +24,7 @@ describe('US_03.02 Booking link', () => {
         leftMenuPanel.getBookingMenuLink().should('include.text', this.leftMenuPanel.menuLinks.bookingLink)
     });
 
-    it.only('AT_03.02.03 | Clicking "Booking" opening the page with heading "Create booking"', function() {
+    it('AT_03.02.03 | Clicking "Booking" opening the page with heading "Create booking"', function() {
         leftMenuPanel.getBookingMenuLink()
     });
 });
