@@ -58,4 +58,11 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 		header.getFlagIconViet()
 		.should('be.visible')
 	})
+
+	it.only('AT_02.05.15 | Verify the "Vietnamese flag" icon is clickable', function () {
+		header.clickFlagIconViet()
+		createBookingPage
+		.getEmailInputField()
+		.should('have.attr', 'placeholder', this.createBookingPage.inputField.main_passenger.placeholderEmailViet)
+	})
 })
