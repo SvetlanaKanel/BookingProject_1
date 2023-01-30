@@ -23,4 +23,8 @@ describe('US_03.02 Booking link', () => {
     it('AT_03.02.02 | Verify that Sidebar has text "Booking"', function () {
         leftMenuPanel.getBookingMenuLink().should('include.text', this.leftMenuPanel.menuLinks.bookingLink)
     });
+
+    it('AT_03.02.03 | Clicking "Booking" opening the page with heading "Create booking"', function() {
+        leftMenuPanel.getBookingMenuLink()
+    });
 });
