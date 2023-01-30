@@ -26,6 +26,7 @@ class CreateBookingPage {
     getPhoneNumberInputFild = () => cy.get('input#passenger-phone');
     getSelectedSeats = () => cy.get('table.seats tr td[class="seat selected"]');
     getEmailInputField = () => cy.get(':nth-child(4) > .form-control');
+    getRowsSeatsSeatSection = () => cy.get('.seat-chart .seats tr:not(tr:first-child)');
 
     
     // Methods
