@@ -9,6 +9,12 @@ const createBookingPage = new CreateBookingPage();
 describe('US_02.05 | User dropdown menu UI and functionality', () => {
 	const AGENT = Cypress.env('agent');
 
+	before(function () {
+		cy.visit('/')
+		cy.login(AGENT.email, AGENT.password)
+
+	});
+
 	beforeEach(function () {
 		cy.fixture('header').then(header => {
 			this.header = header
@@ -16,8 +22,7 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 		cy.fixture('createBookingPage').then(createBookingPage => {
 			this.createBookingPage = createBookingPage
 		})
-		cy.visit('/')
-		cy.login(AGENT.email, AGENT.password)
+		
 		header.clickUserDropDownMenu()
 	});
 
@@ -47,5 +52,10 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 	it('AT_02.05.06 | Verify TH flag icon is clickable', function () {
 		header.clickFlagIconTh()
 		createBookingPage.getPhoneNumberInputFild().should('have.attr', 'placeholder', this.createBookingPage.inputField.main_passenger.placeholderPhoneNumberTh)
+	})
+
+	it('AT_02.05.14 | Verify the "Vietnamese flag" icon is displayed', function () {
+		header.getFlagIconViet()
+		.should('be.visible')
 	})
 })
