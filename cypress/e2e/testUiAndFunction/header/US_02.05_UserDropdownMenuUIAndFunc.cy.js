@@ -59,7 +59,7 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 		.should('be.visible')
 	})
 
-	it.only('AT_02.05.15 | Verify the "Vietnamese flag" icon is clickable', function () {
+	it('AT_02.05.15 | Verify the "Vietnamese flag" icon is clickable', function () {
 		header.clickFlagIconViet()
 		createBookingPage
 		.getEmailInputField()
