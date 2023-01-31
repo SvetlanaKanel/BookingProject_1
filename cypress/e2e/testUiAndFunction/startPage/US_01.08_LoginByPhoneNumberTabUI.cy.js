@@ -38,7 +38,7 @@ describe('US_01.08 | Login by phone number tab UI', () => {
 
     it('AT_01.08.04 | Verify "Country code" label has color - #aaa', function () {
         loginPopup
-        .getConutryCodeLabel()
+        .getCountryCodeLabel()
         .should('have.css','color', this.startPage.label.labelCountryCode.color)
     });
 });
