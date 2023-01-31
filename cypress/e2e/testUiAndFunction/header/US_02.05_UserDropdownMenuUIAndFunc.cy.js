@@ -72,17 +72,17 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
             .should('be.visible')   
     });
 
-    it('AT_02.05.11 |Verify Es flag" icon is displayed', function () {
+    it('AT_02.05.10 |Verify Es flag" icon is displayed', function () {
         header.getFlagIconEs()
             .should('be.visible')   
     });
 
-    it('AT_02.05.12 |Verify Ru flag" icon is displayed', function () {
+    it('AT_02.05.10 |Verify Ru flag" icon is displayed', function () {
         header.getFlagIconRu()
             .should('be.visible')   
     });
 
-    it('AT_02.05.13 |Verify Cn flag" icon is displayed', function () {
+    it('AT_02.05.10 |Verify Cn flag" icon is displayed', function () {
         header.getFlagIconCn()
             .should('be.visible')   
     });
