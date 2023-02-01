@@ -25,7 +25,7 @@ class CreateBookingPage {
     getArrivalStationDropdown = () => cy.get('#select2-destination-container');
     getArrivalStationList = () => cy.get('.select2-results .select2-results__options');
     getPhoneNumberInputFild = () => cy.get('input#passenger-phone');
-    getSelectedSeats = () => cy.get('table.seats tr td[class="seat selected"]');    
+    getSelectedSeats = () => cy.get('table.seats tr td[class="seat selected"]');
     getFareTypeDropdown = () => cy.get('[id^=select2-passenger-fare]');
     getFareTypeDropdownList = () => cy.get('label [name="passenger-fare[]"] option');
     getRowsSeatsSeatSection = () => cy.get('.seat-chart .seats tr:not(tr:first-child)');
@@ -38,6 +38,7 @@ class CreateBookingPage {
     getSaturdayButton = () => cy.get('div .calendar-day-selection-wrapper :nth-child(6)');
     getDriverSeat = () => cy.get('table.seats tr td[class="seat blocked"]');  
     
+
     // Methods
     clickCalendarNextButton() {
         this.getCalendarNextButton().click()
@@ -73,7 +74,7 @@ class CreateBookingPage {
 
     clickArrivalStationDropdown() {
         this.getArrivalStationDropdown().click()
-    };    
+    };
 
     clickFareTypeDropdown() {
         this.getFareTypeDropdown().click()
@@ -81,6 +82,18 @@ class CreateBookingPage {
 
     clickSaturdayButton() {
         this.getSaturdayButton().click();
+    };    
+    
+    getRandomIndexOfMonth() {
+
+        return this.getMonthDropdownList().then($el => {
+            let arrayOfMonth = $el.toArray().map(el => el.innerText);
+            let indexOfMonth = Math.floor(Math.random() * arrayOfMonth.length);
+            if (indexOfMonth == 0) {
+                indexOfMonth++;
+            }
+            return indexOfMonth;
+        });
     };    
 }
 export default CreateBookingPage; 
