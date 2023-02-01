@@ -66,4 +66,10 @@ describe('US_01.05 | Login By Email Tab UI', () => {
         loginPopup.getMessageAlert()
             .should('have.text', this.startPage.alert.loginPopupMessageAlert)
     });
+    
+    it('AT_01.05.06 | Verify SIGN IN button has color - #6CCD66', function () {
+        loginPopup
+            .getSignInButton()
+            .should('have.css', 'color', this.startPage.buttons.signInBtnTextColor);
+    });
 });
