@@ -32,8 +32,13 @@ class CreateBookingPage {
     getEmailInputField = () => cy.get(':nth-child(4) > .form-control');
     getRowsSeatsSeatSection = () => cy.get('.seat-chart .seats tr:not(tr:first-child)');
     getAmountOfChosenPass = () => cy.get('.box-default .passenger-wrapper .passenger-row');
-     
+    getLabelMainPassenger  = () => cy.get('div.passenger-row > label');
+    getDepartureStationSelectionDropdown = () => cy.get('select[name="departure"]');
+    getArrivalStationSelectionDropdown = () => cy.get('select[name="destination"]');
+    getSaturdayButton = () => cy.get('div .calendar-day-selection-wrapper :nth-child(6)');
+    getDriverSeat = () => cy.get('table.seats tr td[class="seat blocked"]');  
     
+
     // Methods
     clickCalendarNextButton() {
         this.getCalendarNextButton().click()
