@@ -13,7 +13,6 @@ describe('US_05.12 | Columns are filtered by selected criteria', () => {
     before(() => {
         cy.visit('/')
         cy.login(AGENT.email, AGENT.password)
-        cy.wait(5000)
         cy.get('a[href="/orders/"] i').click();
     });
 
