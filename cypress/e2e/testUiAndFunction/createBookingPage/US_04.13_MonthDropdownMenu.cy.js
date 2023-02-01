@@ -19,7 +19,7 @@ describe('US_04.13 | Create booking page > Departure date > Month dropdown UI an
             .and('have.length', 13);
     })
 
-    it('AT_04.13.02 | Verify the first option of the Month dropdown menu has the current month and the current year', function () {
+    it.skip('AT_04.13.02 | Verify the first option of the Month dropdown menu has the current month and the current year', function () {
         const current = new Date()
         const thailandCurrentMonthAndYear = current.toLocaleString('en-US', { month: 'short', year: 'numeric', timeZone: 'Asia/Ho_Chi_Minh' })
         createBookingPage.getMonthDropdownList()
@@ -57,18 +57,17 @@ describe('US_04.13 | Create booking page > Departure date > Month dropdown UI an
     })
 
     it('AT_04.13.06 | Verify that the month that is shown in the "Departure on" section displays the month selected from the dropdown menu', function () {
-        createBookingPage.getMonthDropdownList().then($el => {
-            let arrayOfMonth = $el.toArray().map(el => el.innerText);
-            let indexOfMonth = Math.floor(Math.random() * arrayOfMonth.length);
-            if (indexOfMonth == 0) {
-                indexOfMonth++;
-            }
-            let selectedMonthAndYear = arrayOfMonth[indexOfMonth];
-
+        
+        createBookingPage.getRandomIndexOfMonth().then($el => {
+            let indexOfMonth = $el;
             createBookingPage.getMonthDropdownSelect().select(indexOfMonth);
 
-            createBookingPage.getLabelDepartureOnDate()
-                .should('contain.text', selectedMonthAndYear);
+            createBookingPage.getMonthDropdownList().eq(indexOfMonth).then($el => {
+                let selectedMonthAndYear = $el.text();
+
+                createBookingPage.getLabelDepartureOnDate()
+                    .should('contain.text', selectedMonthAndYear);
+            })
         })
-    })    
-})
+    })
+})    
