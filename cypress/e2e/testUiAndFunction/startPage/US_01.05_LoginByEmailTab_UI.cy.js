@@ -45,4 +45,31 @@ describe('US_01.05 | Login By Email Tab UI', () => {
         .getEmailLabel()
         .should('have.text', this.startPage.label.labelEmail.text)
     });
+
+    it('AT_01.05.07 | Verify the Password input field and it has text "Password"', function ()  {
+        loginPopup
+            .getPasswordInput()
+            .should('be.visible')
+            .and('have.attr', 'placeholder', this.startPage.inputField.loginPopup.passwordInputField);
+    });
+
+    it('AT_01.05.09 | Verify SIGN IN button has text "SIGN IN"', function() {
+        loginPopup
+            .getByEmailSignInButton()
+            .should('have.value', this.startPage.buttons.signInBtnText)
+    });
+
+    it('AT_01.05.10 | Verify SIGN IN button is visible and clickable', function() {
+        loginPopup
+            .clickByEmailSignInButton()
+
+        loginPopup.getMessageAlert()
+            .should('have.text', this.startPage.alert.loginPopupMessageAlert)
+    });
+    
+    it('AT_01.05.06 | Verify SIGN IN button has color - #6CCD66', function () {
+        loginPopup
+            .getByEmailSignInButton()
+            .should('have.css', 'color', this.startPage.buttons.signInBtnTextColor);
+    });
 });
