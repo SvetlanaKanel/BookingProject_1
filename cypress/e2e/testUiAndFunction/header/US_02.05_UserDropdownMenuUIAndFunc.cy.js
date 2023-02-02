@@ -101,7 +101,7 @@ describe('US_02.05 | User dropdown menu UI and functionality', () => {
 			.should('be.visible')
 	});
 
-	it.only('AT_02.05.03 | Clicking "Sign out" button gets user signed out', function () {
+	it('AT_02.05.03 | Clicking "Sign out" button gets user signed out', function () {
 		header.clickSignOutBtn()
 			startPage.getLoginButton()
 			.should('be.visible')
