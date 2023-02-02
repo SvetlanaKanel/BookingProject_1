@@ -83,5 +83,6 @@
     },
     "placeholder":{
         "name": "Passenger name"
-    }
+    }, 
+    "selectedMonthBtnBackgroundColor": "rgb(0, 166, 90)"
 }
