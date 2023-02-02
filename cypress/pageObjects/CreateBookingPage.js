@@ -9,6 +9,7 @@ class CreateBookingPage {
     getArrivalStationList = () => cy.get('.select2-results .select2-results__options');
     getDepartureStationSelectionDropdown = () => cy.get('select[name="departure"]');
     getArrivalStationSelectionDropdown = () => cy.get('select[name="destination"]');
+    getArrivalSearchField = () => cy.get('.select2-search__field');
 
     //Departure date
     getCalendarNextButton = () => cy.get('div .calendar-week-next');
@@ -46,6 +47,7 @@ class CreateBookingPage {
     getSelectedSeats = () => cy.get('table.seats tr td[class="seat selected"]');
     getRowsSeatsSeatSection = () => cy.get('.seat-chart .seats tr:not(tr:first-child)');    
     getDriverSeat = () => cy.get('table.seats tr td[class="seat blocked"]');  
+   
 
     //Total - Footer section                  
     
