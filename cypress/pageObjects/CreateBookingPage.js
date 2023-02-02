@@ -44,8 +44,7 @@ class CreateBookingPage {
     getSeatSelectionDropdown = () => cy.get('.layout-wrapper .title select.passengers-amount');
     getSeatSelectionDropdownList = () => cy.get('.layout-wrapper .title select.passengers-amount option');
     getSelectedSeats = () => cy.get('table.seats tr td[class="seat selected"]');
-    getRowsSeatsSeatSection = () => cy.get('.seat-chart .seats tr:not(tr:first-child)');
-    //getRowsSeatsSeatSection = () => cy.get('.seat-chart .seats tr:not(tr:first-child)');
+    getRowsSeatsSeatSection = () => cy.get('.seat-chart .seats tr:not(tr:first-child)');    
     getDriverSeat = () => cy.get('table.seats tr td[class="seat blocked"]');  
 
     //Total - Footer section                  
