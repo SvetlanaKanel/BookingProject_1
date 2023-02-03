@@ -1,7 +1,13 @@
 /// <reference types="Cypress" />
 
-const isEqualHeaders = (selector, expectedTableHeaders) => {
-    cy.get(selector).then(($tr) => {
+import LeftMenuPanel from "../../../pageObjects/LeftMenuPanel";
+import BookingsListPage from "../../../pageObjects/BookingsListPage";
+
+const leftMenuPanel = new LeftMenuPanel();
+const bookingListPage = new BookingsListPage();
+
+const isEqualHeaders = (cySelector, expectedTableHeaders) => {
+    cySelector().then(($tr) => {
         const actualTableHeaders = $tr.toArray()[0].innerText.split('\t')
         expect(actualTableHeaders).to.deep.eq(expectedTableHeaders)
     })
@@ -13,7 +19,7 @@ describe('US_05.12 | Columns are filtered by selected criteria', () => {
     before(() => {
         cy.visit('/')
         cy.login(AGENT.email, AGENT.password)
-        cy.get('a[href="/orders/"] i').click();
+        leftMenuPanel.clickBookingManagementIcon()
     });
 
     beforeEach(function () {
@@ -25,150 +31,150 @@ describe('US_05.12 | Columns are filtered by selected criteria', () => {
     context('AT_05.12.03 | Default columns (booking list) are displayed', () => {
         it('AT_05.12.03 | Verify that default columns (booking list) are displayed', function () {
             const expectedResult = this.bookingsListPage.columns.default;
-            isEqualHeaders('.table thead tr', expectedResult)
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult)
         })
     })
 
     context('AT_05.12.03 | Columns (booking list) are filtered by selected criteria', () => {
         beforeEach(() => {
-            cy.get('.table-columns-settings-link').click();
-            cy.get('input[type="checkbox"]').uncheck()
+            bookingListPage.clickColumnsSettingButton()
+            bookingListPage.uncheckColumnsCheckbox()
         });
 
         it('Verify filtering by ID', function () {
-            cy.get('input[type="checkbox"]').check(['id'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['id'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.id;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Booking date', function () {
-            cy.get('input[type="checkbox"]').check(['createdon'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['createdon'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.bookingDate;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Route', function () {
-            cy.get('input[type="checkbox"]').check(['route'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['route'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.route;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Departure date', function () {
-            cy.get('input[type="checkbox"]').check(['godate'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['godate'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.departureDate;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Departure time', function () {
-            cy.get('input[type="checkbox"]').check(['gotime'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['gotime'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.departureTime;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Vehicle', function () {
-            cy.get('input[type="checkbox"]').check(['class'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['class'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.vehicle;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Channel / Agent', function () {
-            cy.get('input[type="checkbox"]').check(['agent'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['agent'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.channelAgent;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Seats', function () {
-            cy.get('input[type="checkbox"]').check(['seats'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['seats'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.seats;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Numbers', function () {
-            cy.get('input[type="checkbox"]').check(['seatnums'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['seatnums'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.numbers;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Contact', function () {
-            cy.get('input[type="checkbox"]').check(['customer'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['customer'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.contact;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Price/USD', function () {
-            cy.get('input[type="checkbox"]').check(['total'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['total'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.priceUsd;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Status', function () {
-            cy.get('input[type="checkbox"]').check(['status'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['status'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.status;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Expire', function () {
-            cy.get('input[type="checkbox"]').check(['expire'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['expire'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.expire;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Notes', function () {
-            cy.get('input[type="checkbox"]').check(['notes'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['notes'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.notes;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by ID + Notes', function () {
-            cy.get('input[type="checkbox"]').check(['id', 'notes'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['id', 'notes'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.idNotes;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Seats + Status', function () {
-            cy.get('input[type="checkbox"]').check(['seats', 'status'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['seats', 'status'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.seatsStatus;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
 
         it('Verify filtering by Route + Vehicle', function () {
-            cy.get('input[type="checkbox"]').check(['route', 'class'])
-            cy.get('.popup-table-columns-settings .btn-success').click();
+            bookingListPage.checkColumnsCheckbox(['route', 'class'])
+            bookingListPage.clickColumnsOkButton()
 
             const expectedResult = this.bookingsListPage.columns.routeVehicle;
-            isEqualHeaders('.table thead tr', expectedResult);
+            isEqualHeaders(bookingListPage.getTableHeaders, expectedResult);
         });
     })
 })
