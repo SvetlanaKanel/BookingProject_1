@@ -58,6 +58,7 @@ class CreateBookingPage {
     // Summary section 
     getColumnSeatsSummary = () => cy.get('.total-wrapper > div.total-row :nth-child(3)')
     getRowsSummaryList = () => cy.get('.total-wrapper > div.total-row')
+    getAmountOfPassengersInSummary = () => cy.get('.box-default .total-wrapper  .total-row')
 
     //Total - Footer section                  
     getReservationTicketArrow = () => cy.get('.btn-group .caret');
@@ -149,6 +150,20 @@ class CreateBookingPage {
             return passengersAmount
         })
     };
+    
+     getRandomAmountOfPassSeatSelectionDrpDwn() {
 
+           return this.getSeatSelectionDropdownList().then($el => {
+            let passengersArray = $el
+                .toArray()
+                .map(el => el.innerText)
+    
+            let indexArr = Math.floor(Math.random() * passengersArray.length) 
+            let amountOfPass = passengersArray[indexArr]
+
+            return amountOfPass;
+         })
+    }
 }
+
 export default CreateBookingPage; 
