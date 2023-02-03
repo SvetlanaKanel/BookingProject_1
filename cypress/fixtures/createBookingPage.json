@@ -83,6 +83,10 @@
     },
     "placeholder":{
         "name": "Passenger name"
+    },
+
+    "weekDayFields": {
+         "quantity": "7"
     }, 
     "selectedMonthBtnBackgroundColor": "rgb(0, 166, 90)"
 }
