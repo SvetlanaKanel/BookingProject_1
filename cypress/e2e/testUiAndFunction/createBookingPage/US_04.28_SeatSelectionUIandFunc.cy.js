@@ -122,7 +122,33 @@ describe('US_04.28 | Seat selection UI and functionality', () => {
                     })
         })            
     })
-});
+
+    it('AT_04.28.10| In the "Seats table" the seats numbers in the vertical row start with one and increase by 1 in each subsequent row, the digit is followed by the same letter (1A, 2A, 3A, 1B, 2B, 3B etc.).', function () {
+        createBookingPage.getAllSeatsSeatSelection().then(($el) => {
+            let arrayOfSeats = $el
+            .toArray()
+            .map($el => $el.innerText)
+
+            createBookingPage.getSeatInRow().then(($el) => {
+                let lengthOfRow = $el.length
+                let newArray = []
+
+            for(let i = 0; i < lengthOfRow; i++){
+                let arr = []
+                for(let j = 0 + i; j < arrayOfSeats.length; j+=lengthOfRow){
+                    arr.push(arrayOfSeats[j])   
+                }
+                newArray.push(arr)
+            }
+            for(let i = 0; i < newArray.length; i++){
+                for(let j = 0; j < newArray[i].length; j++){
+                    expect(newArray[i][j]).to.eq(`${[j + 1]}${this.createBookingPage.alphabet[i]}`)
+                }
+            }
+            })
+        })
+    })
+})
 
 //This describe for trip "Bangkok Khao San - Chonburi"
 

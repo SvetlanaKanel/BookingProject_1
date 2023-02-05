@@ -57,6 +57,8 @@ class CreateBookingPage {
     getDriverSeat = () => cy.get('table.seats tr td[class="seat blocked"]');
     getAllSeatsSeatSelection = () => cy.get('.seat-chart .seats td');
     getTitleOfSeatsTable = () => cy.get('.seats tbody th');
+    getSeatInRow = () => cy.get('.seat-chart .seats tr:nth-child(2) td');
+
 
     // Summary section 
     getColumnSeatsSummary = () => cy.get('.total-wrapper > div.total-row :nth-child(3)')
