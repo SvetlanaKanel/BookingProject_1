@@ -3,7 +3,7 @@ export class StartPage {
 
     getLoginButton = () => cy.get(".login")
     getRegisterAccountLink = () => cy.get('a[title="Register as agent"]')
-    getBackgroungVideo = () => cy.get('video')
+    getBackgroundVideo = () => cy.get('video')
     getLogo = () => cy.get('.logo')
     getBackgroundLoginSection = () => cy.get('.inner')
 
