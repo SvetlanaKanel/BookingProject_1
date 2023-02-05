@@ -16,7 +16,7 @@ describe('US_AC.05 | Create reservation for 1 passenger', () => {
         cy.cleanCiData(MANAGER.email, MANAGER.password, CI)
     })
 
-    before(function () {
+    beforeEach(function () {
         cy.visit('/')
         cy.login(AGENT.email, AGENT.password)
 
@@ -51,4 +51,23 @@ describe('US_AC.05 | Create reservation for 1 passenger', () => {
             bookingPopup.getOnePassengerTypeLabel().should('have.text', 'Child:');
         })
     });
+
+
+    it('AT_AC.05.01| Create reservation for 1 passenger - Adult', function () {
+        createBookingPage.typeIntoMainPassengerNameField(this.createBookingPage.inputField.main_passenger.name);
+        createBookingPage.getMainPassengerFareTypeDropdownList().select('adult', { force: true });
+        createBookingPage.clickReservationTicketArrow();
+        createBookingPage.clickReservationTicketButton();
+
+        cy.intercept('/tools/ping/**').as('getPopUp')
+        
+        cy.wait('@getPopUp').then(({ response }) => {
+            expect(response.statusCode).to.eq(200)
+            bookingPopup.getConfirmTicketButton().should('be.visible');
+            bookingPopup.getPassengerTitle().should('include.text', '(1)');
+            bookingPopup.getPassengersList().should('have.length', 1);
+            bookingPopup.getOnePassengerTypeLabel().should('have.text', 'Adult:');
+        })
+    });
+
 });   
