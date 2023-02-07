@@ -2,12 +2,15 @@
 
 import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
 import getIntergerMinInclMaxExcl from "../../../support/utilities/getRandomInterger";
+import BookingPopup from '../../../pageObjects/BookingPopup';
 
+const bookingPopup = new BookingPopup();
 const createBookingPage = new CreateBookingPage();
+
 const AGENT = Cypress.env('agent');
 
 describe('US_04.28 | Seat selection UI and functionality', () => {
-    
+        
     beforeEach(function () {
         cy.fixture('createBookingPage').then(createBookingPage => {
             this.createBookingPage = createBookingPage;
@@ -156,6 +159,40 @@ describe('US_04.28 | Seat selection UI and functionality', () => {
             })
         })
     })
+
+    context('AT_04.28.07 | The number of available seats in the "Seat selection" section is equal the number of available seats in the selected trip', () => {
+        before(() => {
+            cy.visit('/')
+            cy.login(AGENT.email, AGENT.password)
+            
+            createBookingPage.clickCalendarNextButton()
+            createBookingPage.clickFridayButton()
+            cy.intercept('/tools/**').as('getTrip')
+            cy.wait('@getTrip')
+            createBookingPage.clickFirstTripCard()
+        });
+        
+        it('AT_04.28.07 | The number of available seats in the "Seat selection" section is equal the number of available seats in the selected trip', function() {      
+            createBookingPage.typeIntoMainPassengerNameField(this.createBookingPage.inputField.main_passenger.name)         
+            createBookingPage.clickReservationTicketArrow();
+            createBookingPage.clickReservationTicketButton();   
+            cy.intercept('/tools/ping/**').as('getPopUp')
+            cy.wait('@getPopUp') 
+            bookingPopup.clickCloseBtnBookingPopup()             
+            createBookingPage.clickFirstTripCard()
+    
+            let availableSeatsSeatSelection
+            createBookingPage.getAvailableSeatsSeatSelection().then($el => {
+                availableSeatsSeatSelection = $el.toArray().length                 
+            })       
+    
+            createBookingPage.getTicketsAvailableFirstTripCard().then($el => {
+                let availableSeatsSelectedTrip = $el.text()
+                
+                expect(availableSeatsSeatSelection).to.eq(+availableSeatsSelectedTrip)        
+            })    
+        });
+    })
 })
 
 //This describe for trip "Bangkok Khao San - Chonburi"
@@ -210,4 +247,5 @@ describe('US_04.28 | Seat selection UI and functionality ("Bangkok Khao San - Ch
             .should('be.visible')
             .and('have.text', this.createBookingPage.tripClass[0])
     });
+    
 });
