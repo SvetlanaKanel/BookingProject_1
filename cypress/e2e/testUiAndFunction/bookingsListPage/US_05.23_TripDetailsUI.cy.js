@@ -58,4 +58,14 @@ describe("US_05.23 | Trip detais UI", () => {
       expect(date).to.match(dateFormatRegExp);
     });
   });
+
+  it('AT_05.23.03 | Verify arrival time is in 24-hour notation HH:MM', function () {
+    const timeFormat = createBookingPage.timeFormat;
+    const timeFormatRegExp = new RegExp(timeFormat);
+
+    createBookingPage.getArrivalTime().then(($span) => {
+      const time = $span.text();
+      expect(time).to.match(timeFormatRegExp);
+    });
+  });
 });
