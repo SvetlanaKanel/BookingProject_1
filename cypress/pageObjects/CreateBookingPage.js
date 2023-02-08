@@ -23,6 +23,7 @@ class CreateBookingPage {
     getWeekButton = () => cy.get('button.calendar-view-week');
     getSaturdayButton = () => cy.get('div .calendar-day-selection-wrapper :nth-child(6)');
     getLableDepartureDate = () => cy.get('#label-departure-date');
+    getDepartureDate = () => cy.get('.popup-trip div:nth-child(5) span');
     
     //Departure on
     getFirstTripCard = () => cy.get('div .trip:first-child');
