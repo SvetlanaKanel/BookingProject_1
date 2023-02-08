@@ -23,6 +23,14 @@ describe('US_03.04 Account management link', () => {
         });
     });
 
+    it('AT_03.04.03 Clicking "Account management" opening the page with heading "Account management"', function () {
+        leftMenuPanel.clickAccountManagementIcon() 
+
+        accountManagementPage 
+            .getAccountManagementHeader()
+            .should('include.text', this.accountManagementPage.headers.accountManagementHeader)       
+    });
+
     it('AT_03.04.01 Verify that "Account management" icon in the left menu panel is visible', function () {
         leftMenuPanel.getAccountManagementLeftIcon().should('be.visible');
     });
@@ -31,13 +39,5 @@ describe('US_03.04 Account management link', () => {
         leftMenuPanel
             .getAccountManagementMenuLink()
             .should('include.text', this.leftMenuPanel.menuLinks.accountLink);
-    });
-
-    it('AT_03.04.03 Clicking "Account management" opening the page with heading "Account management"', function () {
-        leftMenuPanel.clickAccountManagementIcon() 
-
-        accountManagementPage 
-            .getAccountManagementHeader()
-            .should('include.text', this.accountManagementPage.headers.accountManagementHeader)       
     });
 })
