@@ -79,6 +79,7 @@ class CreateBookingPage {
     getReservationTicketArrow = () => cy.get('.btn-group .caret');
     getReservationTicketButton = () => cy.get('.btn-reserve-tickets');
     getTotalPrice = () => cy.get('.footer-book-wrapper span.total-price')
+    getTotalPriceLabel = () => cy.get('.footer-book-wrapper > :first-child');    
     getBookTicketsButton = () => cy.get('[class="btn btn-book"]')
 
     // Methods
