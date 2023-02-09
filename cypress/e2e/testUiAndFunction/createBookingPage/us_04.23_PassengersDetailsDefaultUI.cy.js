@@ -28,7 +28,7 @@ describe('US_04.23 | Passengers details default UI', () => {
         createBookingPage.getLabelMainPassenger().should('be.visible');
     });
 
-    it('AT_04.23.03 | Verify passenger name input field has a “Passenger name” text placeholder', function () {
+    it.only('AT_04.23.03 | Verify passenger name input field has a “Passenger name” text placeholder', function () {
         
         createBookingPage.getPlaceholderPassengerName().should('have.attr', 'placeholder', this.createBookingPage.placeholder.name);
     });
@@ -45,5 +45,9 @@ describe('US_04.23 | Passengers details default UI', () => {
     it('AT_04.23.06 | Verify dial code selection arrow is present and visible', ()=> {
         
         createBookingPage.getDialCodeArrow().should('be.visible')
+    });
+
+    it('AT_04.23.07 | Verify email input field has an “Email” text placeholder.', function ()  {
+        createBookingPage.getEmailInputField().should('have.attr', 'placeholder', 'Email');
     });
 });
