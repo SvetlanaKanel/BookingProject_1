@@ -261,6 +261,12 @@ class CreateBookingPage {
         let requiredDefaultDay = (+currentTailandDate + 2).toString();
         return requiredDefaultDay;
     }
+
+    getCurrentMonthAndYear() {
+        let date = new Date();
+        const currentMonthAndYear = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        return currentMonthAndYear;
+    }
 }
 
 export default CreateBookingPage; 
