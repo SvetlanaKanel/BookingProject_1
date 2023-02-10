@@ -98,4 +98,10 @@ describe('US_01.08 | Login by phone number tab UI', () => {
         .getModulFormEntairely()
         .should('have.css', 'background-color', this.startPage.background)
     });
+
+    it('AT_01.08.13 | Verify "REQUEST CODE" button is visible', function () {
+        loginPopup
+        .getRequestCodeButton()
+        .should('be.visible')
+    })
 });
