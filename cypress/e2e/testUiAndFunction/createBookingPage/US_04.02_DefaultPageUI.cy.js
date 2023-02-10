@@ -12,7 +12,7 @@ describe('US_04.02_Default page UI', () => {
         cy.login(AGENT.email, AGENT.password);
     });
 
-    it('AT_04.02.01 | Verify heading of the page is "Create booking" and it is visible. | Verify email input field has an “Email” text placeholder.', function ()  {
+    it('AT_04.02.01 | Verify heading of the page is "Create booking" and it is visible', function ()  {
         createBookingPage.getCreateBookingHeader().should('be.visible');
     });
 })
