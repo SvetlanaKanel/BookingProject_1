@@ -164,6 +164,24 @@ class CreateBookingPage {
         });
     };
 
+    selectDepartureStation(stationName) {
+        this
+            .clickDepartureStationDropdown()
+        this
+            .getListDepartureStation()
+            .contains(stationName)
+            .click()
+    }
+
+    selectArrivalStation(stationName) {
+        this
+            .clickArrivalStationDropdown()
+        this
+            .getArrivalStationList()
+            .contains(stationName)
+            .click()
+    }
+
     selectNeedDepartureStation(nameStation) {
         this.getCreateBookingHeader().click()
         this.clickDepartureStationDropdown()
