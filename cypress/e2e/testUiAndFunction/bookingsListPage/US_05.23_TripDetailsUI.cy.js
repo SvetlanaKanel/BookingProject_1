@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
 import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
+import waitForToolsPing from "../../../support/utilities/waitForToolsPing";
 
 const createBookingPage = new CreateBookingPage();
 
@@ -12,8 +13,7 @@ function createReservation(passengerName) {
   createBookingPage.clickCalendarNextButton();
   createBookingPage.clickSaturdayButton();
 
-  cy.intercept("/tools/**").as("getTrip");
-  cy.wait("@getTrip");
+  waitForToolsPing()
 
   createBookingPage.clickFirstTripCard();
   createBookingPage.typeIntoMainPassengerNameField(passengerName);
@@ -21,7 +21,8 @@ function createReservation(passengerName) {
   createBookingPage.clickReservationTicketButton();
 }
 
-describe.skip("US_05.23 | Trip detais UI", () => {
+describe("US_05.23 | Trip detais UI", () => {
+
   beforeEach(function () {
     cy.fixture("createBookingPage").then((createBookingPage) => {
       this.createBookingPage = createBookingPage;
