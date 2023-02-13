@@ -90,7 +90,8 @@
     "placeholder":{
         "name": "Passenger name",
         "phone": "Phone number",
-        "email": "Email"
+        "email": "Email",
+        "notes": "Booking notes"
     },
 
     "weekDayFields": {
