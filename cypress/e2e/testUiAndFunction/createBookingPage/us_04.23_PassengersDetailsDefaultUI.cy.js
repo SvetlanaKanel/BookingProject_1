@@ -54,4 +54,8 @@ describe('US_04.23 | Passengers details default UI', () => {
     it('AT_04.23.10 | Verify "Notes/Remark" label is present and visible', function ()  {
         createBookingPage.getPlaceholderBookingNotes().should('have.attr', 'placeholder', this.createBookingPage.placeholder.notes);
     });
+
+    it('AT_04.23.11 | Verify "Fare type" label is present and visible.', function ()  {
+        createBookingPage.getFareTypeDropdown().should('be.visible') 
+    });
 });
