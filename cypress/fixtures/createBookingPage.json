@@ -32,7 +32,8 @@
                 "Adult",
                 "Child",
                 "Elder"
-            ]
+            ],
+            "labelName": "Fare type"
         },
 
         "seatSelection": {

@@ -56,6 +56,9 @@ describe('US_04.23 | Passengers details default UI', () => {
     });
 
     it('AT_04.23.11 | Verify "Fare type" label is present and visible.', function ()  {
-        createBookingPage.getFareTypeDropdown().should('be.visible') 
+        createBookingPage
+            .getFareTypeDropdown()
+            .should('be.visible')
+            .and('have.text', this.createBookingPage.fareType.labelName) 
     });
 });
