@@ -125,5 +125,9 @@
 
     "nameOfDay":["M", "T", "W", "T", "F", "S", "S"],
 
-    "dateLabelDepartureOnSectionColor": "rgb(0, 166, 90)"
+    "dateLabelDepartureOnSectionColor": "rgb(0, 166, 90)",
+
+    "warningTexts": {
+        "notAvailableTripText": "Trips are not available. Try searching for another date or location."
+    }
 }
