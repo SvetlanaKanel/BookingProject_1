@@ -99,4 +99,26 @@ describe('US_04.11 | Calendar week functionality', () => {
 			}
 		})
 	});
+
+	it('AT_04.11.05|Calendar week functionality >Verify that when you click an invalid date in the Departure on, the date does not change', function() {
+		createBookingPage.clickCalendarPrevButton();
+		createBookingPage.getCalendarDays().each($selDate => {
+			if($selDate.hasClass('selected')){
+				let selectedDay = $selDate.text();
+							
+				createBookingPage.getCalendarDays().each(($unDate) => {
+					let unavailableDay = $unDate;
+					if(unavailableDay.hasClass('unavailable')){
+						$unDate.on('click');
+						
+						createBookingPage.getLabelDepartureOnDate().then(($onDate) =>{
+							let onDate = $onDate.text().split(' ')[0];
+					
+							expect(selectedDay).to.eq(onDate);
+						})
+					}
+				})
+			}
+		});
+	})
 });
