@@ -61,4 +61,9 @@ describe('US_04.23 | Passengers details default UI', () => {
             .should('be.visible')
             .and('have.text', this.createBookingPage.fareType.labelName) 
     });
+
+    it('AT_04.23.08 | Verify Passenger dropdown is visible', () => {
+        
+        createBookingPage.getPassengersDetailsDropdown().should('be.visible')
+     });
 });
