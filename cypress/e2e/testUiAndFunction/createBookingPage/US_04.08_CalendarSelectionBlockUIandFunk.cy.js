@@ -105,7 +105,6 @@ describe('US_04.08 | Calendar-selection block functionality week/month view', ()
     });
 
     it('AT_04.08.08 | Verify that back arrow click does not show the elapsed month', function() {
-        const date = new Date();
         createBookingPage.clickMonthBtn();
         createBookingPage.clickCalendarPrevButton();
         createBookingPage.getLabelCalendar().then(($label) => {
