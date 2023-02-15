@@ -110,7 +110,7 @@ describe('US_04.08 | Calendar-selection block functionality week/month view', ()
         createBookingPage.clickCalendarPrevButton();
         createBookingPage.getLabelCalendar().then(($label) => {
             let text = $label.text();
-            expect(text).to.deep.equal(createBookingPage.getCurrentMonthAndYear(date))
+            expect(text).to.deep.equal(createBookingPage.getCurrentMonthAndYear())
         });
     });
 });
