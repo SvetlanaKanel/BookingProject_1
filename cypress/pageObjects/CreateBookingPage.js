@@ -120,7 +120,7 @@ class CreateBookingPage {
     };
 
     clickMonthBtn() {
-        this.getMonthBtn().click({ forse: true });
+        this.getMonthBtn().click({ force: true })
     }
 
     clickFridayButton() {
@@ -148,7 +148,7 @@ class CreateBookingPage {
     };
 
     clickReservationTicketButton() {
-        this.getReservationTicketButton().click()
+        this.getReservationTicketButton().click({ force: true })        
     };
 
     clickDepartureLatestButton() {
@@ -299,7 +299,12 @@ class CreateBookingPage {
     }
 
     clickCalendarDay(customDay) {
-        this.getCalendarDays().contains(customDay).click({ force: true })
+        this.getCalendarDays().each(($el) => {
+            if ($el.text() === customDay) {
+                cy.wrap($el).click()
+                return false
+            } 
+        })    
     }
 
     getNextMonth(date) {
