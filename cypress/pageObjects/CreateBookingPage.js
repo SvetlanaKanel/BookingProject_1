@@ -42,7 +42,8 @@ class CreateBookingPage {
 
     //Arrival on
     getArrivalTime = () => cy.get('.popup-trip div:nth-child(7) span');
-
+    getArrivalTimeLabel = () => cy.get('.popup-trip div:nth-child(7) label');
+    
     //Passengers details
     getMainPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]');
     getExtraPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]:not(.form-control:first-child)')
