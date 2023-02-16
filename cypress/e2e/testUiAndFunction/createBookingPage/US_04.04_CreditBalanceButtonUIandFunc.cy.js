@@ -58,7 +58,9 @@ describe("US_04.04 | Credit balance button UI and functionality", () => {
    
    accountManagementPage.getBalanceAmountOnAccountManagementPage().should('be.visible')
 
-   createBookingPage.getBalanceAmountOnBookingPage().then((one) => {
+   cy.intercept('/tools/**').as('getTrip')
+   cy.wait('@getTrip')
+    createBookingPage.getBalanceAmountOnBookingPage().then((one) => {
     accountManagementPage.getBalanceAmountOnAccountManagementPage().then((two) => {
           expect(one.text()).to.equal(two.text())
        })
