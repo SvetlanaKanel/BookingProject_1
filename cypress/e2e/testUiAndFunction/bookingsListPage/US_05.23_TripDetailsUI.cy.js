@@ -22,7 +22,7 @@ function createReservation(passengerName) {
   createBookingPage.clickReservationTicketButton();
 }
 
-describe.skip("US_05.23 | Trip detais UI", () => {
+describe("US_05.23 | Trip detais UI", () => {
   beforeEach(function () {
     cy.fixture("createBookingPage").then((createBookingPage) => {
       this.createBookingPage = createBookingPage;
@@ -68,5 +68,9 @@ describe.skip("US_05.23 | Trip detais UI", () => {
       const time = $span.text();
       expect(time).to.match(timeFormatRegExp);
     });
+  });
+
+  it('AT_05.23.04 | Verify arrival time label is visible', function () {
+    createBookingPage.getArrivalTimeLabel().should('be.visible');
   });
 });
