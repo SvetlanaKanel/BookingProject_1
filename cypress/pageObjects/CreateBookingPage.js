@@ -95,6 +95,9 @@ class CreateBookingPage {
     getBookTicketsButton = () => cy.get('[class="btn btn-book"]');
     getResetButton = () => cy.get('[class="btn btn-reset-form"]');
 
+    // Credit Balance
+    getBalanceAmountOnBookingPage = () => cy.get("span#agent-balance");
+
     // Methods
     clickCalendarNextButton() {
         this.getCalendarNextButton().click()
@@ -328,4 +331,4 @@ class CreateBookingPage {
         return formattedDate;
     }
 }
-export default CreateBookingPage; 
+export default CreateBookingPage;
