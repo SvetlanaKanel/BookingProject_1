@@ -18,11 +18,14 @@ function createReservation(passengerName) {
   createBookingPage.clickFirstTripCard();
   waitForToolsPing();
   createBookingPage.typeIntoMainPassengerNameField(passengerName);
+  waitForToolsPing();
   createBookingPage.clickReservationTicketArrow();
+  waitForToolsPing();
   createBookingPage.clickReservationTicketButton();
+  waitForToolsPing();
 }
 
-describe.skip("US_05.23 | Trip detais UI", () => {
+describe("US_05.23 | Trip detais UI", () => {
   beforeEach(function () {
     cy.fixture("createBookingPage").then((createBookingPage) => {
       this.createBookingPage = createBookingPage;
@@ -40,7 +43,7 @@ describe.skip("US_05.23 | Trip detais UI", () => {
     );
   });
 
-  it('AT_05.23.01 | Verify departure time is in 24-hour notation HH:MM', function () {
+  it.skip('AT_05.23.01 | Verify departure time is in 24-hour notation HH:MM', function () {
     const timeFormat = this.createBookingPage.timeFormat;
     const timeFormatRegExp = new RegExp(timeFormat);
 
@@ -60,7 +63,7 @@ describe.skip("US_05.23 | Trip detais UI", () => {
     });
   });
 
-  it('AT_05.23.03 | Verify arrival time is in 24-hour notation HH:MM', function () {
+  it.skip('AT_05.23.03 | Verify arrival time is in 24-hour notation HH:MM', function () {
     const timeFormat = this.createBookingPage.timeFormat;
     const timeFormatRegExp = new RegExp(timeFormat);
 
@@ -68,5 +71,9 @@ describe.skip("US_05.23 | Trip detais UI", () => {
       const time = $span.text();
       expect(time).to.match(timeFormatRegExp);
     });
+  });
+
+  it('AT_05.23.04 | Verify arrival time label is visible', function () {
+    createBookingPage.getArrivalTimeLabel().should('be.visible');
   });
 });

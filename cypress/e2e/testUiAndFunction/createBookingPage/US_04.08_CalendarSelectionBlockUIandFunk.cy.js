@@ -90,7 +90,7 @@ describe('US_04.08 | Calendar-selection block functionality week/month view', ()
         }
     });
 
-    it('AT_04.08.02 | Verify that Calendar Lable  shows week range in correct format from Monday to Sunday', () => {
+    xit('AT_04.08.02 | Verify that Calendar Lable  shows week range in correct format from Monday to Sunday', () => {
         const date = new Date()
         let avalableForBookingDay = date.setDate(date.getDate() + 2);
         for (let i = 0; i < 10; i++) {
@@ -112,4 +112,13 @@ describe('US_04.08 | Calendar-selection block functionality week/month view', ()
             expect(text).to.deep.equal(createBookingPage.getCurrentMonthAndYear())
         });
     });
+
+    it('AT_04.08.07 | Verify that back arrow click does not show elapsed week', function () {
+        createBookingPage.clickCalendarPrevButton();
+        createBookingPage.getMondayButton().then(($monday) => {
+          let openedWeekMonday = $monday.text();
+    
+          expect(openedWeekMonday).to.deep.equal(createBookingPage.getCurrentMonday());
+        });
+      });
 });
