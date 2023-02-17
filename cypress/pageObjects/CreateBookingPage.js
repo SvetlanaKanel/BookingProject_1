@@ -96,7 +96,9 @@ class CreateBookingPage {
     getResetButton = () => cy.get('[class="btn btn-reset-form"]');
 
     // Credit Balance
-    getBalanceAmountOnBookingPage = () => cy.get("span#agent-balance");
+    getBalanceAmountOnBookingPage = () => cy.get('span#agent-balance');
+    getBalanceOnBookingPage = () => cy.get('.agent-balance-wrap');
+    getSpinner = () => cy.get('#agent-balance .fa');
 
     // Methods
     clickCalendarNextButton() {
@@ -329,6 +331,10 @@ class CreateBookingPage {
         date.setMonth(prevMonth);
         const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
         return formattedDate;
+    }
+
+    clickgetBalanceOnBookingPage() {
+        this.getBalanceOnBookingPage().click();
     }
 }
 export default CreateBookingPage;

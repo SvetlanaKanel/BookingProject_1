@@ -66,4 +66,15 @@ describe("US_04.04 | Credit balance button UI and functionality", () => {
        })
     })
   });
+
+  it('AT_04.04.03 | Create booking page> Credit balance button UI and functionality > Verify the element ‘Credit balance:‘ is visible, clickable, and has text ‘Credit balance:‘', function () {
+    
+    createBookingPage.getBalanceOnBookingPage()
+    .should('be.visible')
+    .and('contains.text', this.createBookingPage.headers.creditBalance)
+    cy.intercept('/tools/**').as('getTrip')
+    cy.wait('@getTrip')
+    createBookingPage.clickgetBalanceOnBookingPage()
+    createBookingPage.getSpinner().should('be.visible')
+  })
 });
