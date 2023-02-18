@@ -99,6 +99,8 @@ class CreateBookingPage {
 
     // Credit Balance
     getBalanceAmountOnBookingPage = () => cy.get("span#agent-balance");
+    getBalanceOnBookingPage = () => cy.get("h1 .agent-balance-wrap");
+    getSpinner = () => cy.get("#agent-balance .fa");
 
     // Methods
     clickCalendarNextButton() {
@@ -348,5 +350,9 @@ class CreateBookingPage {
     const currentMondayDayOnlyNumber = currentMondayDate.split(" ")[2];
     return currentMondayDayOnlyNumber;
   }
+    
+   clickBalanceOnBookingPage() {
+    this.getBalanceOnBookingPage().click();
+   }
 }
 export default CreateBookingPage;
