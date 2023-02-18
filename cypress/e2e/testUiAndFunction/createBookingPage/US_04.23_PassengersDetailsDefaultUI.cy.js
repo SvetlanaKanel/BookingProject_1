@@ -54,8 +54,7 @@ describe('US_04.23 | Passengers details default UI', () => {
     it('AT_04.23.10 | Verify Notes/Remark input field has a “Booking notes” text placeholder.', function ()  {
         createBookingPage
             .getNotesInputField()
-            .should('have.attr', 'placeholder',
-             this.createBookingPage.placeholder.notes);
+            .should('have.attr', 'placeholder', this.createBookingPage.placeholder.notes);
     });
 
     it('AT_04.23.11 | Verify "Fare type" label is present and visible.', function ()  {
