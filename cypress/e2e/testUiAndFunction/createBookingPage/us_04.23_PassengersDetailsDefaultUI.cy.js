@@ -57,9 +57,9 @@ describe('US_04.23 | Passengers details default UI', () => {
 
     it('AT_04.23.11 | Verify "Fare type" label is present and visible.', function ()  {
         createBookingPage
-            .getFareTypeDropdown()
+            .getFareTypeLabel()
             .should('be.visible')
-            .and('have.text', this.createBookingPage.fareType.labelName) 
+            .and('include.text', this.createBookingPage.dropdowns.fareType.labelName);
     });
 
     it('AT_04.23.08 | Verify Passenger dropdown is visible', () => {
