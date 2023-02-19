@@ -12,6 +12,7 @@ class CreateBookingPage {
     getArrivalSearchField = () => cy.get('.select2-search__field');
     getLabelDepartureStation = () => cy.get('.departure-wrapper label')
     getDepartureInputSelectSearchField = () => cy.get('.select2-search__field')
+    getLabelArrivalStation = () => cy.get('.destination-wrapper label')
 
     //Departure date
     getCalendarNextButton = () => cy.get('div .calendar-week-next');
