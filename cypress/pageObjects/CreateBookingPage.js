@@ -259,9 +259,9 @@ class CreateBookingPage {
     };
 
     selectAdultFare() {
-        this.getAddedPassengerFareTypeDropdownListOptions().each(($el) => {
+        this.getAddedPassengerFareTypeDropdownListOptions().each(function ($el) {
             if ($el.text() === 'Adult') {
-                cy.wrap($el).click()
+               return cy.wrap($el).click()
             }
         })
     };
@@ -274,24 +274,6 @@ class CreateBookingPage {
         })
     };
 
-    completeMultipleNameFields() {
-        return this.getMainPassengerNameField().each(($el, index) => {
-            let defaultPassengerName = 'Passenger ' + index
-            if (index <= 0) {
-                cy.wrap($el).type(defaultPassengerName)
-            } else if (index <= 1) {
-                cy.wrap($el).type(defaultPassengerName)
-            } else if (index <= 2) {
-                cy.wrap($el).type(defaultPassengerName)
-            } else if (index <= 3) {
-                cy.wrap($el).type(defaultPassengerName)
-            } else if (index <= 4) {
-                cy.wrap($el).type(defaultPassengerName)
-            } else {
-                cy.wrap($el).type(defaultPassengerName)
-            }
-        })
-    }
     clickBookTicketsBtn() {
         this.getBookTicketsButton().click();
     }
@@ -365,5 +347,27 @@ class CreateBookingPage {
    clickRemovePassengerBtn(passengerNumber) {
     this.getRemovePassengerBtns().eq(passengerNumber - 1).click()
    }
+
+    /**
+     * pass needed fareType in a function ('Adult, Child, Elder) to select option in dropdown
+     * @param {*} fareType 
+     */
+    selectFareType(fareType) {
+        this.getAddedPassengerFareTypeDropdownListOptions().each(function ($el) {
+            if ($el.text() === fareType) {
+               return cy.wrap($el).click()
+            }
+        })
+    };
+
+    /**
+     * fills out all displayed name inputs with default names
+     * @returns 'Passenger ' + index
+     */
+    completeMultipleNameFields() {
+        return this.getMainPassengerNameField().each(($el, index) => {
+            cy.wrap($el).type('Passenger ' + index)
+        })
+    }
 }
 export default CreateBookingPage;
