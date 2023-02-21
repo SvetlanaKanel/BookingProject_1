@@ -25,4 +25,13 @@ describe ('US_01.20 | Start Page > Restore Password Negative', function() {
             .should('be.visible')
             .and('have.text', this.startPage.alert.restorePasswordPopup.enterEmailAlert);
     });
+
+    it('AT_01.20.03 | Verify that the error message Wrong email is displayed with two @ signs at the Email input', function() {
+        restorePopup.enterEmail(this.startPage.data.invalidEmail);
+        restorePopup.clickRestoreButton();
+        restorePopup.getEnterEmailAlert()
+            .should('be.visible')
+            .and('have.text', this.startPage.alert.restorePasswordPopup.wrongEmail);
+
+    });
 });
