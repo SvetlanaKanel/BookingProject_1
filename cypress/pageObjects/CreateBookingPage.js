@@ -77,7 +77,8 @@ class CreateBookingPage {
     getExtraFareTypeDrop = () => cy.get('.fare-type-box .select2-selection__rendered');
     getDropdownPassengerDefault = () => cy.get('.passenger-wrapper option[value="1"]');
     getRemovePassengerBtns = () => cy.get('.passenger-row .btn-remove-passenger');
-    getNotesRemarkLabel = () => cy.get('.notes-row:nth-child(3) > label:nth-child(1)');
+    getNotesRemarkLabel = () => cy.get('.notes-row > label');
+    getFareTypeDrop = () => cy.get('#select2-passenger-fare-ur-container');
 
     //Seat selection
     getSeatSelectionDropdown = () => cy.get('.layout-wrapper .title select.passengers-amount');
