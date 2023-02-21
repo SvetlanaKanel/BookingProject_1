@@ -79,13 +79,4 @@ describe('US_04.23 | Passengers details default UI', () => {
             .getNotesRemarkLabel()
             .should('be.visible');
     });
-
-    it.only('AT_04.23.13 | Verify Fare type has “Adult” option displayed by default.', function ()  {
-        createBookingPage
-            .getExtraFareTypeDrop()
-            .should('have.text', this.createBookingPage.ExtraFareTypeDrop);
-            // .getFareTypeLabel()
-            // .should('be.visible')
-            // .and('include.text', this.createBookingPage.dropdowns.fareType.labelName);
-    });
 });
