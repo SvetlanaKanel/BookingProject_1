@@ -47,6 +47,7 @@ describe('US_04.24 | Multiple passengers UI', () => {
     it('AT_04.24.04 | Verify Notes/Remark input field has a “Booking notes” text placeholder and is visible', function ()  {
         createBookingPage
             .getNotesInputField()
+            .should('be.visible')
             .should('have.attr', 'placeholder', this.createBookingPage.placeholder.notes);
     });
 });    
