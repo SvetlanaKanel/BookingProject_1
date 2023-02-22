@@ -60,6 +60,8 @@
     "inputField": {
         "main_passenger": {
             "name": "Stephan",
+            "country": "United States",
+            "phoneCountryCode": "+1",
             "phone": "291234567",
             "email": "hello@test.plus",
             "placeholderPhoneNumberTh": "เบอร์โทรศัพท์",

@@ -50,7 +50,7 @@ class CreateBookingPage {
     getArrivalTimeLabel = () => cy.get('.popup-trip div:nth-child(7) label');
     
     //Passengers details
-    getMainPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]');
+    getMainPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]:first-child');
     getExtraPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]:not(.form-control:first-child)')
     getMainPassengerPhoneField = () => cy.get('.iti #passenger-phone');
     getLabelPassengerDetails = () => cy.get('.passenger-wrapper div.title label');
@@ -71,6 +71,7 @@ class CreateBookingPage {
     getMainPassengerSelectedSeatByDefault = () => cy.get('div[class="col-lg-12 passenger-row"] span[class="seat-number"]')
     getPassengerDetailsAssignedSeats = () => cy.get('span.seat-number')
     getSelectedDialCode = () => cy.get('.iti__selected-dial-code');
+    getAllCountryCodes = () => cy.get('.iti__country-name');
     getNotesInputField = () => cy.get('textarea#booking_notes');
     getDialCodeArrow = () => cy.get('.iti__selected-flag');    
     getExtraFareTypeData = () => cy.get('.fare-type-box .form-control');
@@ -133,6 +134,10 @@ class CreateBookingPage {
 
     typeIntoMainPassengerPhoneField(phone) {
         this.getMainPassengerPhoneField().type(phone)
+    };
+
+    typeIntoMainPassengerEmailField(Email) {
+        this.getEmailInputField().type(Email)
     };
 
     clickMonthBtn() {
@@ -368,6 +373,21 @@ class CreateBookingPage {
     completeMultipleNameFields() {
         return this.getMainPassengerNameField().each(($el, index) => {
             cy.wrap($el).type('Passenger ' + index)
+        })
+    }
+
+    selectCountryPhoneCode(country) {
+        this.getSelectedDialCode().click()
+        this.getAllCountryCodes().each($el => {
+            if ($el.text() == country) {
+                cy.wrap($el).click()
+            }
+        })
+    }
+
+    selectFareTypeMainPassenger(FareType) {
+        this.getMainPassengerFareTypeDropdownSelect().each($el => {
+            cy.wrap($el).select(FareType, { force: true })         
         })
     }
 }
