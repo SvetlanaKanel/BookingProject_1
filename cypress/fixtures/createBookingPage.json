@@ -60,6 +60,8 @@
     "inputField": {
         "main_passenger": {
             "name": "Stephan",
+            "country": "United States",
+            "phoneCountryCode": "+1",
             "phone": "291234567",
             "email": "hello@test.plus",
             "placeholderPhoneNumberTh": "เบอร์โทรศัพท์",
@@ -124,6 +126,10 @@
 
     "seatSelectoinLabel": "Seat selection", 
 
+    "selectedDateLabel": {
+        "front_size": "22.5px"
+    },
+
    "pricesForFerryAdultChildElder" : ["USD 12.75", "USD 12", "USD 6"],
 
    "departureStationLabelFont": "15px",
@@ -146,6 +152,11 @@
             "fareType": "child"
         }
         
-   ]
+   ],
 
+    "passengersAmountBoundaryArray300": [
+        "1 passenger",
+        "60 passengers",
+        "300 passengers"
+    ]
 }

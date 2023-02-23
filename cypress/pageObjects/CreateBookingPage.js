@@ -53,7 +53,7 @@ class CreateBookingPage {
     
     //Passengers details
     getPassengerNamesInputs = () => cy.get('.form-control[name="passenger-name[]"]');
-    getMainPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]');
+    getMainPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]:first-child');
     getExtraPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]:not(.form-control:first-child)')
     getMainPassengerPhoneField = () => cy.get('.iti #passenger-phone');
     getLabelPassengerDetails = () => cy.get('.passenger-wrapper div.title label');
@@ -75,13 +75,14 @@ class CreateBookingPage {
     getMainPassengerSelectedSeatByDefault = () => cy.get('div[class="col-lg-12 passenger-row"] span[class="seat-number"]')
     getPassengerDetailsAssignedSeats = () => cy.get('span.seat-number')
     getSelectedDialCode = () => cy.get('.iti__selected-dial-code');
+    getAllCountryCodes = () => cy.get('.iti__country-name');
     getNotesInputField = () => cy.get('textarea#booking_notes');
     getDialCodeArrow = () => cy.get('.iti__selected-flag');    
     getExtraFareTypeData = () => cy.get('.fare-type-box .form-control');
     getExtraFareTypeDrop = () => cy.get('.fare-type-box .select2-selection__rendered');
     getDropdownPassengerDefault = () => cy.get('.passenger-wrapper option[value="1"]');
     getRemovePassengerBtns = () => cy.get('.passenger-row .btn-remove-passenger');
-    getFareType = () => cy.get('.passenger-wrapper .passenger-row .div-fare-type')
+    getNotesRemarkLabel = () => cy.get('.notes-row > label');
 
     //Seat selection
     getSeatSelectionDropdown = () => cy.get('.layout-wrapper .title select.passengers-amount');
@@ -109,6 +110,7 @@ class CreateBookingPage {
     getTotalPriceLabel = () => cy.get('.footer-book-wrapper > :first-child');
     getBookTicketsButton = () => cy.get('[class="btn btn-book"]');
     getResetButton = () => cy.get('[class="btn btn-reset-form"]');
+    getDropdownToggleButton = () => cy.get('[class="btn btn-book dropdown-toggle"]');
 
     // Credit Balance
     getBalanceAmountOnBookingPage = () => cy.get("span#agent-balance");
@@ -174,6 +176,10 @@ class CreateBookingPage {
 
     typeIntoMainPassengerPhoneField(phone) {
         this.getMainPassengerPhoneField().type(phone)
+    };
+
+    typeIntoMainPassengerEmailField(Email) {
+        this.getEmailInputField().type(Email)
     };
 
     clickMonthBtn() {
@@ -421,6 +427,21 @@ class CreateBookingPage {
     completeMultipleNameFields() {
         return this.getMainPassengerNameField().each(($el, index) => {
             cy.wrap($el).type('Passenger ' + index)
+        })
+    }
+
+    selectCountryPhoneCode(country) {
+        this.getSelectedDialCode().click()
+        this.getAllCountryCodes().each($el => {
+            if ($el.text() == country) {
+                cy.wrap($el).click()
+            }
+        })
+    }
+
+    selectFareTypeMainPassenger(FareType) {
+        this.getMainPassengerFareTypeDropdownSelect().each($el => {
+            cy.wrap($el).select(FareType, { force: true })         
         })
     }
 }
