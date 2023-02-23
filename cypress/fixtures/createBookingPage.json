@@ -126,6 +126,26 @@
 
    "pricesForFerryAdultChildElder" : ["USD 12.75", "USD 12", "USD 6"],
 
-   "departureStationLabelFont": "15px"
+   "departureStationLabelFont": "15px",
+
+   "passengers": [
+        {
+            "name": "Main Passenger Adult",
+            "fareType": "adult",
+            "phone": "phone",
+            "email": "email"
+        },
     
+        {
+            "name": "Elder Extra Passenger",
+            "fareType": "elder"
+        },
+
+        {
+            "name": "Child Extra Passenger",
+            "fareType": "child"
+        }
+        
+   ]
+
 }

@@ -1,3 +1,5 @@
+import waitForToolsPing from '../support/utilities/waitForToolsPing'
+
 class CreateBookingPage {
     //Header
     getCreateBookingHeader = () => cy.get('div h1');
@@ -50,6 +52,7 @@ class CreateBookingPage {
     getArrivalTimeLabel = () => cy.get('.popup-trip div:nth-child(7) label');
     
     //Passengers details
+    getPassengerNamesInputs = () => cy.get('.form-control[name="passenger-name[]"]');
     getMainPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]');
     getExtraPassengerNameField = () => cy.get('.form-control[name="passenger-name[]"]:not(.form-control:first-child)')
     getMainPassengerPhoneField = () => cy.get('.iti #passenger-phone');
@@ -57,6 +60,7 @@ class CreateBookingPage {
     getPassengersDetailsDropdown = () => cy.get('.passenger-wrapper .title select.passengers-amount');
     getPassengersDetailsDropdownList = () => cy.get('.passenger-wrapper .title select.passengers-amount option');
     getPhoneNumberInputFild = () => cy.get('input#passenger-phone');
+    getFareTypeSelects = () => cy.get('[name="passenger-fare[]"]');
     getFareTypeDropdown = () => cy.get('[id^="select2-passenger-fare"]');
     getFareTypeLabel = () => cy.get('.div-fare-type > label');
     getMainPassengerFareTypeDropdownSelect = () => cy.get('div.passenger-row:not(.passenger-add) .div-fare-type select');
@@ -77,6 +81,7 @@ class CreateBookingPage {
     getExtraFareTypeDrop = () => cy.get('.fare-type-box .select2-selection__rendered');
     getDropdownPassengerDefault = () => cy.get('.passenger-wrapper option[value="1"]');
     getRemovePassengerBtns = () => cy.get('.passenger-row .btn-remove-passenger');
+    getFareType = () => cy.get('.passenger-wrapper .passenger-row .div-fare-type')
 
     //Seat selection
     getSeatSelectionDropdown = () => cy.get('.layout-wrapper .title select.passengers-amount');
@@ -111,6 +116,30 @@ class CreateBookingPage {
     getSpinner = () => cy.get("#agent-balance .fa");
 
     // Methods
+    createBooking(passengerNames, passengerAmount, fareTypes) {
+
+        this.clickCalendarNextButton()
+        waitForToolsPing()
+    
+        this.clickFridayButton()
+        waitForToolsPing()
+    
+        this.clickFirstTripCard()
+        waitForToolsPing()
+    
+        this.selectAmountPassengersDetailsDropdown(passengerAmount)
+        waitForToolsPing()
+    
+        this.typePassengerNames(passengerNames)
+        waitForToolsPing()
+    
+        this.selectFareTypes(fareTypes)
+        waitForToolsPing()
+    
+        this.clickBookTicketsBtn()
+    
+    }
+
     clickCalendarNextButton() {
         this.getCalendarNextButton().click()
     };
@@ -125,6 +154,18 @@ class CreateBookingPage {
 
     clickSecondTripCard() {
         this.getSecondTridCard().click()
+    }
+
+    typePassengerNames = (names) => {
+        this
+            .getPassengerNamesInputs()
+            .each((inputName, index) => {
+                if (Array.isArray(names)) {
+                    cy.wrap(inputName).type(names[index])
+                } else {
+                    cy.wrap(inputName).type(names)
+                }
+            })
     }
 
     typeIntoMainPassengerNameField(name) {
@@ -353,6 +394,18 @@ class CreateBookingPage {
      * pass needed fareType in a function ('Adult, Child, Elder) to select option in dropdown
      * @param {*} fareType 
      */
+    selectFareTypes(fareType) {
+        this
+            .getFareTypeSelects()
+            .each((select, index) => {
+                if (Array.isArray(fareType)) {
+                    cy.wrap(select).select(fareType[index], { force: true })
+                } else {
+                    cy.wrap(select).select(fareType, { force: true })
+                } 
+            })
+    }
+
     selectFareType(fareType) {
         this.getAddedPassengerFareTypeDropdownListOptions().each(function ($el) {
             if ($el.text() === fareType) {
