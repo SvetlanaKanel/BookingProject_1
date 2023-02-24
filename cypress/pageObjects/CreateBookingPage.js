@@ -323,7 +323,7 @@ class CreateBookingPage {
     };
 
     clickBookTicketsBtn() {
-        this.getBookTicketsButton().click();
+        this.getBookTicketsButton().click({force: true});
     }
 
     getRequiredDefaulDay_DDFormat() {
