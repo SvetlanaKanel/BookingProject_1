@@ -32,12 +32,12 @@ class CreateBookingPage {
 
     //Departure on
     getFirstTripCard = () => cy.get('div .trip:first-child');
-    getSecondTripCard = () => cy.get('div .trip:nth-child(2)');
+    getSecondTridCard = () => cy.get('div .trip:nth-child(2)');
     getTicketsAvailableFirstTripCard = () => cy.get('.trip:first-child span.availability span.num');
     getLabelDepartureOnDate = () => cy.get('#label-departure-on #trips-selected-date');
     getNumberAllSeatsFirstTripCard = () => cy.get('div .trip:first-child .class');
     getPriceOfTicket = () => cy.get('.vehclass-ferry.selected .price');
-    getLabelTicketsAvailableSelectedTripCard = () => cy.get('.selected .availability');
+    getTicketsAvailableFirstTripCard = () => cy.get('.trip:first-child span.availability span.num');
     getDepartureTime = () => cy.get('.popup-trip div:nth-child(6) span');
     getDepartureLatestButton = () => cy.get('button.trips-order-desc');
     getDepartureTripCardsList = () => cy.get('.trips-list-wrapper > div.trip');
@@ -63,7 +63,6 @@ class CreateBookingPage {
     getFareTypeLabel = () => cy.get('.div-fare-type > label');
     getMainPassengerFareTypeDropdownSelect = () => cy.get('div.passenger-row:not(.passenger-add) .div-fare-type select');
     getMainPassengerFareTypeDropdownList = () => cy.get('div.passenger-row:not(.passenger-add) .div-fare-type select option');
-    getMainPassengerFareTypeContainerText = () => cy.get('.div-fare-type > label > span');
     getAddedPassengersFareTypeDropdownLists = () => cy.get('div.passenger-row.passenger-add .div-fare-type select');
     getAddedPassengerFareTypeDropdownListOptions = () => cy.get('[class="select2-results__options"] li');
     getEmailInputField = () => cy.get(':nth-child(4) > .form-control');
@@ -118,7 +117,16 @@ class CreateBookingPage {
 
     // Methods
     createBooking(passengerNames, passengerAmount, fareTypes) {
+        cy.intercept('/tools/ping/**').as('getToolsPing')
 
+        this.clickCalendarNextButton()
+        cy.wait('@getToolsPing')
+    
+        this.clickFridayButton()
+        cy.wait('@getToolsPing')
+
+        this.clickFirstTripCard()
+    
         this.selectAmountPassengersDetailsDropdown(passengerAmount)
     
         this.typePassengerNames(passengerNames)
@@ -142,7 +150,7 @@ class CreateBookingPage {
     };
 
     clickSecondTripCard() {
-        this.getSecondTripCard().click()
+        this.getSecondTridCard().click()
     }
 
     typePassengerNames = (names) => {
@@ -203,10 +211,6 @@ class CreateBookingPage {
 
     clickDepartureLatestButton() {
         this.getDepartureLatestButton().click({ force: true })
-    };
-
-    clickDepartureErliestButton() {
-        this.getBtnErliest().click({ force: true })
     };
 
     getRandomIndexOfMonth() {
@@ -423,12 +427,17 @@ class CreateBookingPage {
 
     selectCountryPhoneCode(country) {
         this.getSelectedDialCode().click()
-        this.getAllCountryCodes().contains(country).click()
+        this.getAllCountryCodes().each($el => {
+            if ($el.text() == country) {
+                cy.wrap($el).click()
+            }
+        })
     }
 
     selectFareTypeMainPassenger(FareType) {
-        this.getMainPassengerFareTypeDropdownSelect()
-            .select(FareType, { force: true })        
+        this.getMainPassengerFareTypeDropdownSelect().each($el => {
+            cy.wrap($el).select(FareType, { force: true })         
+        })
     }
 }
 export default CreateBookingPage;
