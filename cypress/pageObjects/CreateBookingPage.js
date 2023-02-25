@@ -126,6 +126,7 @@ class CreateBookingPage {
         cy.wait('@getToolsPing')
 
         this.clickFirstTripCard()
+        cy.wait('@getToolsPing')
     
         this.selectAmountPassengersDetailsDropdown(passengerAmount)
     
