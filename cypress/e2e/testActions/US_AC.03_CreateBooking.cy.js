@@ -19,6 +19,12 @@ describe('US_AC.03 | Create booking for 1 passenger', () => {
         cy.visit('/')
         cy.login(AGENT.email, AGENT.password)
 
+        cy.intercept('/booking/**').as('getBooking')
+        cy.wait('@getBooking')
+
+        cy.intercept('/tools/ping/**').as('getToolsPing')
+        cy.wait('@getToolsPing')
+
         cy.fixture('createBookingPage').then(createBookingPage => {
             this.createBookingPage = createBookingPage
         })

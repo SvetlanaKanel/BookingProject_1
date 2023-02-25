@@ -118,11 +118,6 @@ class CreateBookingPage {
 
     // Methods
     createBooking(passengerNames, passengerAmount, fareTypes) {
-        cy.intercept('/booking/**').as('getBooking')
-        cy.wait('@getBooking')
-
-        cy.intercept('/tools/ping/**').as('getToolsPing')
-        cy.wait('@getToolsPing')
 
         this.clickCalendarNextButton()
         cy.wait('@getBooking')
