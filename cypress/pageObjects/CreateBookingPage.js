@@ -1,5 +1,3 @@
-import waitForToolsPing from '../support/utilities/waitForToolsPing'
-
 class CreateBookingPage {
     //Header
     getCreateBookingHeader = () => cy.get('div h1');
@@ -119,24 +117,29 @@ class CreateBookingPage {
 
     // Methods
     createBooking(passengerNames, passengerAmount, fareTypes) {
+        cy.intercept('/booking/**').as('getBooking')
+        cy.wait('@getBooking')
+
+        cy.intercept('/tools/ping/**').as('getToolsPing')
+        cy.wait('@getToolsPing')
 
         this.clickCalendarNextButton()
-        waitForToolsPing()
+        cy.wait('@getBooking')
+        cy.wait('@getToolsPing')
     
         this.clickFridayButton()
-        waitForToolsPing()
+        cy.wait('@getBooking')
+        cy.wait('@getToolsPing')
     
         this.clickFirstTripCard()
-        waitForToolsPing()
+        cy.wait('@getBooking')
+        cy.wait('@getToolsPing')
     
         this.selectAmountPassengersDetailsDropdown(passengerAmount)
-        waitForToolsPing()
     
         this.typePassengerNames(passengerNames)
-        waitForToolsPing()
     
         this.selectFareTypes(fareTypes)
-        waitForToolsPing()
     
         this.clickBookTicketsBtn()
     
@@ -323,7 +326,7 @@ class CreateBookingPage {
     };
 
     clickBookTicketsBtn() {
-        this.getBookTicketsButton().click({force: true});
+        this.getBookTicketsButton().click();
     }
 
     getRequiredDefaulDay_DDFormat() {

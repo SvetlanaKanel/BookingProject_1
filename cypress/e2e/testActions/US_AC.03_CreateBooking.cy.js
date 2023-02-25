@@ -2,7 +2,6 @@
 
 import CreateBookingPage from "../../pageObjects/CreateBookingPage"
 import BookingPopup from "../../pageObjects/BookingPopup"
-import waitForToolsPing from '../../support/utilities/waitForToolsPing'
 
 const createBookingPage = new CreateBookingPage()
 const bookingPopup = new BookingPopup()
@@ -14,6 +13,7 @@ const CI = Cypress.env('CI')
 describe('US_AC.03 | Create booking for 1 passenger', () => {
 
     beforeEach(function () {
+
         cy.cleanCiData(MANAGER.email, MANAGER.password, CI)
 
         cy.visit('/')
@@ -22,6 +22,7 @@ describe('US_AC.03 | Create booking for 1 passenger', () => {
         cy.fixture('createBookingPage').then(createBookingPage => {
             this.createBookingPage = createBookingPage
         })
+
     })
 
     it('AT_AC.03.01| Create booking for 1 passenger: Adult', function () {
@@ -30,7 +31,6 @@ describe('US_AC.03 | Create booking for 1 passenger', () => {
         const passengerAmount = 1
 
         createBookingPage.createBooking(passengerName, passengerAmount, adultFareType)
-        waitForToolsPing()
 
         bookingPopup.getBookingDetailsTitle().contains('Booking details');
         bookingPopup.getFirstFareType().contains('Adult');
