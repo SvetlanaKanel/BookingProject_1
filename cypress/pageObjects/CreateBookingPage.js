@@ -120,8 +120,8 @@ class CreateBookingPage {
     createBooking(passengerNames, passengerAmount, fareTypes) {
         cy.intercept('/tools/ping/**').as('getToolsPing')
 
-        this.clickCalendarNextButton()
         cy.wait('@getToolsPing')
+        this.clickCalendarNextButton()
     
         this.clickFridayButton()
         cy.wait('@getToolsPing')
