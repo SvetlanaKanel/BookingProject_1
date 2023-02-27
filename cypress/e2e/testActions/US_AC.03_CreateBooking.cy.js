@@ -6,14 +6,16 @@ import BookingPopup from "../../pageObjects/BookingPopup"
 const createBookingPage = new CreateBookingPage()
 const bookingPopup = new BookingPopup()
 
-const MANAGER = Cypress.env('manager')
 const AGENT = Cypress.env('agent')
-const CI = Cypress.env('CI')
 
 describe('US_AC.03 | Create booking for 1 passenger', () => {
 
+    before(() => {
+        cy.viewport(1200, 720)
+    })
+
     beforeEach(function () {
-        cy.cleanCiData(MANAGER.email, MANAGER.password, CI)
+        cy.cleanData()
 
         cy.visit('/')
         cy.login(AGENT.email, AGENT.password)
