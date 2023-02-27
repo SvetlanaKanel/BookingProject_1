@@ -3,6 +3,7 @@ class CreateBookingPage {
     getCreateBookingHeader = () => cy.get('div h1');
 
     //Departure/Arrival station
+    getDepartureStationSection = () => cy.get('.box-body.route-wrapper');
     getDepartureStationDropdown = () => cy.get('#select2-departure-container');
     getListDepartureStation = () => cy.get('.select2-results .select2-results__option');
     getArrivalStationDropdown = () => cy.get('#select2-destination-container');
@@ -15,6 +16,7 @@ class CreateBookingPage {
     getLabelArrivalStation = () => cy.get('.destination-wrapper label')
 
     //Departure date
+    getDepartureDateSection = () => cy.get('.box-body.calendar-wrapper');
     getCalendarNextButton = () => cy.get('div .calendar-week-next');
     getCalendarPrevButton = () => cy.get('button.calendar-week-prev');
     getCalendarDays = () => cy.get('.calendar-day-selection-wrapper > .day-wrapper');
@@ -37,13 +39,14 @@ class CreateBookingPage {
     getLabelDepartureOnDate = () => cy.get('#label-departure-on #trips-selected-date');
     getNumberAllSeatsFirstTripCard = () => cy.get('div .trip:first-child .class');
     getPriceOfTicket = () => cy.get('.vehclass-ferry.selected .price');
-    getTicketsAvailableFirstTripCard = () => cy.get('.trip:first-child span.availability span.num');
+    getLabelTicketsAvailableSecondTripCard = () => cy.get('.trip:nth-child(2) span.availability');
     getDepartureTime = () => cy.get('.popup-trip div:nth-child(6) span');
     getDepartureLatestButton = () => cy.get('button.trips-order-desc');
     getDepartureTripCardsList = () => cy.get('.trips-list-wrapper > div.trip');
     getBtnErliest = () => cy.get('button.trips-order-asc');
     getTripClassDropdown = () => cy.get('select[name="trips_class"]');
     getVehicleClassTripCards = () => cy.get('.trips-list-wrapper > div> span.class');
+    getNumberTicketsAvailableSecondTripCard = () => cy.get('.trip:nth-child(2) span.availability .num');
 
     //Arrival on
     getArrivalTime = () => cy.get('.popup-trip div:nth-child(7) span');
@@ -146,7 +149,7 @@ class CreateBookingPage {
     };
 
     clickSecondTripCard() {
-        this.getSecondTridCard().click()
+        this.getSecondTripCard().click({ force: true })
     }
 
     typePassengerNames = (names) => {
