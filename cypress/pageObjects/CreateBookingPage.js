@@ -237,6 +237,10 @@ class CreateBookingPage {
         })
     };
 
+    selectMonthFromMonthDropdown(month) {
+        this.getMonthDropdownSelect().select(month, { force: true })
+    }
+
     getRandomPassengersAmmount() {
         return this.getPassengersDetailsDropdown().then(($el) => {
             const passengersArray = $el
@@ -422,5 +426,29 @@ class CreateBookingPage {
             }
         })
     }      
+
+    /**
+      * @returns array of 13 consetutive months, starting from current
+    */
+    createArrayOfConsetutiveMonths = () => {
+        let consecutiveMonths = []
+        let count = 0
+        while (count <= 12) {
+            const current = new Date()
+            current.setDate(1)
+            current.setMonth(current.getMonth() + count)
+            const month = current.toLocaleString('en-US', { month: 'short', year: 'numeric' })
+            consecutiveMonths.push(month)
+            count++
+        }
+        return consecutiveMonths
+    }  
+
+    /**
+      * @returns array of 3 months in order: current, six months from current, 12 months from current 
+    */
+    validBoundaryValuesMonthDropdownMinNomMax () {
+        return [this.createArrayOfConsetutiveMonths()[0], this.createArrayOfConsetutiveMonths()[6], this.createArrayOfConsetutiveMonths()[12]]
+    }
 }
 export default CreateBookingPage;
