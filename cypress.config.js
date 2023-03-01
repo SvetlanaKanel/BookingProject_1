@@ -1,5 +1,6 @@
 const { defineConfig } = require("cypress");
-
+const { rmdir } = require('fs')
+const { verifyDownloadTasks } = require('cy-verify-downloads');
 
 module.exports = defineConfig({
   viewportWidth: 1920,
@@ -13,6 +14,20 @@ module.exports = defineConfig({
     baseUrl: 'https://qatest.site',
     setupNodeEvents(on, config) {
       // implement node event listeners here
+        on('task', {
+          deleteFolder() {
+            console.log('deleting folder downloads')
+            return new Promise((resolve) => {
+              rmdir('cypress/downloads', {maxRetries: 10,  recursive: true , force: true },  (err) => {
+                if (err) {
+                  console.error(err)
+                }
+                resolve(null)
+              })
+            })
+          },
+        }),
+        on('task', verifyDownloadTasks)
     },
   },
   video: false,
@@ -21,3 +36,4 @@ module.exports = defineConfig({
     mochaFile: 'reports/test-results-[hash].xml',
   },
 });
+
