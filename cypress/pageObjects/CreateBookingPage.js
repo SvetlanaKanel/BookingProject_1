@@ -461,5 +461,11 @@ class CreateBookingPage {
         const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'Asia/Bangkok' });
         return formattedDate;
     }
+
+    getCurrentMonthAndYearThailand() {
+        let date = new Date();
+        const currentMonthAndYearThailand = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'Asia/Bangkok' });
+        return currentMonthAndYearThailand;
+    }
 }
 export default CreateBookingPage;
