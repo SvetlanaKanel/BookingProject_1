@@ -10,15 +10,11 @@ const AGENT = Cypress.env('agent')
 
 describe('US_AC.03 | Create booking for 1 passenger', () => {
 
-    before(() => {
-        cy.viewport(1200, 720)
-    })
-
     beforeEach(function () {
         cy.cleanData()
 
+        cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/')
-        cy.login(AGENT.email, AGENT.password)
 
         cy.fixture('createBookingPage').then(createBookingPage => {
             this.createBookingPage = createBookingPage

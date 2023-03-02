@@ -88,6 +88,9 @@ class CreateBookingPage {
     getRemovePassengerBtns = () => cy.get('.passenger-row .btn-remove-passenger');
     getNotesRemarkLabel = () => cy.get('.notes-row > label');
 
+    // Trip section
+    getTrips = () => cy.get('div.trip');
+
     //Seat selection
     getSeatSelectionDropdown = () => cy.get('.layout-wrapper .title select.passengers-amount');
     getSeatSelectionDropdownList = () => cy.get('.layout-wrapper .title select.passengers-amount option');
@@ -135,7 +138,7 @@ class CreateBookingPage {
     
         this.selectFareTypes(fareTypes)
 
-        this.clickFirstTripCard()
+        this.clickTripCard()
 
         this.clickBookTicketsBtn()
     }
@@ -146,6 +149,19 @@ class CreateBookingPage {
 
     clickCalendarPrevButton() {
         this.getCalendarPrevButton().click()
+    };
+
+    clickTripCard() {
+        cy.intercept('/tools/**').as('getTrip');
+        cy.wait('@getTrip');
+
+        this.getTrips().each(($el) => {
+            const statusText = $el.text();
+            if (statusText !== 'Overdue') {
+                cy.wrap($el).click();
+                return false;
+            }
+        })
     };
 
     clickFirstTripCard() {
