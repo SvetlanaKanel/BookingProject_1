@@ -169,7 +169,7 @@ class CreateBookingPage {
     };
 
     clickSecondTripCard() {
-        this.getSecondTripCard().click({ force: true })
+        this.getSecondTridCard().click({ force: true })
     }
 
     typePassengerNames = (names) => {
@@ -230,6 +230,10 @@ class CreateBookingPage {
 
     clickDepartureLatestButton() {
         this.getDepartureLatestButton().click({ force: true })
+    };
+
+    clickDepartureErliestButton() {
+        this.getBtnErliest().click({ force: true })
     };
 
     getRandomIndexOfMonth() {
