@@ -37,7 +37,7 @@ class CreateBookingPage {
     getDepartureOnSection = () => cy.get('.box-body.trips-wrapper');
     getDepartureOnLabel = () => cy.get('.trips-filters-wrapper #label-departure-on');
     getFirstTripCard = () => cy.get('div .trip:first-child');
-    getSecondTridCard = () => cy.get('div .trip:nth-child(2)');
+    getSecondTripCard = () => cy.get('div .trip:nth-child(2)');
     getTicketsAvailableFirstTripCard = () => cy.get('.trip:first-child span.availability span.num');
     getLabelDepartureOnDate = () => cy.get('#label-departure-on #trips-selected-date');
     getNumberAllSeatsFirstTripCard = () => cy.get('div .trip:first-child .class');
@@ -169,7 +169,7 @@ class CreateBookingPage {
     };
 
     clickSecondTripCard() {
-        this.getSecondTridCard().click({ force: true })
+        this.getSecondTripCard().click({ force: true })
     }
 
     typePassengerNames = (names) => {
