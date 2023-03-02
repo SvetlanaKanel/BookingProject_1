@@ -17,6 +17,7 @@ class CreateBookingPage {
 
     //Departure date
     getDepartureDateSection = () => cy.get('.box-body.calendar-wrapper');
+    getDepartureDateLabel = () => cy.get('#label-departure-date');
     getCalendarNextButton = () => cy.get('div .calendar-week-next');
     getCalendarPrevButton = () => cy.get('button.calendar-week-prev');
     getCalendarDays = () => cy.get('.calendar-day-selection-wrapper > .day-wrapper');
@@ -33,6 +34,8 @@ class CreateBookingPage {
     getMondayButton = () => cy.get('div .calendar-day-selection-wrapper :first-child');
 
     //Departure on
+    getDepartureOnSection = () => cy.get('.box-body.trips-wrapper');
+    getDepartureOnLabel = () => cy.get('.trips-filters-wrapper #label-departure-on');
     getFirstTripCard = () => cy.get('div .trip:first-child');
     getSecondTridCard = () => cy.get('div .trip:nth-child(2)');
     getTicketsAvailableFirstTripCard = () => cy.get('.trip:first-child span.availability span.num');
@@ -95,7 +98,7 @@ class CreateBookingPage {
     getTitleOfSeatsTable = () => cy.get('.seats tbody th');
     getSeatInRow = () => cy.get('.seat-chart .seats tr:nth-child(2) td');
     getAvailableSeatsSeatSelection = () => cy.get('.seat-chart .available');
-    getLabelSeatSelection = () => cy.get('[class="col-lg-6 col-md-12 layout-wrapper"] [class="col-lg-12 title"] label')
+    getLabelSeatSelection = () => cy.get('div.layout-wrapper div.title label')
 
     // Summary section 
     getSeatsNumberColumnSummary = () => cy.get('.total-wrapper > div.total-row :nth-child(3)');
@@ -104,6 +107,7 @@ class CreateBookingPage {
     getPricesSummary = () => cy.get('.total-wrapper > div.total-row span');
     getTotalPriceSummary = () => cy.get('.box-footer span.total-price.right');
     getTotalSummaryLabel = () => cy.get('div.box-footer > span:nth-child(1) > b');
+    getFareTypeColumnSummary = () => cy.get('div.total-row > div:nth-child(1)')
 
     //Total - Footer section                  
     getReservationTicketArrow = () => cy.get('.btn-group .caret');
@@ -262,6 +266,10 @@ class CreateBookingPage {
         })
     };
 
+    selectMonthFromMonthDropdown(month) {
+        this.getMonthDropdownSelect().select(month, { force: true })
+    }
+
     getRandomPassengersAmmount() {
         return this.getPassengersDetailsDropdown().then(($el) => {
             const passengersArray = $el
@@ -320,17 +328,24 @@ class CreateBookingPage {
         this.getBookTicketsButton().click();
     }
 
-    getRequiredDefaulDay_DDFormat() {
+    getFirstAvailableForBookingDefaultDay() {                   
         let date = new Date();
-        let currentTailandDate = date.toLocaleDateString('en-US', { day: 'numeric', timeZone: 'Asia/Bangkok' });
-        let requiredDefaultDay = (+currentTailandDate + 2).toString();
-        return requiredDefaultDay;
+        date.setDate(date.getDate() + 2);
+        let requiredDate = date.toLocaleString("en-US", { day: 'numeric',  timeZone: 'Asia/Bangkok'});
+        return requiredDate;
     }
 
     getCurrentMonthAndYear() {
         let date = new Date();
         const currentMonthAndYear = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
         return currentMonthAndYear;
+    }
+ 
+    getFirstAvailableForBookingDefaultMonthYear() {
+        let date = new Date();
+        date.setDate(date.getDate() + 2);
+        let requiredMonthYear = date.toLocaleString("en-US", { month: 'short', year: 'numeric',  timeZone: 'Asia/Bangkok'});
+        return requiredMonthYear;
     }
 
     selectAmountPassengersDetailsDropdown(amount) {
@@ -352,10 +367,9 @@ class CreateBookingPage {
         const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
         return formattedDate;   
     }
-    getDefaultDayMonthYear() {      
-        let date = new Date();
-        let currentMonthYearTailand = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'Asia/Bangkok' });
-        let defaultDayMonthYear = this.getRequiredDefaulDay_DDFormat() + " " + currentMonthYearTailand;       
+
+    getFirstAvailableForBookingDefaultDayMonthYear() {             
+        let defaultDayMonthYear = this.getFirstAvailableForBookingDefaultDay() + " " + this.getFirstAvailableForBookingDefaultMonthYear();
         return defaultDayMonthYear;       
     }
 
@@ -388,7 +402,26 @@ class CreateBookingPage {
 
    clickRemovePassengerBtn(passengerNumber) {
     this.getRemovePassengerBtns().eq(passengerNumber - 1).click()
-   }
+    }
+    
+    clickOnLastAvailiableTripCard() {
+        this.getDepartureTripCardsList().each(($el) => {
+            const statusText = $el.text();
+            if (statusText !== 'Overdue') {
+                cy.wrap($el).last().click();
+            }
+        })
+    }
+
+    clickOnFirstAvailableTripCard() {
+        this.getDepartureTripCardsList().each(($el) => {
+            const statusText = $el.text();
+            if (statusText !== 'Overdue') {
+                cy.wrap($el).click();
+                return false;
+            }
+        })
+    }
 
     /**
      * pass needed fareType in a function ('Adult, Child, Elder) to select option in dropdown
@@ -457,6 +490,44 @@ class CreateBookingPage {
                 cy.wrap($el).trigger('mouseover')
             }
         })
+    }      
+
+    /**
+      * @returns array of 13 consetutive months, starting from current
+    */
+    createArrayOfConsetutiveMonths = () => {
+        let consecutiveMonths = []
+        let count = 0
+        while (count <= 12) {
+            const current = new Date()
+            current.setDate(1)
+            current.setMonth(current.getMonth() + count)
+            const month = current.toLocaleString('en-US', { month: 'short', year: 'numeric' })
+            consecutiveMonths.push(month)
+            count++
+        }
+        return consecutiveMonths
+    }  
+
+    /**
+      * @returns array of 3 months in order: current, six months from current, 12 months from current 
+    */
+    validBoundaryValuesMonthDropdownMinNomMax () {
+        return [this.createArrayOfConsetutiveMonths()[0], this.createArrayOfConsetutiveMonths()[6], this.createArrayOfConsetutiveMonths()[12]]
+    }
+
+    getNextMonthAndCurrentYear() {
+        const date = new Date();
+        let nextMonth = date.getMonth() + 1;
+        date.setMonth(nextMonth);
+        const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'Asia/Bangkok' });
+        return formattedDate;
+    }
+
+    getCurrentMonthAndYearThailand() {
+        let date = new Date();
+        const currentMonthAndYearThailand = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'Asia/Bangkok' });
+        return currentMonthAndYearThailand;
     }
 }
 export default CreateBookingPage;
