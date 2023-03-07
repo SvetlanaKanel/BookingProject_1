@@ -33,8 +33,8 @@ describe('US_AC.04 | Create booking for more then 1 passenger', () => {
 
         bookingPopup.getBookingDetailsTitle().should('have.text', 'Booking details');
         bookingPopup.getPassengerTitle().should('have.text', 'Passengers (2)');
-        bookingPopup.getFirstPassengerTypeLabel().contains('Adult');
-        bookingPopup.getSecondPassengerTypeLabel().contains('Adult');
+        bookingPopup.getPassengerTypeLabel(1).contains('Adult');
+        bookingPopup.getPassengerTypeLabel(2).contains('Adult');
     })
 
 })
