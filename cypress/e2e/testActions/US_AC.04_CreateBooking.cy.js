@@ -37,4 +37,18 @@ describe('US_AC.04 | Create booking for more then 1 passenger', () => {
         bookingPopup.getPassengerTypeLabel(2).contains('Adult');
     })
 
+    it('AT_AC.04.02| Create booking for more then 1 passenger: Child + Child', function () {
+        const filteredPassengers = this.createBookingPage.passengers.filter((passenger) => passenger.fareType === 'child')
+        const passengerNames = filteredPassengers.map((passenger) => passenger.name)
+        const adultFareTypes = filteredPassengers.map((passenger) => passenger.fareType)
+        const passengerAmount = 2
+
+        createBookingPage.createBooking(passengerNames, passengerAmount, adultFareTypes)
+
+        bookingPopup.getBookingDetailsTitle().should('have.text', 'Booking details');
+        bookingPopup.getPassengerTitle().should('have.text', 'Passengers (2)');
+        bookingPopup.getPassengerTypeLabel(1).contains('Child');
+        bookingPopup.getPassengerTypeLabel(2).contains('Child');
+    })
+
 })
