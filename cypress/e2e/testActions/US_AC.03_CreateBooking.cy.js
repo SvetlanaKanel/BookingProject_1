@@ -44,4 +44,15 @@ describe('US_AC.03 | Create booking for 1 passenger', () => {
         bookingPopup.getBookingDetailsTitle().contains('Booking details');
         bookingPopup.getFirstFareType().contains('Child');
     })
+
+    it('AT_AC.03.03| Create booking for 1 passenger: Elder', function () {
+        const passengerName = this.createBookingPage.passengers[0].name
+        const adultFareType = this.createBookingPage.passengers.find((passenger) => passenger.fareType === 'elder').fareType
+        const passengerAmount = 1
+
+        createBookingPage.createBooking(passengerName, passengerAmount, adultFareType)
+
+        bookingPopup.getBookingDetailsTitle().contains('Booking details');
+        bookingPopup.getFirstFareType().contains('Elder');
+    })
 })
