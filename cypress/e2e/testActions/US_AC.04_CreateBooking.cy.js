@@ -31,10 +31,10 @@ describe('US_AC.04 | Create booking for more then 1 passenger', () => {
 
         createBookingPage.createBooking(passengerNames, passengerAmount, adultFareTypes)
 
-        bookingPopup.getBookingDetailsTitle().should('have.text', 'Booking details');
-        bookingPopup.getPassengerTitle().should('have.text', 'Passengers (2)');
-        bookingPopup.getPassengerTypeLabel(1).contains('Adult');
-        bookingPopup.getPassengerTypeLabel(2).contains('Adult');
+        bookingPopup.getBookingDetailsTitle().should('have.text', 'Booking details')
+        bookingPopup.getPassengerTitle().should('have.text', 'Passengers (2)')
+        bookingPopup.getPassengerTypeLabel(1).should('contain', 'Adult')
+        bookingPopup.getPassengerTypeLabel(2).should('contain', 'Adult')
     })
 
     it('AT_AC.04.02| Create booking for more then 1 passenger: Child + Child', function () {
@@ -47,8 +47,8 @@ describe('US_AC.04 | Create booking for more then 1 passenger', () => {
 
         bookingPopup.getBookingDetailsTitle().should('have.text', 'Booking details');
         bookingPopup.getPassengerTitle().should('have.text', 'Passengers (2)');
-        bookingPopup.getPassengerTypeLabel(1).contains('Child');
-        bookingPopup.getPassengerTypeLabel(2).contains('Child');
+        bookingPopup.getPassengerTypeLabel(1).should('contain', 'Child')
+        bookingPopup.getPassengerTypeLabel(2).should('contain', 'Child')
     })
 
 })
