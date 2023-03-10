@@ -1,4 +1,9 @@
+import BookingPopup from "./BookingPopup";
+
+const bookingPopup = new BookingPopup();
+
 class CreateBookingPage {
+        
     //Header
     getCreateBookingHeader = () => cy.get('div h1');
 
@@ -623,6 +628,24 @@ class CreateBookingPage {
             check = check && (checkForSameNumber.size == 1) && (checkForA_B_C == expectedString)
         }
         return check
+    }    
+
+    reserveBooking(passengerNames, passengerAmount, fareTypes) {
+        this.clickCalendarNextButton();
+    
+        this.clickFridayButton();
+
+        this.selectAmountPassengersDetailsDropdown(passengerAmount);
+
+        this.clickTripCard();        
+    
+        this.typePassengerNames(passengerNames);
+    
+        this.selectFareTypes(fareTypes);
+
+        this.clickReservationTicketArrow();
+
+        this.clickReservationTicketButton();
     }
 
     clickResetButton() {
