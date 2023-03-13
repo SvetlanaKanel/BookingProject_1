@@ -76,4 +76,19 @@ describe('US_04.22 | Trip card functionality', { tags: ['smoke', 'regression'] }
                     })
             })   
     });
+
+    it('AT_04.22.08 | Trip cards are filtered by vehicle class "Economy Bus 300" selected from trip class dropdown menu (Bangkok Khao San - Phuket Town trip)', function () {
+        createBookingPage
+            .selectDepartureStation(this.bookingData.dropdowns.departureStation.stationsNames[2])
+        createBookingPage
+            .selectArrivalStation(this.bookingData.dropdowns.arrivalStation.stationsNames[3])
+        cy.wait('@getTrip')
+        createBookingPage
+            .getTripClassDropdown().select(this.bookingData.tripClass.economyBus)
+
+        createBookingPage.getVehicleClassTripCards().filter(':visible').each(($el) => {
+            expect($el.text()).to.eq(this.bookingData.tripClass.economyBus)
+        })
+    });
 });
+ 
