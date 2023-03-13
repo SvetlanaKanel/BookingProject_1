@@ -263,6 +263,10 @@ class CreateBookingPage {
         this.getBtnErliest().click({ force: true })
     };
 
+    clickResetButton() {
+        this.getResetButton().click()
+    };
+
     getRandomIndexOfMonth() {
 
         return this.getMonthDropdownList().then($el => {
@@ -659,10 +663,6 @@ class CreateBookingPage {
         this.clickReservationTicketArrow();
 
         this.clickReservationTicketButton();
-    }
-
-    clickResetButton() {
-        this.getResetButton().click();
     }    
 
     getValidBoundaryValuesMonthDropdownMinNomMax() {
