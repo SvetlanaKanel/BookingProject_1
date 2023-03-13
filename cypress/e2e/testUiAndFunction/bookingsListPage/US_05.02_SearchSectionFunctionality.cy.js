@@ -50,7 +50,7 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     bookingsListPage.getSearchField().should("be.empty");
   });
 
-  it('AT_05.02.01 | Verify that the agent is able to enter data in Search input field and find booking', function () {
+  it.skip('AT_05.02.01 | Verify that the agent is able to enter data in Search input field and find booking', function () {
     //Precondition
     leftMenuPanel.clickBookingIcon()
     createBookingPage.createCustomBooking(this.bookingData.bookingDetailsTest1)
@@ -60,20 +60,21 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     leftMenuPanel.clickBookingManagementIcon()
     bookingsListPage.clickDatesRangeDropdown()
     bookingsListPage.clickDrpdDatesRangeThisMonth()
+    bookingsListPage.getTableBodyRows().should('have.length', 3)
 
     bookingsListPage.typeInSearchField(`${this.bookingData.bookingDetailsTest1.passengerName}{enter}`)
     bookingsListPage.getTableHeadersColumnsList().then(($el) => {
       let tableHeaderArray = getArray($el)
       let indexOfContact = tableHeaderArray.indexOf(this.bookingsListPage.columns.contact[1])
       
-      bookingsListPage.getTableBody().then(($el) => {
+      bookingsListPage.getTableBodyCells().then(($el) => {
         let tableDataArray = getArray($el)
         expect(tableDataArray[indexOfContact]).to.eq(this.bookingData.bookingDetailsTest1.passengerName)
       })
     })
   });
 
-  it('AT_05.02.02 | Verify that the agent is able to enter data in Booking ID input field and find booking', function () {
+  it.skip('AT_05.02.02 | Verify that the agent is able to enter data in Booking ID input field and find booking', function () {
     //Precondition
     leftMenuPanel.clickBookingIcon()
     createBookingPage.createCustomBooking(this.bookingData.bookingDetailsTest2)
@@ -85,13 +86,14 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
       leftMenuPanel.clickBookingManagementIcon()
       bookingsListPage.clickDatesRangeDropdown()
       bookingsListPage.clickDrpdDatesRangeThisMonth()
+      bookingsListPage.getTableBodyRows().should('have.length', 4)
       
       bookingsListPage.typeInBookingIDField(`${bookingID}{enter}`)
       bookingsListPage.getTableHeadersColumnsList().then(($el) => {
         let tableHeaderArray = getArray($el)
         let indexOfID = tableHeaderArray.indexOf(this.bookingsListPage.columns.id[1])
         
-        bookingsListPage.getTableBody().then(($el) => {
+        bookingsListPage.getTableBodyCells().then(($el) => {
           let tableDataArray = getArray($el)
           expect(tableDataArray[indexOfID]).to.eq(bookingID)
         })

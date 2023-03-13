@@ -111,7 +111,8 @@ class CreateBookingPage {
     getTitleOfSeatsTable = () => cy.get('.seats tbody th');
     getSeatInRow = () => cy.get('.seat-chart .seats tr:nth-child(2) td');
     getAvailableSeatsSeatSelection = () => cy.get('.seat-chart .seats td:not(.unavailable)');
-    getLabelSeatSelection = () => cy.get('div.layout-wrapper div.title label')
+    getLabelSeatSelection = () => cy.get('div.layout-wrapper div.title label');
+    getSelectSeatLableTrip = () => cy.get('.seats [colspan]')
 
     // Summary section 
     getSeatsNumberColumnSummary = () => cy.get('.total-wrapper > div.total-row :nth-child(3)');
@@ -183,7 +184,19 @@ class CreateBookingPage {
     };
 
     clickSecondTripCard() {
-        this.getSecondTripCard().click({ force: true })
+        cy.intercept('/tools/**').as('getTrip');
+        cy.wait('@getTrip');
+
+        this.getSecondTripCard().then(($el) => {
+            if ($el.text() == "Overdue") {
+                this.clickCalendarNextButton();
+                clickSecondTripCard();
+                return false;
+            } else {
+                cy.wrap($el).click();
+                return false;
+            }           
+        })
     }
 
     typePassengerNames = (names) => {
@@ -248,6 +261,10 @@ class CreateBookingPage {
 
     clickDepartureErliestButton() {
         this.getBtnErliest().click({ force: true })
+    };
+
+    clickResetButton() {
+        this.getResetButton().click()
     };
 
     getRandomIndexOfMonth() {
@@ -646,10 +663,6 @@ class CreateBookingPage {
         this.clickReservationTicketArrow();
 
         this.clickReservationTicketButton();
-    }
-
-    clickResetButton() {
-        this.getResetButton().click();
     }    
 
     getValidBoundaryValuesMonthDropdownMinNomMax() {
@@ -680,6 +693,16 @@ class CreateBookingPage {
         let previousWeekSunday = nextWeekMonday.toLocaleString('en-US', { month: 'short', day: 'numeric' }).split(" ")
         previousWeekSunday = previousWeekSunday[1] + " " + previousWeekSunday[0]
         return previousWeekMonday + ' - ' + previousWeekSunday
+    }
+
+    createReservationSecondTrip(passengerAmount, passengerNames, fareTypes) {
+        this.clickSecondTripCard(); 
+        this.selectAmountPassengersDetailsDropdown(passengerAmount);
+        this.typePassengerNames(passengerNames);  
+        this.selectFareTypes(fareTypes);
+        this.clickReservationTicketArrow();
+        this.clickReservationTicketButton();
+        bookingPopup.getBookingPopupWindow().should('be.visible');        
     }
 }
 export default CreateBookingPage;

@@ -77,6 +77,23 @@ describe('US_04.22 | Trip card functionality', { tags: ['smoke', 'regression'] }
             })   
     });
 
+    it('AT_04.22.07 | Verify when trip card is selected, “Summary” shows default selected seat number', function() {
+        createBookingPage.selectAmountPassengersDetailsDropdown(3)
+        createBookingPage.clickTripCard()
+        createBookingPage.getLabelSeatSelection()
+                    .should('be.visible')
+                    .and('have.text', 'Seat selection')
+        let seatsSeatSelection
+        createBookingPage.getSelectedSeats().then($el => {
+            seatsSeatSelection = getArray($el)            
+        })
+        createBookingPage.getSeatsNumberColumnSummary().then($el => {
+            let seatsSummarySelection = getArray($el) 
+
+            expect(seatsSummarySelection).to.deep.eq(seatsSeatSelection)
+        })
+    });
+
     it('AT_04.22.08 | Trip cards are filtered by vehicle class "Economy Bus 300" selected from trip class dropdown menu (Bangkok Khao San - Phuket Town trip)', function () {
         createBookingPage
             .selectDepartureStation(this.bookingData.dropdowns.departureStation.stationsNames[2])

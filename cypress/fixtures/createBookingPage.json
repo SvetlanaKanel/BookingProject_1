@@ -49,7 +49,9 @@
     "tripClass": {
        "VIP_Bus": "VIP bus 24",
         "ferry": "Ferry 300",
-        "economyBus" :"Economy bus 300"
+        "economyBus" :"Economy bus 300",
+        "economBusTitle": "Economy bus",
+        "ferryTitle": "Ferry"
     },
     
     "headers": {
@@ -243,5 +245,5 @@
         "emailWithoutDot" : "select@gmailcom",
         "emailWithWrongDomen" : "email@gmail.123",
         "emailTooLong75Symbl" : "SUPER.LONG.STRING.SUPER.LONG.STRING.SUPER.LONG.STRING.SUPER.LON75@gmail.com"
-      }
+      } 
 }

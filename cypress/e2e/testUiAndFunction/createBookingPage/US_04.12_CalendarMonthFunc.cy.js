@@ -2,7 +2,6 @@
 
 import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
 import getCustomCalendarDay from "../../../support/utilities/getCustomCalendarDay";
-import waitForToolsPing from "../../../support/utilities/waitForToolsPing";
 import getArray from "../../../support/utilities/getArray";
 
 const createBookingPage = new CreateBookingPage();
@@ -17,9 +16,10 @@ describe('US_04.12 | Calendar month functionality', { tags: ['smoke', 'regressio
 
 		cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
-		
-		createBookingPage.clickMonthBtn()
-		waitForToolsPing()
+
+		cy.intercept('/tools/ping/**').as('getTrip')
+    	createBookingPage.clickMonthBtn()
+		cy.wait('@getTrip')
 	})
 
 	it.skip('AT_04.12.01 | Create booking page > Verify any date earlier than the current date is not available.', function () {
@@ -57,20 +57,12 @@ describe('US_04.12 | Calendar month functionality', { tags: ['smoke', 'regressio
 		const currentDayThailand = getCustomCalendarDay(0)
 		const availableDayThailand = getCustomCalendarDay(2)
 		
-		if(availableDayThailand === "1" || availableDayThailand === "2"){
+		if (availableDayThailand === "1" || availableDayThailand === "2") {
 			createBookingPage.clickCalendarPrevButton()
-			
-			createBookingPage.clickCalendarDay(currentDayThailand)
-			waitForToolsPing()
-			createBookingPage.getLabelDepartureOnDate()
-				.should('have.text', (`${currentDayThailand} ${createBookingPage.getCurrentMonthAndYearThailand()}`))
-
-			createBookingPage.getDepartureTripCardsList().each(($el) => {
-				cy.wrap($el).should('have.class', 'disabled')
-			})
 		}
+
 		createBookingPage.clickCalendarDay(currentDayThailand)
-		waitForToolsPing()
+		cy.wait('@getTrip')
 		createBookingPage.getLabelDepartureOnDate()
 			.should('have.text', (`${currentDayThailand} ${createBookingPage.getCurrentMonthAndYearThailand()}`))
 
@@ -83,35 +75,29 @@ describe('US_04.12 | Calendar month functionality', { tags: ['smoke', 'regressio
 		const tomorrowDayThailand = getCustomCalendarDay(1)
 		const availableDayThailand = getCustomCalendarDay(2)
 		
-		if(availableDayThailand === "1") {
+		if (availableDayThailand === "1") {
 			createBookingPage.clickCalendarPrevButton()
 			
 			createBookingPage.clickCalendarDay(tomorrowDayThailand)
-			waitForToolsPing()
+			cy.wait('@getTrip')
 			createBookingPage.getLabelDepartureOnDate()
 				.should('have.text', (`${tomorrowDayThailand} ${createBookingPage.getCurrentMonthAndYearThailand()}`))
 
-			createBookingPage.getDepartureTripCardsList().each(($el) => {
-				cy.wrap($el).should('have.class', 'disabled')
-			})
-		} else if(availableDayThailand === "2") {
+		} else if (availableDayThailand === "2") {
 			createBookingPage.clickCalendarDay(tomorrowDayThailand)
-			waitForToolsPing()
+			cy.wait('@getTrip')
 			createBookingPage.getLabelDepartureOnDate()
 				.should('have.text', (`${tomorrowDayThailand} ${createBookingPage.getNextMonthAndCurrentYear()}`))
-
-			createBookingPage.getDepartureTripCardsList().each(($el) => {
-				cy.wrap($el).should('have.class', 'disabled')
-			})
+		
 		} else {
 			createBookingPage.clickCalendarDay(tomorrowDayThailand)
-			waitForToolsPing()
+			cy.wait('@getTrip')
 			createBookingPage.getLabelDepartureOnDate()
 				.should('have.text', (`${tomorrowDayThailand} ${createBookingPage.getCurrentMonthAndYearThailand()}`))
-
-			createBookingPage.getDepartureTripCardsList().each(($el) => {
-				cy.wrap($el).should('have.class', 'disabled')
-			})
 		}
+
+		createBookingPage.getDepartureTripCardsList().each(($el) => {
+			cy.wrap($el).should('have.class', 'disabled')
+		})
 	});
 })
