@@ -94,7 +94,7 @@ describe('US_04.22 | Trip card functionality', { tags: ['smoke', 'regression'] }
             expect(seatsSummarySelection).to.deep.eq(seatsSeatSelection)
         })
     });
-
+    
     it('AT_04.22.08 | Trip cards are filtered by vehicle class "Economy Bus 300" selected from trip class dropdown menu (Bangkok Khao San - Phuket Town trip)', function () {
         createBookingPage
             .selectDepartureStation(this.bookingData.dropdowns.departureStation.stationsNames[2])
@@ -107,6 +107,27 @@ describe('US_04.22 | Trip card functionality', { tags: ['smoke', 'regression'] }
         createBookingPage.getVehicleClassTripCards().filter(':visible').each(($el) => {
             expect($el.text()).to.eq(this.bookingData.tripClass.economyBus)
         })
+    });    
+    
+    it('AT_04.22.09 | Verufy when trip card is selected, “Summary” shows default ticket price', function() {
+        createBookingPage.selectAmountPassengersDetailsDropdown(3)
+        createBookingPage.clickTripCard()
+        createBookingPage.getLabelSeatSelection()
+                    .should('be.visible')
+                    .and('have.text', 'Seat selection')
+
+        let priceEachPas = []
+        createBookingPage.getPricesSummary().each($el => {
+            let text1 = $el.text().split(' ')
+            priceEachPas.push(+text1[1])      
+        })    
+       
+        createBookingPage.getTotalPriceSummary().then($el => {
+            let sumPrices = priceEachPas.reduce((sum, el) => sum +el)
+            let text2 = $el.text().split(' ')
+            let totalPrice = +text2[1]
+
+            expect(sumPrices).to.eq(totalPrice)
+        })
     });
 });
- 
