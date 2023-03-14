@@ -2,6 +2,7 @@
 
 import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
 import { sortDesc, sortAsc } from "../../../support/utilities/sortArrayByDigit";
+import getArray from "../../../support/utilities/getArray";
 
 const createBookingPage = new CreateBookingPage();
 
