@@ -41,4 +41,14 @@ describe('US_01.04 | Login Popup Footer UI and Functionality', { tags: ['smoke']
         loginPopup.clickForgotYourPasswordLink()
         restorePopup.getRestorePopupHeader().should('have.text', this.startPage.headers.restorePasswordHeaderText)
     });
+
+    it('AT_01.04.06 | Verify the Agent is redirected to the Register agent account page when clicked on the Register link', { tags: ['regression'] }, function () {
+        loginPopup.clickRegisterLink()
+        loginPopup.getLoginPopupHeader().should('not.be.visible')
+        registerPopup
+            .getRegisterPopupHeader()
+            .should('be.visible')
+            .and('include.text', this.startPage.headers.registerAgentAccount)
+    });
 })
+
