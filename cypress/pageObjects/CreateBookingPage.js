@@ -20,6 +20,8 @@ class CreateBookingPage {
     getDepartureInputSelectSearchField = () => cy.get('.select2-search__field')
     getLabelArrivalStation = () => cy.get('.destination-wrapper label')
     getDepartureStationSelectionArrow = () => cy.get('.departure-wrapper .select2-selection__arrow');
+    getDepartureStationDrpdwnComboBox = () => cy.get('.departure-wrapper [class ="select2-selection select2-selection--single"]');
+    
 
     //Departure date
     getDepartureDateSection = () => cy.get('.box-body.calendar-wrapper');
@@ -233,6 +235,10 @@ class CreateBookingPage {
 
     clickDepartureStationDropdown() {
         this.getDepartureStationDropdown().click()
+    };
+
+    clickDepartureStationSelectionArrow() {
+        this.getDepartureStationSelectionArrow().click()
     };
 
     clickArrivalStationDropdown() {
