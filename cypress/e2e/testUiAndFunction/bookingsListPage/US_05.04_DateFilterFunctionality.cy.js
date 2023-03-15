@@ -16,18 +16,15 @@ describe('US_05.04 | Date filter functionality', { tags: ['regression'] }, () =>
 
     const AGENT = Cypress.env('agent')
 
-    before(() => {
+    beforeEach(function () {
+        cy.fixture('bookingsListPage').then(bookingsListPage => {
+            this.bookingsListPage = bookingsListPage;
+        })
         cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
 
         //Precondition
         leftMenuPanel.clickBookingManagementIcon()
-    });
-
-    beforeEach(function () {
-        cy.fixture('bookingsListPage').then(bookingsListPage => {
-            this.bookingsListPage = bookingsListPage;
-        })
     });
 
     it('AT_05.04.01 Verify that the "filterDateType" dropdown is clickable', function() {  
@@ -41,9 +38,9 @@ describe('US_05.04 | Date filter functionality', { tags: ['regression'] }, () =>
     it('AT_05.04.05 | Verify calendar dates are correct if clicking on corresponding date from date range dropdown menu', () => {
         let arrayOfDatesRange = [bookingsListPage.today(), bookingsListPage.tommorow(),
                                 bookingsListPage.yesterday(), bookingsListPage.nextWeek(),
-                                bookingsListPage.lastWeekDates(), bookingsListPage.lastThirtyDays(),
-                                bookingsListPage.nextMonthDates(), bookingsListPage.thisMonthDates(),
-                                bookingsListPage.lastMonthDates()]
+                                bookingsListPage.lastWeek(), bookingsListPage.lastThirtyDays(),
+                                bookingsListPage.nextMonth(), bookingsListPage.thisMonth(),
+                                bookingsListPage.lastMonth()]
         
         bookingsListPage.getDrpdDatesRangeList().each(($el, i) => {
             bookingsListPage.clickDrdnDatesRangeArrow() 
@@ -55,10 +52,24 @@ describe('US_05.04 | Date filter functionality', { tags: ['regression'] }, () =>
             bookingsListPage.getDrdnDatesRangeValue().then(($el) => {
                 expect($el.text()).to.eq(arrayOfDatesRange[i])
             })
+        })
+    })
 
+    it('AT_05.04.06 | Verify custom range dates match chosen custom range dates (week back - week forward from current date)', () => {
+        let getWeekForwardDates = bookingsListPage.getEndDateFromDatesRange(bookingsListPage.nextWeek())
+        let startDate = bookingsListPage.getDateOnly(bookingsListPage.getWeekBackDates())
+        let startMonth = bookingsListPage.getMonthOnly(bookingsListPage.getWeekBackDates())
+        let startYear = bookingsListPage.getYearOnly(bookingsListPage.getWeekBackDates())
+        let endDate = bookingsListPage.getDateOnly(getWeekForwardDates)
+        let endMonth = bookingsListPage.getMonthOnly(getWeekForwardDates)
+        let endYear = bookingsListPage.getYearOnly(getWeekForwardDates)
+       
+        bookingsListPage.clickDrdnDatesRangeArrow()
+        bookingsListPage.clickDrdnDatesRangeCustomRange()
+        bookingsListPage.chooseCustomDatesRange(startDate, startMonth, startYear, endDate, endMonth, endYear)
+
+        bookingsListPage.getDrdnDatesRangeValue().then(($el) => {
+            expect($el.text()).to.eq(bookingsListPage.formattedDatesRangeDD_MMCommaYYYY(bookingsListPage.getWeekBackDates(), getWeekForwardDates))
         })
     })
 });
-
-
-
