@@ -2,6 +2,7 @@
 
 import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
 import getNameOfDay from "../../../support/utilities/getNameOfDay";
+import getColorNameOfDay from "../../../support/utilities/getColorNameOfDay";
 
 const createBookingPage = new CreateBookingPage();
 
@@ -89,4 +90,14 @@ describe('US_04.09 | Calendar available days week UI', { tags: ['smoke'] }, () =
 		expect(nameOfDay).to.eq(this.bookingData.nameOfDay[ind]);
 		});
 	});
-});
+
+	it('AT_04.09.09 | In any inactive field the letter has the color #A0A0A0', function () {
+        createBookingPage.getCalendarDays().each(($el) => {
+			if($el.hasClass('unavailable')){
+				const colorNameOfDay = getColorNameOfDay($el);
+
+            	expect(colorNameOfDay).to.deep.eq(this.colors.greyInactiveLetter);
+			}
+        })
+    });
+})

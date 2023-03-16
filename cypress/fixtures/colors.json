@@ -16,5 +16,6 @@
     "blue": "rgb(66, 139, 202)",
     "redWarningBg": "rgb(246, 234, 234)",
     "redWarningBorder": "rgb(184, 77, 77)",
-    "darkGray": "rgb(75, 75, 75)"
+    "darkGray": "rgb(75, 75, 75)",
+    "greyInactiveLetter": "rgb(160, 160, 160)"
 }
