@@ -34,7 +34,9 @@ class BookingsListPage {
     getDrdnMonthRight = () => cy.get('.calendar.right select.monthselect');
     getDrdnYearLeft = () => cy.get('.calendar.left select.yearselect');
     getDrdnYearRight = () => cy.get('.calendar.right select.yearselect');
-    getDrpdDatesRangeCustomRange = () => cy.get('.ranges ul li[data-range-key="Custom Range"]')
+    getDrpdDatesRangeCustomRange = () => cy.get('.ranges ul li[data-range-key="Custom Range"]');
+    getCalendarTableLeft = () => cy.get('.calendar.left .calendar-table');
+    getCalendarTableRight = () => cy.get('.calendar.right .calendar-table');
 
     // Booking list section
     getTableHeaders = () => cy.get('.table thead tr');
@@ -163,7 +165,7 @@ class BookingsListPage {
     /**
       * all parametrs are passed as strings 
     */
-    chooseCustomDatesRange(startDate, startMonth, startYear, endDate, endMonth, endYear) {
+    clickCustomDates(startDate, startMonth, startYear, endDate, endMonth, endYear) {
         this.getSelectedMonthCalendarLeft().then(($month) => {
             let selectedMonth = $month.text()
 
@@ -188,6 +190,14 @@ class BookingsListPage {
         })
     }
 
+    chooseCustomDatesRange(startDate, startMonth, startYear, endDate, endMonth, endYear) {
+        this.clickDrdnDatesRangeArrow()
+        this.clickDrdnDatesRangeCustomRange()
+        this.getCalendarTableLeft().should('exist').and('be.visible')
+        this.getCalendarTableRight().should('exist').and('be.visible')
+        this.clickCustomDates(startDate, startMonth, startYear, endDate, endMonth, endYear)
+    }
+
     /**
       * @returns number of days in months
       * monthIndex is index of the month which starts from 0 (January = 0, February = 1 etc..)
@@ -196,6 +206,9 @@ class BookingsListPage {
         return new Date(year, monthIndex + 1, 0).getDate();
     }
 
+    /**
+      * @returns given in format 'Mar, 10 2023' date formatted date, ex '10 Mar, 2023'
+    */
     DD_MMCommaYYYYFormat = (date) => {
         let dateToArray = date.toLocaleString("en-US", { day: 'numeric', month: 'short', year: 'numeric' }).split(' ')
         return dateToArray[1].split(',')[0] + " " + dateToArray[0] + ", " + dateToArray[2]
@@ -209,21 +222,21 @@ class BookingsListPage {
     }
 
     /**
-      * @returns date from given in format '10 Mar, 2023' stringdate , ex '10 '
+      * @returns date from given in format '10 Mar, 2023' date , ex '10 '
     */
     getDateOnly = (dateString) => {
         return dateString.split(" ")[0]
     }
 
     /**
-      * @returns month from given in format '10 Mar, 2023' stringdate , ex 'Mar '
+      * @returns month from given in format '10 Mar, 2023' date , ex 'Mar '
     */
     getMonthOnly = (dateString) => {
         return dateString.split(" ")[1].split(',')[0]
     }
 
     /**
-      * @returns year from given in format '10 Mar, 2023' stringdate, ex '2023 '
+      * @returns year from given in format '10 Mar, 2023' date, ex '2023 '
     */
     getYearOnly = (dateString) => {
         return dateString.split(" ")[2]
@@ -250,8 +263,7 @@ class BookingsListPage {
       * @returns tommorow's date in format, ex '10 Mar, 2023 - 10 Mar, 2023'
     */
     tommorow = () => {
-        let now = new Date()
-        now.setDate(now.getDate() + 1)
+        let now = this.getDate(1)
         let tommorow = this.DD_MMCommaYYYYFormat(now)
         tommorow = this.formattedDatesRangeDD_MMCommaYYYY(tommorow, tommorow)
         return tommorow
@@ -261,8 +273,7 @@ class BookingsListPage {
       * @returns yesterday date in format, ex '10 Mar, 2023 - 10 Mar, 2023'
     */
     yesterday = () => {
-        let now = new Date()
-        now.setDate(now.getDate() - 1)
+        let now = this.getDate(-1)
         let yesterday = this.DD_MMCommaYYYYFormat(now)
         yesterday = this.formattedDatesRangeDD_MMCommaYYYY(yesterday, yesterday)
         return yesterday
@@ -272,8 +283,7 @@ class BookingsListPage {
       * @returns next week dates, starting from tommorow's date - 7 days from current date, in format, ex '12 Mar, 2023 - 18 Mar, 2023'
     */
     nextWeek = () => {
-        let now = new Date()
-        now.setDate(now.getDate() + 7)
+        let now = this.getDate(7)
         let nextWeekDays = this.DD_MMCommaYYYYFormat(now)
         nextWeekDays = this.tommorow(this.currentDD_MMCommaYYYY()).split('-')[0] + "- " + nextWeekDays
         return nextWeekDays
@@ -283,8 +293,7 @@ class BookingsListPage {
     * @returns date 6 days ago - current date in format, ex '12 Mar, 2023 - 18 Mar, 2023'
     */
     lastWeek = () => {
-        let now = new Date()
-        now.setDate(now.getDate() - 6)
+        let now = this.getDate(-6)
         let lastWeekDays = this.DD_MMCommaYYYYFormat(now)
         lastWeekDays = this.formattedDatesRangeDD_MMCommaYYYY(lastWeekDays, this.currentDD_MMCommaYYYY())
         return lastWeekDays
@@ -294,8 +303,7 @@ class BookingsListPage {
       * @returns date 29 days ago - current date, in format, ex '10 Feb, 2023 - 11 Mar, 2023'
     */
     lastThirtyDays = () => {
-        let now = new Date()
-        now.setDate(now.getDate() - 29)
+        let now = this.getDate(-29)
         let lastThirtyDays = this.DD_MMCommaYYYYFormat(now)
         lastThirtyDays = this.formattedDatesRangeDD_MMCommaYYYY(lastThirtyDays, this.currentDD_MMCommaYYYY())
         return lastThirtyDays
@@ -340,20 +348,6 @@ class BookingsListPage {
         let lastMonth = this.DD_MMCommaYYYYFormat(now)
         let lastMonthDates = this.formattedDatesRangeDD_MMCommaYYYY(lastMonth, this.getNumberOfDaysInMonth(indexOfLastMonth, lastMonthYear) + " " + lastMonth.split(' ')[1] + " " + lastMonth.split(' ')[2])
         return lastMonthDates
-    }
-    
-    /**
-      * @returns week back date, month, year from current date, in format, ex '1 Feb, 2023'
-    */
-    getWeekBackDates = () => {
-        let now = new Date()
-        now.setDate(now.getDate() - 7)
-        let lastWeekDates = this.DD_MMCommaYYYYFormat(now)
-        return lastWeekDates
-    }
-
-    getEndDateFromDatesRange = (string) => {
-        return string.split(' - ')[1]
     }
 }
 

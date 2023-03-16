@@ -25,7 +25,7 @@ function chooseCustomDatesRangeWithCount (startDayCount, endDayCount) {
   let endYear = bookingsListPage.getYearOnly(bookingsListPage.DD_MMCommaYYYYFormat(getCustomCalendarDate(endDayCount)))
   bookingsListPage.clickDrdnDatesRangeArrow()
   bookingsListPage.clickDrdnDatesRangeCustomRange()
-  bookingsListPage.chooseCustomDatesRange(startDate, startMonth, startYear, endDate, endMonth, endYear)
+  bookingsListPage.clickCustomDates(startDate, startMonth, startYear, endDate, endMonth, endYear)
 }
 
 describe("US_05.02_Search section functionality", { tags: ['regression'] }, () => {

@@ -56,20 +56,19 @@ describe('US_05.04 | Date filter functionality', { tags: ['regression'] }, () =>
     })
 
     it('AT_05.04.06 | Verify custom range dates match chosen custom range dates (week back - week forward from current date)', () => {
-        let getWeekForwardDates = bookingsListPage.getEndDateFromDatesRange(bookingsListPage.nextWeek())
-        let startDate = bookingsListPage.getDateOnly(bookingsListPage.getWeekBackDates())
-        let startMonth = bookingsListPage.getMonthOnly(bookingsListPage.getWeekBackDates())
-        let startYear = bookingsListPage.getYearOnly(bookingsListPage.getWeekBackDates())
+        let getWeekForwardDates = bookingsListPage.DD_MMCommaYYYYFormat(bookingsListPage.getDate(+7))
+        let getWeekBackDates = bookingsListPage.DD_MMCommaYYYYFormat(bookingsListPage.getDate(-7))
+        let startDate = bookingsListPage.getDateOnly(getWeekBackDates)
+        let startMonth = bookingsListPage.getMonthOnly(getWeekBackDates)
+        let startYear = bookingsListPage.getYearOnly(getWeekBackDates)
         let endDate = bookingsListPage.getDateOnly(getWeekForwardDates)
         let endMonth = bookingsListPage.getMonthOnly(getWeekForwardDates)
         let endYear = bookingsListPage.getYearOnly(getWeekForwardDates)
        
-        bookingsListPage.clickDrdnDatesRangeArrow()
-        bookingsListPage.clickDrdnDatesRangeCustomRange()
         bookingsListPage.chooseCustomDatesRange(startDate, startMonth, startYear, endDate, endMonth, endYear)
 
         bookingsListPage.getDrdnDatesRangeValue().then(($el) => {
-            expect($el.text()).to.eq(bookingsListPage.formattedDatesRangeDD_MMCommaYYYY(bookingsListPage.getWeekBackDates(), getWeekForwardDates))
+            expect($el.text()).to.eq(bookingsListPage.formattedDatesRangeDD_MMCommaYYYY(getWeekBackDates, getWeekForwardDates))
         })
     })
 });
