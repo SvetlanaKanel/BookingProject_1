@@ -100,6 +100,7 @@
         "lettersInCountryCode": "SK",
         "letterInPhoneNumber": "61616161A",
         "symbolsInCountryCode": "%@",
-        "missingDomainEmail": "test@"
+        "missingDomainEmail": "test@",
+        "missingDomainAndAtSignEmail": "test"
     }
 }

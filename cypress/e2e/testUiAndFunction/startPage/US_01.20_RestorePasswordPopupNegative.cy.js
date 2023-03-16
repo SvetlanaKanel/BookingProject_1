@@ -44,4 +44,12 @@ describe ('US_01.20 | Start Page > Restore Password Negative', { tags: ['regress
             .should('be.visible')
             .and('have.text', this.startPage.alert.restorePasswordPopup.wrongEmail);
     });
+
+    it('AT_01.20.04 | Verify that the error message Wrong email is displayed without @ sign and the domain name at the Email input', function() {
+        restorePopup.enterEmail(this.startPage.dataInvalid.missingDomainAndAtSignEmail);
+        restorePopup.clickRestoreButton();
+        restorePopup.getEnterEmailAlert()
+            .should('be.visible')
+            .and('have.text', this.startPage.alert.restorePasswordPopup.wrongEmail);
+    });
 });
