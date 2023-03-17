@@ -10,6 +10,8 @@ class BookingPopup {
     getBookingPopupWindow = () => cy.get('.popup-content');
     getBtnExtend = () => cy.get('#button-extend');
     getCountdownClock = () => cy.get('#countdown-clock');
+    getNotesRemarkField = () => cy.get('.popup-booking div:last-child>span');
+    getChannelField = () => cy.get('.channel');
 
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3')
@@ -36,6 +38,35 @@ class BookingPopup {
             let extendTimeNumber = parseFloat(extendTimeStr);
             return extendTimeNumber;       
         })     
+    }
+
+     /**
+     * this method returns string "DD-MM-YYYY hh:mm:"
+     */
+     getCurrentDateAndTimeInTailand() {
+        let date = new Date();
+       
+        const currentDateTime = date.toLocaleString("en-US", { currentTime: 'numeric',  timeZone: 'Asia/Bangkok'});
+        let dateTimeArray = currentDateTime.split(',');
+        let currentDateArrey = dateTimeArray[0].split('/');
+        let curentMonth;
+        if (currentDateArrey[0] < 10) {
+            curentMonth = ('0' + currentDateArrey[0]).split(' ').join('')
+        } else {
+            curentMonth = currentDateArrey[0];
+        }
+        let formattedDate = currentDateArrey[1] + '-' + curentMonth + '-' + currentDateArrey[2]
+        let currentTimeArray = dateTimeArray[1].split(':');
+        let hour ;
+        if (currentTimeArray[0] < 10) {
+            hour = ('0' + currentTimeArray[0]).split(' ').join('');
+        } else {
+            hour = currentTimeArray[0];
+        }
+        let formattedTime = hour + ":" + currentTimeArray[1] + ":";
+        let formattedDateAndTime = formattedDate + " " + formattedTime;
+        
+        return formattedDateAndTime;
     }
 }
 export default BookingPopup;

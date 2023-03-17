@@ -5,5 +5,7 @@
             "childFare": " x Child",
             "elderFare": " x Elder"
         }
-    }
+    },
+
+    "notesRemark" : "reservation extended: 15 minutes"
 }

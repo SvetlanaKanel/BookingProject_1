@@ -701,8 +701,14 @@ class CreateBookingPage {
         return previousWeekMonday + ' - ' + previousWeekSunday
     }
 
-    createReservationSecondTrip(passengerAmount, passengerNames, fareTypes) {
-        this.clickSecondTripCard(); 
+    reserveSecondTripDefaultDay(passengerAmount, passengerNames, fareTypes) {
+        cy.intercept('POST', '/booking/**').as('getBooking');
+        //cy.intercept('/tools/ping/**').as('getToolsPing');
+       
+        this.clickSecondTripCard();    
+        cy.wait('@getBooking');    
+     //   cy.wait('@getToolsPing');
+
         this.selectAmountPassengersDetailsDropdown(passengerAmount);
         this.typePassengerNames(passengerNames);  
         this.selectFareTypes(fareTypes);
