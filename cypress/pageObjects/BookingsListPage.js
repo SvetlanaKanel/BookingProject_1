@@ -46,6 +46,7 @@ class BookingsListPage {
     getColumnsSettingButton = () => cy.get('.table-columns-settings-link');
     getColumnsCheckbox = () => cy.get('input[type="checkbox');
     getColumnsOkButton = () => cy.get('.popup-table-columns-settings .btn-success');
+    getFirstRowBokTkt = () => cy.get('.odd:first-child');
 
     // Methods
     clickPrintButton() {
@@ -349,6 +350,11 @@ class BookingsListPage {
         let lastMonthDates = this.formattedDatesRangeDD_MMCommaYYYY(lastMonth, this.getNumberOfDaysInMonth(indexOfLastMonth, lastMonthYear) + " " + lastMonth.split(' ')[1] + " " + lastMonth.split(' ')[2])
         return lastMonthDates
     }
+    
+    clickFirstRowBokTkt() {
+        this.getFirstRowBokTkt().click()
+    }
+
 }
 
 export default BookingsListPage;

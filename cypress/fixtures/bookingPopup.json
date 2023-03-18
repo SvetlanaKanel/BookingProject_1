@@ -7,5 +7,8 @@
         }
     },
 
+    "sectionsPopup": ["Booking details", "Trip details", "Passengers"],
+
     "notesRemark" : "reservation extended: 15 minutes"
+
 }
