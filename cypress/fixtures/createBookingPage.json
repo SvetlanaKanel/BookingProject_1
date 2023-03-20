@@ -234,6 +234,15 @@
         "fareType" : "Elder"
       },
 
+      "bookingDetailsTest3" : {
+        "departureStationName" : "Chiang Mai Bus Terminal 1",
+        "arrivalStationName" : "Ayutthaya",
+        "passengerName" : "Meryl Pierce",
+        "passengerAmount" : "1",
+        "fareType" : "Adult",
+        "route" : "Chiang Mai - Ayutthaya - Bangkok (economy)"
+      },
+
       "octWeek": "2 Oct - 8 Oct",
 
       "alerts": {

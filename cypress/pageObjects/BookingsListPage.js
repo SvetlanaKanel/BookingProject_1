@@ -15,9 +15,10 @@ class BookingsListPage {
     getRouteField = () => cy.get('div #select2-filterRoute-container');
     getVehicleField = () => cy.get('div #select2-filterVehicle-container');
     getClearLink = () => cy.get('div #filterClear');
-    getDrdnStatusList = () => cy.get('#filterStatus option')
-    getListStatusNoResults = () => cy.get('#select2-filterStatus-results li')
-    getDrdnStatus = () => cy.get('.selection textarea')
+    getDrdnStatusList = () => cy.get('#filterStatus option');
+    getListStatusNoResults = () => cy.get('#select2-filterStatus-results li');
+    getDrdnStatus = () => cy.get('.selection textarea');
+    getRouteSelect = () => cy.get('select#filterRoute');
 
     //Date filter section
     getDateRangeType = () => cy.get('div #filterDateType option');
@@ -146,7 +147,7 @@ class BookingsListPage {
     chooseDateMonthYearCalendarRight(customdate, month, year) {
         this.getDrdnMonthRight().select(month)
         this.getDrdnYearRight().select(year)
-        this.getCalendarRight().each(($el) => {
+        this.getCalendarRight().not('.off.available').each(($el) => {
             if ($el.text() === customdate) {
                 cy.wrap($el).click({ force: true })
                 return false
@@ -155,7 +156,7 @@ class BookingsListPage {
     }
 
     clickOnDateCalendarLeft(customdate) {
-        this.getCalendarLeft().each(($el) => {
+        this.getCalendarLeft().not('.off.available').each(($el) => {
             if ($el.text() === customdate) {
                 cy.wrap($el).click({ force: true })
                 return false
@@ -353,6 +354,11 @@ class BookingsListPage {
     
     clickFirstRowBokTkt() {
         this.getFirstRowBokTkt().click()
+    }
+
+    selectRoute(route) {
+        this.getRouteSelect()
+            .select(route, {force: true})
     }
 
 }

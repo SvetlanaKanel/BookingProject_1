@@ -119,4 +119,31 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
       })
     })
   });
+
+  it('AT_05.02.04 | Verify that the agent is able to select route in Route filter dropdown menu and find bookings for this route', function () {
+    //Precondition
+    leftMenuPanel.clickBookingIcon()
+    cy.intercept('POST', 'orders').as('orders')
+    createBookingPage.createCustomBooking(this.bookingData.bookingDetailsTest3)
+    cy.intercept('/tools/ping/**').as('getPopUp')
+    cy.wait('@getPopUp') 
+    bookingPopup.clickCloseBtnBookingPopup()
+    leftMenuPanel.clickBookingManagementIcon()
+
+    chooseCustomDatesRangeWithCount(-3, 3)
+    cy.wait('@orders')
+    bookingsListPage.getTableBodyRows().should('have.length', 5)
+
+    bookingsListPage.selectRoute(this.bookingData.bookingDetailsTest3.route)
+    bookingsListPage.getTableHeadersColumnsList().then(($header) => {
+      let tableHeaderArray = getArray($header)
+      let indexOfRoute = tableHeaderArray.indexOf(this.bookingsListPage.columns.route[1])
+        
+      bookingsListPage.getTableBodyCells().then(($cell) => {
+        let tableDataArray = getArray($cell)
+        expect(tableDataArray[indexOfRoute])
+          .to.eq(this.bookingData.bookingDetailsTest3.departureStationName + " → " + this.bookingData.bookingDetailsTest3.arrivalStationName)
+      })
+    })
+  });
 });

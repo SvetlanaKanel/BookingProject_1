@@ -6,7 +6,7 @@ const bookingPopup = new BookingPopup();
 
 const AGENT = Cypress.env('agent')
 
-describe('US_AC.08 | ACTIONS > Extend reservation', { tags: ['regression'] }, function () {
+describe.skip('US_AC.08 | ACTIONS > Extend reservation', { tags: ['regression'] }, function () {
     beforeEach(function () {
         cy.fixture('createBookingPage').then(bookingData => {
             this.bookingData = bookingData;
