@@ -50,5 +50,14 @@ describe('US_01.04 | Login Popup Footer UI and Functionality', { tags: ['smoke']
             .should('be.visible')
             .and('include.text', this.startPage.headers.registerAgentAccount)
     });
+    
+    it('AT_01.04.07 | Verify the Agent is redirected to the Restore password page when clicked on the "Forgot your password?" link', { tags: ['regression'] }, function () {
+        loginPopup.clickForgotYourPasswordLink()
+        loginPopup.getLoginPopupHeader().should('not.be.visible')
+        restorePopup
+            .getRestorePopupHeader()
+            .should('be.visible')
+            .and('include.text', this.startPage.headers.restorePasswordHeaderText)
+    });
 })
 
