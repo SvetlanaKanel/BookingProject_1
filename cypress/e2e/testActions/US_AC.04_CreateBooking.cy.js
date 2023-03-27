@@ -65,7 +65,7 @@ describe('US_AC.04 | Create booking for more then 1 passenger', { tags: ['regres
         bookingPopup.getPassengerTypeLabel(2).should('contain', 'Elder');
     });
 
-    it('AT_AC.04.04| Create booking for more then 1 passenger: Adult + Child', function () {
+    it('AT_AC.04.04| Create booking for 2 addedpassenger: Adult + Child', function () {
         const passengerNames = this.bookingData.twoPassangers.map((passenger) => passenger.name);
         const passengerFareTypes = this.bookingData.twoPassangers.map((passenger) => passenger.fareType);
         const passengerAmount = 2;
