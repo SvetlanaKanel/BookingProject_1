@@ -382,7 +382,7 @@ class CreateBookingPage {
     };
 
     clickBookTicketsBtn() {
-        this.getBookTicketsButton().click();
+        this.getBookTicketsButton().click({ force: true });
     }
 
     getFirstAvailableForBookingDefaultDay() {                   
@@ -474,17 +474,18 @@ class CreateBookingPage {
     }
     
     clickOnLastAvailiableTripCard() {
-        cy.intercept('/tools/**').as('getToolsPing')
-        cy.wait('@getToolsPing')
+        cy.wait(1500)
         this.getDepartureTripCardsList().each(($el) => {
         const statusText = $el.text();
-         if (statusText !== 'Overdue') {
-            cy.wrap($el).trigger('mouseover').click();
+            if (statusText !== 'Overdue') {
+                cy.wrap($el).click();
             }
         })
+       
     }
 
     clickOnFirstAvailableTripCard() {
+        cy.wait(1500)
         this.getDepartureTripCardsList().each(($el) => {
             const statusText = $el.text();
             if (statusText !== 'Overdue') {

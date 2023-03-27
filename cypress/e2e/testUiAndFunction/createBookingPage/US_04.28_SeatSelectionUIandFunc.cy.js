@@ -22,10 +22,12 @@ describe('US_04.28 | Seat selection UI and functionality', () => {
         before(() => {
             cy.loginWithSession(AGENT.email, AGENT.password);
             cy.visit('/');
-            
+            cy.intercept('POST', '/booking/', (req) => {
+                if (req.body.includes('action=get-trips')) {
+                }
+            }).as('getTrip')
             createBookingPage.clickCalendarNextButton()
-            cy.intercept('/tools/**').as('getTrip')
-            cy.wait('@getTrip')
+            cy.wait('@getTrip').its('response.body').should('include', 'trip')
             createBookingPage.clickOnFirstAvailableTripCard()
             createBookingPage.getLabelSeatSelection()
                 .should('be.visible')
@@ -106,12 +108,14 @@ describe('US_04.28 | Seat selection UI and functionality', () => {
             before(() => {
                 cy.loginWithSession(AGENT.email, AGENT.password);
                 cy.visit('/');
-        
+                cy.intercept('POST', '/booking/', (req) => {
+                    if (req.body.includes('action=get-trips')) {
+                    }
+                }).as('getTrip')
                 createBookingPage.selectDepartureStation('Bangkok Khao San')
                 createBookingPage.selectArrivalStation('Chonburi')
                 createBookingPage.clickCalendarNextButton()
-                cy.intercept('/tools/**').as('getTrip')
-                cy.wait('@getTrip')
+                cy.wait('@getTrip').its('response.body').should('include', 'trip')
                 createBookingPage.clickSaturdayButton()
                 cy.wait('@getTrip')
                 createBookingPage.clickOnFirstAvailableTripCard()
@@ -155,10 +159,12 @@ describe('US_04.28 | Seat selection UI and functionality', () => {
                 cy.cleanData();
                 cy.loginWithSession(AGENT.email, AGENT.password);
                 cy.visit('/');
-        
+                cy.intercept('POST', '/booking/', (req) => {
+                    if (req.body.includes('action=get-trips')) {
+                    }
+                }).as('getTrip')
                 createBookingPage.selectDepartureStation(this.bookingData.dropdowns.departureStation.stationsNames[7])
-                cy.intercept('/tools/**').as('getTrip')
-                cy.wait('@getTrip')
+                cy.wait('@getTrip').its('response.body').should('include', 'trip')
                 createBookingPage.clickCalendarNextButton()
                 cy.wait('@getTrip')
                 createBookingPage.clickOnFirstAvailableTripCard()
@@ -279,7 +285,12 @@ describe('US_04.28 | Seat selection UI and functionality', () => {
                 cy.loginWithSession(AGENT.email, AGENT.password);
                 cy.visit('/');         
 
-                cy.intercept('/tools/ping/**').as('getPopUp')
+                cy.intercept('POST', '/orders', (req) => {
+                    req.continue((res) => {
+                        expect(res.body).to.include('"status":"PENDING"')
+                    })
+                }).as('getPopUp')
+                
  
             });
 
@@ -311,12 +322,14 @@ describe('US_04.28 | Seat selection UI and functionality', () => {
         before(() => {
             cy.loginWithSession(AGENT.email, AGENT.password);
             cy.visit('/');
-            
+            cy.intercept('POST', '/booking/', (req) => {
+                if (req.body.includes('action=get-trips')) {
+                }
+            }).as('getTrip')
             createBookingPage.selectDepartureStation('Bangkok Khao San')
             createBookingPage.selectArrivalStation('Ayutthaya')
             createBookingPage.clickCalendarNextButton()
-            cy.intercept('/tools/**').as('getTrip')
-            cy.wait('@getTrip')
+            cy.wait('@getTrip').its('response.body').should('include', 'trip')
             createBookingPage.clickOnFirstAvailableTripCard()
         });
 
@@ -332,12 +345,14 @@ describe('US_04.28 | Seat selection UI and functionality', () => {
         before(() => {
             cy.loginWithSession(AGENT.email, AGENT.password);
             cy.visit('/');
-            
+            cy.intercept('POST', '/booking/', (req) => {
+                if (req.body.includes('action=get-trips')) {
+                }
+            }).as('getTrip')
             createBookingPage.selectDepartureStation('Ao Por Pier')
             createBookingPage.selectArrivalStation('Naka Island')
             createBookingPage.clickCalendarNextButton()
-            cy.intercept('/tools/**').as('getTrip')
-            cy.wait('@getTrip')
+            cy.wait('@getTrip').its('response.body').should('include', 'trip')
             createBookingPage.clickOnFirstAvailableTripCard()
         });
 
