@@ -410,7 +410,7 @@ class CreateBookingPage {
     }
 
     clickCalendarDay(customDay) {
-        this.getCalendarDays().each(($el) => {
+        this.getCalendarDays().not('.unavailable').each(($el) => {
             if ($el.text() === customDay) {
                 cy.wrap($el).click({force: true})
                 return false
