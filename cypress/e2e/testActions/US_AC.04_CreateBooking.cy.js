@@ -64,4 +64,17 @@ describe('US_AC.04 | Create booking for more then 1 passenger', { tags: ['regres
         bookingPopup.getPassengerTypeLabel(1).should('contain', 'Elder:');
         bookingPopup.getPassengerTypeLabel(2).should('contain', 'Elder');
     });
-})
+
+    it('AT_AC.04.04| Create booking for more then 1 passenger: Adult + Child', function () {
+        const passengerNames = this.bookingData.twoPassangers.map((passenger) => passenger.name);
+        const passengerFareTypes = this.bookingData.twoPassangers.map((passenger) => passenger.fareType);
+        const passengerAmount = 2;
+
+        createBookingPage.createBooking(passengerNames, passengerAmount, passengerFareTypes)
+
+        bookingPopup.getBookingDetailsTitle().should('have.text', 'Booking details');
+        bookingPopup.getPassengerTitle().should('have.text', 'Passengers (2)');
+        bookingPopup.getPassengerTypeLabel(1).should('contain', 'Adult:');
+        bookingPopup.getPassengerTypeLabel(2).should('contain', 'Child');
+    });
+});
