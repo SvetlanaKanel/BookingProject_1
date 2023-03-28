@@ -61,6 +61,7 @@ class CreateBookingPage {
     getNumberTicketsAvailableSecondTripCard = () => cy.get('.trip:nth-child(2) span.availability .num');
     getClassUnselectedTripCards = () => cy.get('.trips-list-wrapper > div.trip .class');
     getSelectedTripCard = () => cy.get('div.trip.selected');
+    getSecondTripCardAvailability = () => cy.get('div .trip:nth-child(2) span.availability');
 
     //Arrival on
     getArrivalTime = () => cy.get('.popup-trip div:nth-child(7) span');
@@ -189,13 +190,13 @@ class CreateBookingPage {
         cy.intercept('/tools/**').as('getTrip');
         cy.wait('@getTrip');
 
-        this.getSecondTripCard().then(($el) => {
+        this.getSecondTripCardAvailability().then(($el) => {
             if ($el.text() == "Overdue") {
                 this.clickCalendarNextButton();
-                clickSecondTripCard();
+                this.getSecondTripCard().click();
                 return false;
             } else {
-                cy.wrap($el).click();
+                this.getSecondTripCard().click();
                 return false;
             }           
         })
@@ -703,13 +704,9 @@ class CreateBookingPage {
     }
 
     reserveSecondTripDefaultDay(passengerAmount, passengerNames, fareTypes) {
-        cy.intercept('POST', '/booking/**').as('getBooking');
-        //cy.intercept('/tools/ping/**').as('getToolsPing');
-       
+        cy.intercept('POST', '/booking/**').as('getBooking');               
         this.clickSecondTripCard();    
-        cy.wait('@getBooking');    
-     //   cy.wait('@getToolsPing');
-
+        cy.wait('@getBooking');         
         this.selectAmountPassengersDetailsDropdown(passengerAmount);
         this.typePassengerNames(passengerNames);  
         this.selectFareTypes(fareTypes);

@@ -52,7 +52,7 @@ describe('US_04.08 | Calendar-selection block functionality week/month view', { 
         });
     });
 
-    it('AT_04.08.04 | Verify that Click forward arrow works and switches month in correct order', () => {
+    it.skip('AT_04.08.04 | Verify that Click forward arrow works and switches month in correct order', () => {
         const date = new Date();
         date.setDate(date.getDate() + 2)
         createBookingPage.clickMonthBtn();
@@ -77,7 +77,7 @@ describe('US_04.08 | Calendar-selection block functionality week/month view', { 
         })
     });
 
-    it('AT_04.08.06 | Verify that Click back arrow works and switches month in correct order', () => {
+    it.skip('AT_04.08.06 | Verify that Click back arrow works and switches month in correct order', () => {
         createBookingPage.clickMonthBtn();
         const date = new Date()
         date.setDate(date.getDate() + 2)

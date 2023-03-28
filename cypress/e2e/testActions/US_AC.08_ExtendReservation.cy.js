@@ -6,7 +6,7 @@ const bookingPopup = new BookingPopup();
 
 const AGENT = Cypress.env('agent')
 
-describe.skip('US_AC.08 | ACTIONS > Extend reservation', { tags: ['regression'] }, function () {
+describe('US_AC.08 | ACTIONS > Extend reservation', { tags: ['regression'] }, function () {
     beforeEach(function () {
         cy.fixture('createBookingPage').then(bookingData => {
             this.bookingData = bookingData;
@@ -35,7 +35,6 @@ describe.skip('US_AC.08 | ACTIONS > Extend reservation', { tags: ['regression'] 
     })
 
     it('AT_AC.08.02 | Extend one time and verify the field Notes / Remarks has the text  "Agent DD-MM-YYYY HH:MM: reservation extended: 15 minutes', function () {
-        cy.intercept('/tools/**').as('getToolsPing');
         let numberOfPassengers = 1;
         let passengerName = this.bookingData.inputField.main_passenger.name;
         let passengerFareTypes = this.bookingData.dropdowns.fareType.fareTypesNames[0];
@@ -47,8 +46,7 @@ describe.skip('US_AC.08 | ACTIONS > Extend reservation', { tags: ['regression'] 
             let agentName = $el.text();           
             let formatterdDateAndTime = bookingPopup.getCurrentDateAndTimeInTailand();          
             let expectedNotesRemarkText = agentName + " " + formatterdDateAndTime + this.bookingPopUpData.notesRemark;
-            cy.log(expectedNotesRemarkText);
-
+           
             bookingPopup.getNotesRemarkField().should('have.text', expectedNotesRemarkText);
         })
     })

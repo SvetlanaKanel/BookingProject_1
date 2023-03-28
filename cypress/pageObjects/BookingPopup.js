@@ -45,28 +45,19 @@ class BookingPopup {
      */
      getCurrentDateAndTimeInTailand() {
         let date = new Date();
-       
-        const currentDateTime = date.toLocaleString("en-US", { currentTime: 'numeric',  timeZone: 'Asia/Bangkok'});
+        const options = {
+            day: '2-digit', month: '2-digit', year: 'numeric', 
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            timeZone: 'Asia/Bangkok'
+        }
+        const currentDateTime = date.toLocaleString("ru-RU", options);
         let dateTimeArray = currentDateTime.split(',');
-        let currentDateArrey = dateTimeArray[0].split('/');
-        let curentMonth;
-        if (currentDateArrey[0] < 10) {
-            curentMonth = ('0' + currentDateArrey[0]).split(' ').join('')
-        } else {
-            curentMonth = currentDateArrey[0];
-        }
-        let formattedDate = currentDateArrey[1] + '-' + curentMonth + '-' + currentDateArrey[2]
-        let currentTimeArray = dateTimeArray[1].split(':');
-        let hour ;
-        if (currentTimeArray[0] < 10) {
-            hour = ('0' + currentTimeArray[0]).split(' ').join('');
-        } else {
-            hour = currentTimeArray[0];
-        }
-        let formattedTime = hour + ":" + currentTimeArray[1] + ":";
-        let formattedDateAndTime = formattedDate + " " + formattedTime;
-        
-        return formattedDateAndTime;
+        let currentDateArrey = dateTimeArray[0].split('.').join('-');  
+        let currentTimeArray = dateTimeArray[1].split(':'); 
+        currentTimeArray.pop();
+        let formattedTime = currentTimeArray.join(':') + ":";
+
+       return currentDateArrey + formattedTime;
     }
 }
 export default BookingPopup;

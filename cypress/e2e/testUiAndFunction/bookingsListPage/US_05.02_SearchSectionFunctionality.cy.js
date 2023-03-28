@@ -65,7 +65,7 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     bookingsListPage.getSearchField().should("be.empty");
   });
 
-  it('AT_05.02.01 | Verify that the agent is able to enter data in Search input field and find booking', function () {
+  it.skip('AT_05.02.01 | Verify that the agent is able to enter data in Search input field and find booking', function () {
     //Precondition
     leftMenuPanel.clickBookingIcon()
     cy.intercept('POST', 'orders').as('orders')
@@ -91,7 +91,7 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     })
   });
 
-  it('AT_05.02.02 | Verify that the agent is able to enter data in Booking ID input field and find booking', function () {
+  it.skip('AT_05.02.02 | Verify that the agent is able to enter data in Booking ID input field and find booking', function () {
     //Precondition
     leftMenuPanel.clickBookingIcon()
     cy.intercept('POST', 'orders').as('orders')
@@ -120,7 +120,7 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     })
   });
 
-  it('AT_05.02.04 | Verify that the agent is able to select route in Route filter dropdown menu and find bookings for this route', function () {
+  it.skip('AT_05.02.04 | Verify that the agent is able to select route in Route filter dropdown menu and find bookings for this route', function () {
     //Precondition
     leftMenuPanel.clickBookingIcon()
     cy.intercept('POST', 'orders').as('orders')

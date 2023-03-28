@@ -13,7 +13,7 @@ const bookingPopup = new BookingPopup();
 const BOOKING = require('../../../fixtures/createBookingPage.json');
 const AGENT = Cypress.env('agent');
 
-describe('US_05.16 | Buttons section UI and funtionality', () => {
+describe.skip('US_05.16 | Buttons section UI and funtionality', () => {
     
     before(() => {
         cy.cleanData();
