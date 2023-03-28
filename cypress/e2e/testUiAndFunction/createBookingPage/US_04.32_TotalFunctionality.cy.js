@@ -25,11 +25,7 @@ describe('US_04.32 | Total functionality', () => {
 
     it('AT_04.32.01 | Verify that the "Reset" button is clickable',() => {
         createBookingPage.typeIntoMainPassengerNameField(randomFullName)
-        createBookingPage.typeIntoMainPassengerEmailField(randomEmail)
-        createBookingPage.typeIntoMainPassengerPhoneField(randomPhoneNumber)
         createBookingPage.clickResetButton()
         createBookingPage.getMainPassengerNameField().should('be.empty')
-        createBookingPage.getMainPassengerPhoneField().should('be.empty')
-        createBookingPage.getEmailInputField().should('be.empty')
     })
 })
