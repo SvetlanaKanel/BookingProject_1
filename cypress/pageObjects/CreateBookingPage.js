@@ -604,7 +604,10 @@ class CreateBookingPage {
     }
 
     createCustomBooking({departureStationName, arrivalStationName, passengerName, passengerAmount, fareType}) {
-        cy.intercept('/tools/**').as('getTrip')
+        cy.intercept('POST', 'booking', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+          }).as('getTrip')
         
         this.selectDepartureStation(departureStationName)
         cy.wait('@getTrip')
@@ -622,9 +625,15 @@ class CreateBookingPage {
         cy.wait('@getTrip')
         
         this.selectAmountPassengersDetailsDropdown(passengerAmount)
-        cy.wait('@getTrip')
-        
-        this.clickTripCard()
+
+        cy.wait(1500);
+        this.getTrips().each(($el) => {
+            const statusText = $el.text();
+            if (statusText !== 'Overdue') {
+                cy.wrap($el).click();
+                return false;
+            }
+        })
         this.getLabelSeatSelection()
                 .should('be.visible')
                 .and('have.text', 'Seat selection')
@@ -634,7 +643,6 @@ class CreateBookingPage {
         this.selectFareTypes(fareType)
         
         this.clickBookTicketsBtn()
-        
     }
 
     clickgetOctoberMondayButton() {
