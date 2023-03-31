@@ -30,7 +30,7 @@ describe('US_AC.08 | ACTIONS > Extend reservation', { tags: ['regression'] }, fu
 
         bookingPopup.getTimeFromTimer().then(extendTime => {
             expect(extendTime).to.be.below(15);
-            expect(extendTime).to.be.above(14);
+            expect(extendTime).to.be.above(14);           
         })
     })
 

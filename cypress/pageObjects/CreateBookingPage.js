@@ -187,20 +187,23 @@ class CreateBookingPage {
     };
 
     clickSecondTripCard() {
+        cy.wait(1000)
         cy.intercept('/tools/**').as('getTrip');
+        cy.intercept('POST', '/booking/**').as('getBooking');
         cy.wait('@getTrip');
 
         this.getSecondTripCardAvailability().then(($el) => {
             if ($el.text() == "Overdue") {
                 this.clickCalendarNextButton();
+                cy.wait('@getBooking'); 
                 this.getSecondTripCard().click();
                 return false;
             } else {
                 this.getSecondTripCard().click();
                 return false;
             }           
-        })
-    }
+        }) 
+     }
 
     typePassengerNames = (names) => {
         this
@@ -712,9 +715,7 @@ class CreateBookingPage {
     }
 
     reserveSecondTripDefaultDay(passengerAmount, passengerNames, fareTypes) {
-        cy.intercept('POST', '/booking/**').as('getBooking');               
-        this.clickSecondTripCard();    
-        cy.wait('@getBooking');         
+        this.clickSecondTripCard(); 
         this.selectAmountPassengersDetailsDropdown(passengerAmount);
         this.typePassengerNames(passengerNames);  
         this.selectFareTypes(fareTypes);

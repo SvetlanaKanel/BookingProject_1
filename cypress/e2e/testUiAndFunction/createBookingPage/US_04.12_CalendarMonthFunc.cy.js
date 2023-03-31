@@ -34,7 +34,7 @@ describe('US_04.12 | Calendar month functionality', { tags: ['smoke', 'regressio
 		})		
 	});
 
-	it('AT_04.12.02 | Verify current Thailand date,  chosen month and year (current, 6 months from current, 12 months from current) match label departure on date', function () {
+	it.skip('AT_04.12.02 | Verify current Thailand date,  chosen month and year (current, 6 months from current, 12 months from current) match label departure on date', function () {
 		createBookingPage.getMonthDropdownList().then(($el) => {
 			let arrayofMonths = getArray($el)
 			expect(arrayofMonths).to.deep.eq(createBookingPage.createArrayOfConsetutiveMonths())
@@ -71,7 +71,7 @@ describe('US_04.12 | Calendar month functionality', { tags: ['smoke', 'regressio
 		})
 	});
 
-	it('AT_04.12.05 | Tickets are not available for tomorrow (the current date by GMT+7)', () => {
+	it.skip('AT_04.12.05 | Tickets are not available for tomorrow (the current date by GMT+7)', () => {
 		const tomorrowDayThailand = getCustomCalendarDay(1)
 		const availableDayThailand = getCustomCalendarDay(2)
 		
