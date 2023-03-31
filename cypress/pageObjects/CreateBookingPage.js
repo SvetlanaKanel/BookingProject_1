@@ -594,8 +594,8 @@ class CreateBookingPage {
 
     getNextMonthAndCurrentYear() {
         const date = new Date();
-        let nextMonth = date.getMonth() + 1;
-        date.setMonth(nextMonth);
+        date.setDate(1)
+        date.setMonth(date.getMonth() + 1);
         const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'Asia/Bangkok' });
         return formattedDate;
     }
@@ -686,18 +686,10 @@ class CreateBookingPage {
 
     getValidBoundaryValuesMonthDropdownMinNomMax() {
         let validBoundaryValueArrayMinNomMax = this.validBoundaryValuesMonthDropdownMinNomMax()
-    
         if (this.getFirstAvailableForBookingDefaultDay() === "1" || this.getFirstAvailableForBookingDefaultDay() === "2") {
             this.clickCalendarPrevButton()
-            return validBoundaryValueArrayMinNomMax
         }
-        if (this.getCurrentDateInThailand() === "1" && this.getCurrentDate() !== "1") {
-            validBoundaryValueArrayMinNomMax[0] = this.createArrayOfConsetutiveMonths()[1]
-           return  validBoundaryValueArrayMinNomMax
-        }
-        else {
-            return validBoundaryValueArrayMinNomMax
-        }
+        return validBoundaryValueArrayMinNomMax
     }
 
     getPreviousWeekMonSundDays = (date) => {
@@ -722,6 +714,55 @@ class CreateBookingPage {
         this.clickReservationTicketArrow();
         this.clickReservationTicketButton();
         bookingPopup.getBookingPopupWindow().should('be.visible');        
+    }
+
+    /**
+      * @returns number of days in months
+    */
+    getNumberOfDaysInMonth = (month, year) => {
+        let monthIndex = [
+            'Jan', 'Feb', 'Mar',
+            'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep',
+            'Oct', 'Nov', 'Dec',
+        ].indexOf(month)
+
+        return new Date(year, monthIndex + 1, 0).getDate();
+    }
+
+    /**
+      * @returns month from given in format "Mar 2023" date, ex 'Mar'
+    */
+    getMonthOnly(date) {
+        return date.split(' ')[0]
+    }
+    /**
+    * @returns year from given in format "Mar 2023" date, ex. '2023'
+    */
+    getYearOnly(date) {
+        return date.split(' ')[1]
+    }
+    
+    chooseDate() {
+        let date = this.getCurrentDateInThailand()
+        let arrayOfDates = []
+        for (let i = 0; i < this.validBoundaryValuesMonthDropdownMinNomMax().length; i++) {
+            if (this.getNumberOfDaysInMonth(this.getMonthOnly(this.validBoundaryValuesMonthDropdownMinNomMax()[i]), this.getYearOnly(this.validBoundaryValuesMonthDropdownMinNomMax()[i])) < this.getNumberOfDaysInMonth(this.getMonthOnly(this.getCurrentMonthAndYearThailand()), this.getYearOnly(this.getCurrentMonthAndYearThailand()))) {
+                date = (+date - 1).toString()
+                arrayOfDates.push(date)
+                date = this.getCurrentDateInThailand()
+            } 
+            else if (this.validBoundaryValuesMonthDropdownMinNomMax()[i] == 'Feb' && this.getNumberOfDaysInMonth(this.getMonthOnly(this.getCurrentMonthAndYearThailand()), this.getYearOnly(this.getCurrentMonthAndYearThailand())) == 31) {
+                date = (+date - 2).toString()
+                arrayOfDates.push(date)
+                date = this.getCurrentDateInThailand()
+            }
+            else {
+                date = date
+                arrayOfDates.push(date)
+            } 
+        }
+        return arrayOfDates
     }
 }
 export default CreateBookingPage;
