@@ -183,6 +183,7 @@ class CreateBookingPage {
     };
 
     clickFirstTripCard() {
+        cy.wait(300)
         this.getFirstTripCard().click({ force: true })
     };
 
@@ -331,18 +332,6 @@ class CreateBookingPage {
         this.getMonthDropdownSelect().select(month, { force: true })
     }
 
-    getRandomPassengersAmmount() {
-        return this.getPassengersDetailsDropdown().then(($el) => {
-            const passengersArray = $el
-                .toArray()
-                .map(el => el.innerText.split('\n'))
-                .join(',').split(',')
-            const indexOfPassengersAmmount = Math.floor(Math.random() * passengersArray.length)
-            const passengersAmount = passengersArray[indexOfPassengersAmmount]
-            return passengersAmount
-        })
-    };
-
     getRandomAmountOfPassSeatSelectionDrpDwn() {
 
         return this.getSeatSelectionDropdownList().then($el => {
@@ -360,30 +349,6 @@ class CreateBookingPage {
     clickWeekBtn() {
         this.getWeekButton().click();
     }
-
-    selectChildFare() {
-        this.getAddedPassengerFareTypeDropdownListOptions().each(function ($el) {
-            if ($el.text() === 'Child') {
-                return cy.wrap($el).click()
-            }
-        })
-    };
-
-    selectAdultFare() {
-        this.getAddedPassengerFareTypeDropdownListOptions().each(function ($el) {
-            if ($el.text() === 'Adult') {
-               return cy.wrap($el).click()
-            }
-        })
-    };
-
-    selectElderFare() {
-        this.getAddedPassengerFareTypeDropdownListOptions().each(function ($el) {
-            if ($el.text() === 'Elder') {
-                return cy.wrap($el).click()
-            }
-        })
-    };
 
     clickBookTicketsBtn() {
         this.getBookTicketsButton().click({ force: true });

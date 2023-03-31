@@ -1,6 +1,5 @@
 /// <reference types="Cypress" />
 
-import waitForToolsPing from "../../../support/utilities/waitForToolsPing";
 import CreateBookingPage from "../../../pageObjects/CreateBookingPage.js";
 
 const createBookingPage = new CreateBookingPage();
@@ -11,9 +10,13 @@ describe('US_04.17 | Departure on trip selected UI', { tags: ['smoke'] }, functi
     before(function () {
         cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
-
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+        }).as('getTrip')
         createBookingPage.clickCalendarNextButton();
-        waitForToolsPing();
+        cy.wait('@getTrip').its('response.body').should('include', 'trip')
+        cy.wait(500)
         createBookingPage.clickFirstTripCard();
     });
 

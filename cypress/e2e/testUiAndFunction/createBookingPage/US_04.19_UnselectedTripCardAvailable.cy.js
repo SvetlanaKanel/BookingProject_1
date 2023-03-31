@@ -1,7 +1,6 @@
 /// <reference types ="cypress" />
 
 import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
-import waitForToolsPing from "../../../support/utilities/waitForToolsPing";
 
 const createBookingPage = new CreateBookingPage();
 
@@ -12,8 +11,12 @@ describe('US_04.19 | Unselected trip card available UI', { tags: ['smoke'] }, fu
     before(() => {
         cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
-        createBookingPage.clickCalendarNextButton(); 
-        waitForToolsPing();          
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+        }).as('getTrip')
+        createBookingPage.clickCalendarNextButton()
+        cy.wait('@getTrip').its('response.body').should('include', 'trip')         
     });
 
     beforeEach(function () {
@@ -27,6 +30,7 @@ describe('US_04.19 | Unselected trip card available UI', { tags: ['smoke'] }, fu
     });
 
     it('AT_04.19.01 | Verify Trips card with "Number available tickets" label is visible as unselected', function () {
+        cy.wait(300)
         createBookingPage.getDepartureTripCardsList().each($el => {
             cy.wrap($el).should('be.visible')
                         .and('not.have.class', 'selected')  

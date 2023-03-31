@@ -11,11 +11,13 @@ describe('US_04.25 | Passengers details functionality - One passenger', { tags: 
     before(() => {
         cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
-
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+        }).as('getTrip');
         //Precondition
         createBookingPage.clickCalendarNextButton();
-        cy.intercept('/tools/**').as('getTrip');
-		cy.wait('@getTrip');
+        cy.wait('@getTrip').its('response.body').should('include', 'trip')
         createBookingPage.clickFirstTripCard();
     });
 

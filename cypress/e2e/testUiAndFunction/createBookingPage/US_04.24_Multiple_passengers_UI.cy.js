@@ -16,10 +16,13 @@ describe('US_04.24 | Multiple passengers UI', { tags: ['smoke'] }, () => {
     before(function () {
         cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
-
-        createBookingPage.clickCalendarNextButton();
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+        }).as('getTrip')
+        createBookingPage.clickCalendarNextButton()
+        cy.wait('@getTrip').its('response.body').should('include', 'trip')  
         createBookingPage.clickFridayButton();
-        cy.intercept('/tools/**').as('getTrip');
 		cy.wait('@getTrip');
         createBookingPage.clickFirstTripCard();
     });

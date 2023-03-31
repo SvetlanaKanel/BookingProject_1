@@ -15,9 +15,12 @@ describe('US_04.22 | Trip card functionality', { tags: ['smoke', 'regression'] }
         })
         cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
-        cy.intercept('/tools/**').as('getTrip')
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+        }).as('getTrip')
         createBookingPage.clickCalendarNextButton()
-        cy.wait('@getTrip')   
+        cy.wait('@getTrip').its('response.body').should('include', 'trip')    
     });
     
     it('AT_04.22.01 | Verify “Passenger” section displays default selected seat number after selecting trip card', function () {
@@ -78,9 +81,10 @@ describe('US_04.22 | Trip card functionality', { tags: ['smoke', 'regression'] }
             })   
     });
 
-    it('AT_04.22.07 | Verify when trip card is selected, “Summary” shows default selected seat number', function() {
+    it('AT_04.22.07 | Verify when trip card is selected, “Summary” shows default selected seat number', function () {
+        createBookingPage.clickOnFirstAvailableTripCard() 
         createBookingPage.selectAmountPassengersDetailsDropdown(3)
-        createBookingPage.clickTripCard()
+        
         createBookingPage.getLabelSeatSelection()
                     .should('be.visible')
                     .and('have.text', 'Seat selection')
@@ -109,9 +113,9 @@ describe('US_04.22 | Trip card functionality', { tags: ['smoke', 'regression'] }
         })
     });    
     
-    it('AT_04.22.09 | Verufy when trip card is selected, “Summary” shows default ticket price', function() {
+    it('AT_04.22.09 | Verufy when trip card is selected, “Summary” shows default ticket price', function () {
+        createBookingPage.clickOnFirstAvailableTripCard() 
         createBookingPage.selectAmountPassengersDetailsDropdown(3)
-        createBookingPage.clickTripCard()
         createBookingPage.getLabelSeatSelection()
                     .should('be.visible')
                     .and('have.text', 'Seat selection')
