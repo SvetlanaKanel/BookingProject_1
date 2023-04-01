@@ -12,6 +12,7 @@ class BookingPopup {
     getCountdownClock = () => cy.get('#countdown-clock');
     getNotesRemarkField = () => cy.get('.popup-booking div:last-child>span');
     getChannelField = () => cy.get('.channel');
+    getBookingStatus = () => cy.get('.booking-status')
 
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3')

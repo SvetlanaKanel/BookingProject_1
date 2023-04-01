@@ -9,6 +9,7 @@
 
     "sectionsPopup": ["Booking details", "Trip details", "Passengers"],
 
-    "notesRemark" : "reservation extended: 15 minutes"
+    "notesRemark" : "reservation extended: 15 minutes",
 
+    "bookingStatus": "Pending"
 }
