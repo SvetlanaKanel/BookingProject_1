@@ -709,22 +709,21 @@ class CreateBookingPage {
     }
     
     chooseDate() {
-        let date = this.getCurrentDateInThailand()
-        let arrayOfDates = []
-        for (let i = 0; i < this.validBoundaryValuesMonthDropdownMinNomMax().length; i++) {
-            if (this.getNumberOfDaysInMonth(this.getMonthOnly(this.validBoundaryValuesMonthDropdownMinNomMax()[i]), this.getYearOnly(this.validBoundaryValuesMonthDropdownMinNomMax()[i])) < this.getNumberOfDaysInMonth(this.getMonthOnly(this.getCurrentMonthAndYearThailand()), this.getYearOnly(this.getCurrentMonthAndYearThailand()))) {
-                date = (+date - 1).toString()
+        let date
+        let numberOfDaysInCurrentMonth = this.getNumberOfDaysInMonth(this.getMonthOnly(this.getCurrentMonthAndYearThailand()), this.getYearOnly(this.getCurrentMonthAndYearThailand()))
+        let arrayOfDates = [this.getCurrentDateInThailand()]
+        for (let i = 1; i < this.validBoundaryValuesMonthDropdownMinNomMax().length; i++) {
+            let numberOfDays = this.getNumberOfDaysInMonth(this.getMonthOnly(this.validBoundaryValuesMonthDropdownMinNomMax()[i]), this.getYearOnly(this.validBoundaryValuesMonthDropdownMinNomMax()[i]))
+            if (numberOfDays < numberOfDaysInCurrentMonth && +this.getCurrentDateInThailand() == numberOfDaysInCurrentMonth) {
+                date = (+this.getCurrentDateInThailand() - 1).toString()
                 arrayOfDates.push(date)
-                date = this.getCurrentDateInThailand()
             } 
-            else if (this.validBoundaryValuesMonthDropdownMinNomMax()[i] == 'Feb' && this.getNumberOfDaysInMonth(this.getMonthOnly(this.getCurrentMonthAndYearThailand()), this.getYearOnly(this.getCurrentMonthAndYearThailand())) == 31) {
-                date = (+date - 2).toString()
+            else if (this.validBoundaryValuesMonthDropdownMinNomMax()[i].includes('Feb') && numberOfDaysInCurrentMonth == 31 && +this.getCurrentDateInThailand() == numberOfDaysInCurrentMonth) {
+                date = (+this.getCurrentDateInThailand() - 2).toString()
                 arrayOfDates.push(date)
-                date = this.getCurrentDateInThailand()
             }
             else {
-                date = date
-                arrayOfDates.push(date)
+                arrayOfDates.push(this.getCurrentDateInThailand())
             } 
         }
         return arrayOfDates
