@@ -7,11 +7,14 @@ describe('US_04.18 | Create booking page > Selected trip card UI', { tags: ['smo
     const AGENT = Cypress.env('agent');
 
     before(() => {
-        cy.intercept('/tools/ping/**').as('getToolsPing');
         cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+        }).as('getTrip')
         createBookingPage.clickCalendarNextButton(); 
-        cy.wait('@getToolsPing');     
+        cy.wait('@getTrip').its('response.body').should('include', 'trip')
         createBookingPage.clickSecondTripCard();      
     })
     beforeEach(function () {

@@ -45,48 +45,47 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     cy.loginWithSession(AGENT.email, AGENT.password);
     cy.visit("/");
 
-    cy.intercept('/tools/ping/**').as('getPopUp')
-    cy.intercept('POST', 'orders').as('orders')
+    cy.intercept('POST', 'orders', (req) => {
+      if (req.body.includes('action=get-booking')) {
+      }
+    }).as('getPopUp')
+  
     const bookingsDetails = BOOKING.bookingDetails
     for (const bookingDetails of bookingsDetails) {
       createBookingPage.createCustomBooking(bookingDetails)
       cy.wait('@getPopUp') 
       bookingPopup.clickCloseBtnBookingPopup()
     }
-    
+    cy.intercept('POST', 'orders', (req) => {
+      if (req.body.includes('action=get-orders')) {
+      }
+    }).as('orders')
     leftMenuPanel.clickBookingManagementIcon();
+    cy.wait('@orders').its('response.body').should('include', '"recordsTotal"')
+    chooseCustomDatesRangeWithCount(-3, 3)
     cy.wait('@orders')
-  });
-
-  it("AT_05.02.03.01| Verify the Clear anchor is clickable and removes all input data from the placeholder field Search", () => {
-    bookingsListPage.typeInSearchField(randomWord);
-    bookingsListPage.clickClearLink();
-
-    bookingsListPage.getSearchField().should("be.empty");
+    bookingsListPage.getTableBodyRows()
+      .should('have.length', 4)
   });
 
   it('AT_05.02.01 | Verify that the agent is able to enter data in Search input field and find booking', function () {
-    //Precondition
-    leftMenuPanel.clickBookingIcon()
-    cy.intercept('POST', 'orders').as('orders')
-    createBookingPage.createCustomBooking(this.bookingData.bookingDetailsTest1)
-    cy.intercept('/tools/ping/**').as('getPopUp')
-    cy.wait('@getPopUp') 
-    bookingPopup.clickCloseBtnBookingPopup()
-    leftMenuPanel.clickBookingManagementIcon()
+    cy.intercept('POST', 'orders', (req) => {
+      if (req.body.includes('action=get-orders')) {
+      }
+    }).as('orders')
 
-    chooseCustomDatesRangeWithCount(-3, 3)
-    cy.wait('@orders')
-    bookingsListPage.getTableBodyRows().should('have.length', 3)
+    bookingsListPage.typeInSearchField(`${this.bookingData.bookingDetails[2].passengerName}{enter}`)
+    cy.wait('@orders').its('response.body').should('include', '"recordsTotal"')
+    bookingsListPage.getTableBodyRows()
+      .should('have.length', 1)
 
-    bookingsListPage.typeInSearchField(`${this.bookingData.bookingDetailsTest1.passengerName}{enter}`)
     bookingsListPage.getTableHeadersColumnsList().then(($header) => {
       let tableHeaderArray = getArray($header)
       let indexOfContact = tableHeaderArray.indexOf(this.bookingsListPage.columns.contact[1])
       
       bookingsListPage.getTableBodyCells().then(($cell) => {
         let tableDataArray = getArray($cell)
-        expect(tableDataArray[indexOfContact]).to.eq(this.bookingData.bookingDetailsTest1.passengerName)
+        expect(tableDataArray[indexOfContact]).to.eq(this.bookingData.bookingDetails[2].passengerName)
       })
     })
   });
@@ -94,20 +93,33 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
   it('AT_05.02.02 | Verify that the agent is able to enter data in Booking ID input field and find booking', function () {
     //Precondition
     leftMenuPanel.clickBookingIcon()
-    cy.intercept('POST', 'orders').as('orders')
-    createBookingPage.createCustomBooking(this.bookingData.bookingDetailsTest2)
-    cy.intercept('/tools/ping/**').as('getPopUp')
+    cy.intercept('POST', 'orders', (req) => {
+      if (req.body.includes('action=get-booking')) {
+      }
+    }).as('getPopUp')
+    
+    createBookingPage.createCustomBooking(this.bookingData.bookingDetailsTest)
     cy.wait('@getPopUp')
     bookingPopup.getBookingID().then(($id) => {
       let bookingID = $id.text()
       bookingPopup.clickCloseBtnBookingPopup()
+      cy.intercept('POST', '/orders', (req) => {
+        if (req.body.includes('action=get-orders')) {
+        }
+      }).as('orders')
       leftMenuPanel.clickBookingManagementIcon()
 
+      cy.wait('@orders').its('response.body').should('include', '"recordsTotal"')
       chooseCustomDatesRangeWithCount(-3, 3)
       cy.wait('@orders')
-      bookingsListPage.getTableBodyRows().should('have.length', 4)
+      bookingsListPage.getTableBodyRows()
+        .should('have.length', 5)
       
       bookingsListPage.typeInBookingIDField(`${bookingID}{enter}`)
+      cy.wait('@orders')
+      bookingsListPage.getTableBodyRows()
+        .should('have.length', 1)
+
       bookingsListPage.getTableHeadersColumnsList().then(($header) => {
         let tableHeaderArray = getArray($header)
         let indexOfID = tableHeaderArray.indexOf(this.bookingsListPage.columns.id[1])
@@ -120,21 +132,31 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     })
   });
 
-  it('AT_05.02.04 | Verify that the agent is able to select route in Route filter dropdown menu and find bookings for this route', function () {
-    //Precondition
-    leftMenuPanel.clickBookingIcon()
-    cy.intercept('POST', 'orders').as('orders')
-    createBookingPage.createCustomBooking(this.bookingData.bookingDetailsTest3)
-    cy.intercept('/tools/ping/**').as('getPopUp')
-    cy.wait('@getPopUp') 
-    bookingPopup.clickCloseBtnBookingPopup()
-    leftMenuPanel.clickBookingManagementIcon()
+  it("AT_05.02.03.01| Verify the Clear anchor is clickable and removes all input data from the placeholder field Search", () => {
+    bookingsListPage.typeInSearchField(randomWord);
+    bookingsListPage.clickClearLink();
 
+    bookingsListPage.getSearchField().should("be.empty");
+  });
+
+  it('AT_05.02.04 | Verify that the agent is able to select route in Route filter dropdown menu and find bookings for this route', function () {
+    cy.intercept('POST', 'orders', (req) => {
+      if (req.body.includes('action=get-orders')) {
+      }
+    }).as('orders')
+    
+    leftMenuPanel.clickBookingManagementIcon()
+    cy.wait('@orders').its('response.body').should('include', '"recordsTotal"')
     chooseCustomDatesRangeWithCount(-3, 3)
     cy.wait('@orders')
-    bookingsListPage.getTableBodyRows().should('have.length', 5)
+    bookingsListPage.getTableBodyRows()
+      .should('have.length', 5)
 
-    bookingsListPage.selectRoute(this.bookingData.bookingDetailsTest3.route)
+    bookingsListPage.selectRoute(this.bookingData.bookingDetails[3].route)
+    cy.wait('@orders')
+    bookingsListPage.getTableBodyRows()
+      .should('have.length', 1)
+
     bookingsListPage.getTableHeadersColumnsList().then(($header) => {
       let tableHeaderArray = getArray($header)
       let indexOfRoute = tableHeaderArray.indexOf(this.bookingsListPage.columns.route[1])
@@ -142,7 +164,7 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
       bookingsListPage.getTableBodyCells().then(($cell) => {
         let tableDataArray = getArray($cell)
         expect(tableDataArray[indexOfRoute])
-          .to.eq(this.bookingData.bookingDetailsTest3.departureStationName + " → " + this.bookingData.bookingDetailsTest3.arrivalStationName)
+          .to.eq(this.bookingData.bookingDetails[3].departureStationName + " → " + this.bookingData.bookingDetails[3].arrivalStationName)
       })
     })
   });

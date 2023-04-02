@@ -1,7 +1,6 @@
 /// <reference types="Cypress" />
 
 import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
-import waitForToolsPing from "../../../support/utilities/waitForToolsPing";
 
 const createBookingPage = new CreateBookingPage();
 const AGENT = Cypress.env('agent');
@@ -16,7 +15,10 @@ describe('US_04.31 | Total UI', { tags: ['smoke'] }, () => {
         cy.fixture('colors').then(colors => {
             this.colors = colors;
         });
-        cy.intercept('/tools/ping/**').as('getToolsPing');
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+        }).as('getTrip')
 	});
 
     it('AT_04.31.01 | Verify that the text "Total " is visible', () => {
@@ -52,12 +54,11 @@ describe('US_04.31 | Total UI', { tags: ['smoke'] }, () => {
     });
 
     it('AT_04.31.09 | Verify that the pop up button "Reserve tickets" is visible', () => {
-        cy.wait('@getToolsPing')
         createBookingPage.clickCalendarNextButton()
+        cy.wait('@getTrip').its('response.body').should('include', 'trip') 
         createBookingPage.clickSaturdayButton()
-        cy.wait('@getToolsPing')
+        cy.wait('@getTrip')
         createBookingPage.clickSecondTripCard()
-        cy.wait('@getToolsPing')
         createBookingPage.clickReservationTicketArrow()
         createBookingPage.getReservationTicketButton().should('be.visible')
     });

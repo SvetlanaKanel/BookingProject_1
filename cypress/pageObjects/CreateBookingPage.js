@@ -61,6 +61,7 @@ class CreateBookingPage {
     getNumberTicketsAvailableSecondTripCard = () => cy.get('.trip:nth-child(2) span.availability .num');
     getClassUnselectedTripCards = () => cy.get('.trips-list-wrapper > div.trip .class');
     getSelectedTripCard = () => cy.get('div.trip.selected');
+    getSecondTripCardAvailability = () => cy.get('div .trip:nth-child(2) span.availability');
 
     //Arrival on
     getArrivalTime = () => cy.get('.popup-trip div:nth-child(7) span');
@@ -182,24 +183,28 @@ class CreateBookingPage {
     };
 
     clickFirstTripCard() {
+        cy.wait(300)
         this.getFirstTripCard().click({ force: true })
     };
 
     clickSecondTripCard() {
+        cy.wait(1000)
         cy.intercept('/tools/**').as('getTrip');
+        cy.intercept('POST', '/booking/**').as('getBooking');
         cy.wait('@getTrip');
 
-        this.getSecondTripCard().then(($el) => {
+        this.getSecondTripCardAvailability().then(($el) => {
             if ($el.text() == "Overdue") {
                 this.clickCalendarNextButton();
-                clickSecondTripCard();
+                cy.wait('@getBooking'); 
+                this.getSecondTripCard().click();
                 return false;
             } else {
-                cy.wrap($el).click();
+                this.getSecondTripCard().click();
                 return false;
             }           
-        })
-    }
+        }) 
+     }
 
     typePassengerNames = (names) => {
         this
@@ -327,18 +332,6 @@ class CreateBookingPage {
         this.getMonthDropdownSelect().select(month, { force: true })
     }
 
-    getRandomPassengersAmmount() {
-        return this.getPassengersDetailsDropdown().then(($el) => {
-            const passengersArray = $el
-                .toArray()
-                .map(el => el.innerText.split('\n'))
-                .join(',').split(',')
-            const indexOfPassengersAmmount = Math.floor(Math.random() * passengersArray.length)
-            const passengersAmount = passengersArray[indexOfPassengersAmmount]
-            return passengersAmount
-        })
-    };
-
     getRandomAmountOfPassSeatSelectionDrpDwn() {
 
         return this.getSeatSelectionDropdownList().then($el => {
@@ -356,30 +349,6 @@ class CreateBookingPage {
     clickWeekBtn() {
         this.getWeekButton().click();
     }
-
-    selectChildFare() {
-        this.getAddedPassengerFareTypeDropdownListOptions().each(function ($el) {
-            if ($el.text() === 'Child') {
-                return cy.wrap($el).click()
-            }
-        })
-    };
-
-    selectAdultFare() {
-        this.getAddedPassengerFareTypeDropdownListOptions().each(function ($el) {
-            if ($el.text() === 'Adult') {
-               return cy.wrap($el).click()
-            }
-        })
-    };
-
-    selectElderFare() {
-        this.getAddedPassengerFareTypeDropdownListOptions().each(function ($el) {
-            if ($el.text() === 'Elder') {
-                return cy.wrap($el).click()
-            }
-        })
-    };
 
     clickBookTicketsBtn() {
         this.getBookTicketsButton().click({ force: true });
@@ -590,8 +559,8 @@ class CreateBookingPage {
 
     getNextMonthAndCurrentYear() {
         const date = new Date();
-        let nextMonth = date.getMonth() + 1;
-        date.setMonth(nextMonth);
+        date.setDate(1)
+        date.setMonth(date.getMonth() + 1);
         const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'Asia/Bangkok' });
         return formattedDate;
     }
@@ -603,7 +572,10 @@ class CreateBookingPage {
     }
 
     createCustomBooking({departureStationName, arrivalStationName, passengerName, passengerAmount, fareType}) {
-        cy.intercept('/tools/**').as('getTrip')
+        cy.intercept('POST', 'booking', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+          }).as('getTrip')
         
         this.selectDepartureStation(departureStationName)
         cy.wait('@getTrip')
@@ -621,9 +593,15 @@ class CreateBookingPage {
         cy.wait('@getTrip')
         
         this.selectAmountPassengersDetailsDropdown(passengerAmount)
-        cy.wait('@getTrip')
-        
-        this.clickTripCard()
+
+        cy.wait(1500);
+        this.getTrips().each(($el) => {
+            const statusText = $el.text();
+            if (statusText !== 'Overdue') {
+                cy.wrap($el).click();
+                return false;
+            }
+        })
         this.getLabelSeatSelection()
                 .should('be.visible')
                 .and('have.text', 'Seat selection')
@@ -633,7 +611,6 @@ class CreateBookingPage {
         this.selectFareTypes(fareType)
         
         this.clickBookTicketsBtn()
-        
     }
 
     clickgetOctoberMondayButton() {
@@ -674,18 +651,10 @@ class CreateBookingPage {
 
     getValidBoundaryValuesMonthDropdownMinNomMax() {
         let validBoundaryValueArrayMinNomMax = this.validBoundaryValuesMonthDropdownMinNomMax()
-    
         if (this.getFirstAvailableForBookingDefaultDay() === "1" || this.getFirstAvailableForBookingDefaultDay() === "2") {
             this.clickCalendarPrevButton()
-            return validBoundaryValueArrayMinNomMax
         }
-        if (this.getCurrentDateInThailand() === "1" && this.getCurrentDate() !== "1") {
-            validBoundaryValueArrayMinNomMax[0] = this.createArrayOfConsetutiveMonths()[1]
-           return  validBoundaryValueArrayMinNomMax
-        }
-        else {
-            return validBoundaryValueArrayMinNomMax
-        }
+        return validBoundaryValueArrayMinNomMax
     }
 
     getPreviousWeekMonSundDays = (date) => {
@@ -703,19 +672,61 @@ class CreateBookingPage {
     }
 
     reserveSecondTripDefaultDay(passengerAmount, passengerNames, fareTypes) {
-        cy.intercept('POST', '/booking/**').as('getBooking');
-        //cy.intercept('/tools/ping/**').as('getToolsPing');
-       
-        this.clickSecondTripCard();    
-        cy.wait('@getBooking');    
-     //   cy.wait('@getToolsPing');
-
+        this.clickSecondTripCard(); 
         this.selectAmountPassengersDetailsDropdown(passengerAmount);
         this.typePassengerNames(passengerNames);  
         this.selectFareTypes(fareTypes);
         this.clickReservationTicketArrow();
         this.clickReservationTicketButton();
         bookingPopup.getBookingPopupWindow().should('be.visible');        
+    }
+
+    /**
+      * @returns number of days in months
+    */
+    getNumberOfDaysInMonth = (month, year) => {
+        let monthIndex = [
+            'Jan', 'Feb', 'Mar',
+            'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep',
+            'Oct', 'Nov', 'Dec',
+        ].indexOf(month)
+
+        return new Date(year, monthIndex + 1, 0).getDate();
+    }
+
+    /**
+      * @returns month from given in format "Mar 2023" date, ex 'Mar'
+    */
+    getMonthOnly(date) {
+        return date.split(' ')[0]
+    }
+    /**
+    * @returns year from given in format "Mar 2023" date, ex. '2023'
+    */
+    getYearOnly(date) {
+        return date.split(' ')[1]
+    }
+    
+    chooseDate() {
+        let date
+        let numberOfDaysInCurrentMonth = this.getNumberOfDaysInMonth(this.getMonthOnly(this.getCurrentMonthAndYearThailand()), this.getYearOnly(this.getCurrentMonthAndYearThailand()))
+        let arrayOfDates = [this.getCurrentDateInThailand()]
+        for (let i = 1; i < this.validBoundaryValuesMonthDropdownMinNomMax().length; i++) {
+            let numberOfDays = this.getNumberOfDaysInMonth(this.getMonthOnly(this.validBoundaryValuesMonthDropdownMinNomMax()[i]), this.getYearOnly(this.validBoundaryValuesMonthDropdownMinNomMax()[i]))
+            if (numberOfDays < numberOfDaysInCurrentMonth && +this.getCurrentDateInThailand() == numberOfDaysInCurrentMonth) {
+                date = (+this.getCurrentDateInThailand() - 1).toString()
+                arrayOfDates.push(date)
+            } 
+            else if (this.validBoundaryValuesMonthDropdownMinNomMax()[i].includes('Feb') && numberOfDaysInCurrentMonth == 31 && +this.getCurrentDateInThailand() == numberOfDaysInCurrentMonth) {
+                date = (+this.getCurrentDateInThailand() - 2).toString()
+                arrayOfDates.push(date)
+            }
+            else {
+                arrayOfDates.push(this.getCurrentDateInThailand())
+            } 
+        }
+        return arrayOfDates
     }
 }
 export default CreateBookingPage;

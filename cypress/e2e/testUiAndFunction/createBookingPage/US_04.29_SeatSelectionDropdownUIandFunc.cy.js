@@ -23,10 +23,12 @@ describe('US_04.29 | Seat selection dropdown UI and functionality', () => {
         cy.cleanData();
         cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
-        
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+        }).as('getTrip')
         createBookingPage.clickCalendarNextButton()
-        cy.intercept('/tools/**').as('getTrip')
-        cy.wait('@getTrip')
+        cy.wait('@getTrip').its('response.body').should('include', 'trip') 
         createBookingPage.clickOnFirstAvailableTripCard()
         createBookingPage.getLabelSeatSelection()
             .should('be.visible')

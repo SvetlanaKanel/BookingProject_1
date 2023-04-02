@@ -215,32 +215,30 @@
             "passengerName" : "Shanna Lester",
             "passengerAmount" : "1",
             "fareType" : "Adult"
-          }
+        },
+        {
+            "departureStationName" : "Rassada Pier",
+            "arrivalStationName" : "Naka Island",
+            "passengerName" : "Betty Hardy",
+            "passengerAmount" : "1",
+            "fareType" : "Adult"
+        },
+        {
+            "departureStationName" : "Chiang Mai Bus Terminal 1",
+            "arrivalStationName" : "Ayutthaya",
+            "passengerName" : "Meryl Pierce",
+            "passengerAmount" : "1",
+            "fareType" : "Adult",
+            "route" : "Chiang Mai - Ayutthaya - Bangkok (economy)"
+        }
     ],
 
-    "bookingDetailsTest1" : {
-        "departureStationName" : "Rassada Pier",
-        "arrivalStationName" : "Naka Island",
-        "passengerName" : "Betty Hardy",
-        "passengerAmount" : "1",
-        "fareType" : "Adult"
-    },
-
-    "bookingDetailsTest2" : {
+    "bookingDetailsTest" : {
         "departureStationName" : "Phuket Town",
         "arrivalStationName" : "Bangkok Khao San",
         "passengerName" : "Clinton Cain",
         "passengerAmount" : "1",
         "fareType" : "Elder"
-      },
-
-      "bookingDetailsTest3" : {
-        "departureStationName" : "Chiang Mai Bus Terminal 1",
-        "arrivalStationName" : "Ayutthaya",
-        "passengerName" : "Meryl Pierce",
-        "passengerAmount" : "1",
-        "fareType" : "Adult",
-        "route" : "Chiang Mai - Ayutthaya - Bangkok (economy)"
       },
 
       "octWeek": "2 Oct - 8 Oct",

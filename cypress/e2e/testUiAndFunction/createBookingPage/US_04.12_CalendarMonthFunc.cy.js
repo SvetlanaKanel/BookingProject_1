@@ -16,10 +16,12 @@ describe('US_04.12 | Calendar month functionality', { tags: ['smoke', 'regressio
 
 		cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
-
-		cy.intercept('/tools/ping/**').as('getTrip')
+		cy.intercept('POST', '/booking/', (req) => {
+			if (req.body.includes('action=get-trips')) {
+			}
+		}).as('getTrip')
     	createBookingPage.clickMonthBtn()
-		cy.wait('@getTrip')
+		cy.wait('@getTrip').its('response.body').should('include', 'trip')
 	})
 
 	it.skip('AT_04.12.01 | Create booking page > Verify any date earlier than the current date is not available.', function () {
@@ -40,15 +42,14 @@ describe('US_04.12 | Calendar month functionality', { tags: ['smoke', 'regressio
 			expect(arrayofMonths).to.deep.eq(createBookingPage.createArrayOfConsetutiveMonths())
 		})
 		
-		for (let monthsAndYear of createBookingPage.getValidBoundaryValuesMonthDropdownMinNomMax()) {
+		for (let i = 0; i < createBookingPage.getValidBoundaryValuesMonthDropdownMinNomMax().length; i++) {
 			createBookingPage
-				.selectMonthFromMonthDropdown(monthsAndYear)
+				.selectMonthFromMonthDropdown(createBookingPage.getValidBoundaryValuesMonthDropdownMinNomMax()[i])
 			createBookingPage
-				.clickCalendarDay(createBookingPage.getCurrentDateInThailand())
-			       
-					createBookingPage.getLabelDepartureOnDate().then(($el) => {
+				.clickCalendarDay(createBookingPage.chooseDate()[i])
+				createBookingPage.getLabelDepartureOnDate().then(($el) => {
 						let departureDate = $el.text()
-						expect(departureDate).to.eq(createBookingPage.getCurrentDateInThailand() + " " + monthsAndYear)
+						expect(departureDate).to.eq(createBookingPage.chooseDate()[i] + " " + createBookingPage.getValidBoundaryValuesMonthDropdownMinNomMax()[i])
 					})			
 		    }
 	});
