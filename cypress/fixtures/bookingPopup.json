@@ -11,5 +11,14 @@
 
     "notesRemark" : "reservation extended: 15 minutes",
 
-    "bookingStatus": "Pending"
+    "bookingStatus": "Pending",
+    
+    "defaultBookingDetails" : {
+        "price" : "12.75 USD",
+        "route" : "Ao Por - Naka - Rassada",
+        "departureStation" : "Ao Por Pier",
+        "arrivalStation" : "Naka Island",
+        "vehicle" : "Ferry",
+        "fareType" : "Adult"
+    }
 }

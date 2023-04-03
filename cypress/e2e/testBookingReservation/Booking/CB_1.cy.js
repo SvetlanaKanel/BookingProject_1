@@ -10,12 +10,13 @@ const AGENT = Cypress.env('agent');
 
 
 beforeEach(function () {
+    cy.cleanData();
     cy.loginWithSession(AGENT.email, AGENT.password);
-    cy.visit('/')
+    cy.visit('/');
 
     cy.fixture('createBookingPage').then(bookingData => {
-        this.bookingData = bookingData
-    })
+        this.bookingData = bookingData;
+    });
 
     cy.fixture('bookingPopup').then(bookingPopup => {
         this.bookingPopup = bookingPopup;
@@ -33,5 +34,13 @@ describe('Popup window parameters verification after the booking was completed',
         createBookingPage.createBooking(passengerNames, passengerAmount, elderFareTypes)
 
         bookingPopup.getBookingStatus().should('contain', this.bookingPopup.bookingStatus);
-    })
+    });
+
+    it('CB_1.06 | Verify Ticket price', function () {
+        createBookingPage.createCustomBooking(this.bookingData.defaultBooking)
+
+        bookingPopup.getTicketsPrice().should('have.text', this.bookingPopup.defaultBookingDetails.price)
+        bookingPopup.getFirstFareTypePrice().should('have.text', this.bookingPopup.defaultBookingDetails.price)
+        bookingPopup.getTotalPrice().should('have.text', this.bookingPopup.defaultBookingDetails.price)
+    });
 })

@@ -12,16 +12,18 @@ class BookingPopup {
     getCountdownClock = () => cy.get('#countdown-clock');
     getNotesRemarkField = () => cy.get('.popup-booking div:last-child>span');
     getChannelField = () => cy.get('.channel');
-    getBookingStatus = () => cy.get('.booking-status')
+    getBookingStatus = () => cy.get('.booking-status');
+    getTicketsPrice = () => cy.get('.popup-booking :nth-child(7) span');
 
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3')
 
     //Passenger prices section
-
     getFirstFareType = () => cy.get('.passengers-prices div:nth-child(1) label');
     getSecondFareType = () => cy.get('.passengers-prices div:nth-child(2) label');
     getThirdFareType = () => cy.get('.passengers-prices div:nth-child(3) label');
+    getFirstFareTypePrice = () => cy.get('.passengers-prices :nth-child(1) .summ');
+    getTotalPrice = () => cy.get('.passengers-prices .total .summ');
 
     // methods
     clickCloseBtnBookingPopup() {

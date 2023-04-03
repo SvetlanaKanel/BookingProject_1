@@ -241,6 +241,14 @@
         "fareType" : "Elder"
       },
 
+      "defaultBooking" : {
+        "departureStationName" : "Ao Por Pier",
+        "arrivalStationName" : "Naka Island",
+        "passengerName" : "Joanna Foster",
+        "passengerAmount" : "1",
+        "fareType" : "Adult"
+    },
+
       "octWeek": "2 Oct - 8 Oct",
 
       "alerts": {

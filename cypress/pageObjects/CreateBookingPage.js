@@ -576,22 +576,28 @@ class CreateBookingPage {
             if (req.body.includes('action=get-trips')) {
             }
           }).as('getTrip')
-        
-        this.selectDepartureStation(departureStationName)
-        cy.wait('@getTrip')
-        
-        this.selectArrivalStation(arrivalStationName)
-        if (departureStationName === 'Bangkok Khao San' && arrivalStationName === 'Chonburi') {
-            this.clickCalendarNextButton()
+
+        if (departureStationName !== 'Ao Por Pier' && arrivalStationName !== 'Naka Island'){
+            this.selectDepartureStation(departureStationName)
             cy.wait('@getTrip')
-            this.clickSaturdayButton()
+        
+            this.selectArrivalStation(arrivalStationName)
+                if (departureStationName === 'Bangkok Khao San' && arrivalStationName === 'Chonburi') {
+                    this.clickCalendarNextButton()
+                    cy.wait('@getTrip')
+                    this.clickSaturdayButton()
+                } else {
+                    this.clickCalendarNextButton()
+                    cy.wait('@getTrip')
+                    this.clickFridayButton()
+                }
+            cy.wait('@getTrip')
         } else {
             this.clickCalendarNextButton()
             cy.wait('@getTrip')
             this.clickFridayButton()
-        }
-        cy.wait('@getTrip')
-        
+            cy.wait('@getTrip')
+        }   
         this.selectAmountPassengersDetailsDropdown(passengerAmount)
 
         cy.wait(1500);
