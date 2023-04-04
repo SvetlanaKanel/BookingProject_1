@@ -10,6 +10,7 @@ const randomLastName = faker.name.lastName();
 const randomFullName = `${randomFirstName} ${randomLastName}`;
 const randomEmail = faker.internet.email(randomFirstName, randomLastName, 'qatest.site');
 const randomPhoneNumber = faker.phone.number('#########');
+const randomNotes = faker.random.words();
 
 describe('US_04.32 | Total functionality', () => {
     before(() => {
@@ -29,5 +30,17 @@ describe('US_04.32 | Total functionality', () => {
         createBookingPage.typeIntoMainPassengerNameField(randomFullName)
         createBookingPage.clickResetButton()
         createBookingPage.getMainPassengerNameField().should('be.empty')
+    })
+
+    it('AT_04.32.02| Verify that after pressing the button “Reset” all the information is erased from the booking',() => {
+        createBookingPage.typeIntoMainPassengerNameField(randomFullName)
+        createBookingPage.typeIntoMainPassengerEmailField(randomEmail)
+        createBookingPage.typeIntoMainPassengerPhoneField(randomPhoneNumber)
+        createBookingPage.typeNotesInputField(randomNotes)
+        createBookingPage.clickResetButton()
+        createBookingPage.getMainPassengerNameField().should('be.empty')
+        createBookingPage.getEmailInputField().should('be.empty')
+        createBookingPage.getMainPassengerPhoneField().should('be.empty')
+        createBookingPage.getNotesInputField().should('be.empty')
     })
 })

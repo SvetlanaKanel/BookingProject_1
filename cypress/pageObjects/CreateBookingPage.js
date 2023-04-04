@@ -230,6 +230,10 @@ class CreateBookingPage {
         this.getEmailInputField().type(Email)
     };
 
+    typeNotesInputField(notes) {
+        this.getNotesInputField().type(notes)
+    }
+
     clickMonthBtn() {
         this.getMonthBtn().click({ force: true })
     }
