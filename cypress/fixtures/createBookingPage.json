@@ -271,5 +271,10 @@
             "name" : "Nik",
             "fareType" : "Child"
           }
-    ] 
+    ],
+
+    "alertZeroBalance" : "You balance must be greater than zero\nPlease try again",
+    "zeroBalance" : "$0.00",
+    "agentZeroEmail" : "zero@qatest.site",
+    "agentZeroPassword" : "12345678"
 }
