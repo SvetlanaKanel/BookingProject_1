@@ -36,4 +36,10 @@ describe('Popup window parameters verification after the booking was completed',
         bookingPopup.getFirstFareTypePrice().should('have.text', this.bookingPopup.defaultBookingDetails.price)
         bookingPopup.getTotalPrice().should('have.text', this.bookingPopup.defaultBookingDetails.price)
     });
+
+    it('CB_1.02 | Verify Booking date is equal to current Thailand date (DD-MMM-YY)', () => {        
+        const currentDate = bookingPopup.getCurrentDateInThailand();
+
+        bookingPopup.getBookingDateWithoutTime().should('eq', currentDate);
+    });
 })

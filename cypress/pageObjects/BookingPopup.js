@@ -14,6 +14,7 @@ class BookingPopup {
     getChannelField = () => cy.get('.channel');
     getBookingStatus = () => cy.get('.booking-status');
     getTicketsPrice = () => cy.get('.popup-booking :nth-child(7) span');
+    getBookingDate = () => cy.get('.popup-booking :nth-child(4) span');
 
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3')
@@ -43,10 +44,10 @@ class BookingPopup {
         })     
     }
 
-     /**
-     * this method returns string "DD-MM-YYYY hh:mm:"
-     */
-     getCurrentDateAndTimeInTailand() {
+    /**
+    * this method returns string "DD-MM-YYYY hh:mm:"
+    */
+    getCurrentDateAndTimeInTailand() {
         let date = new Date();
         const options = {
             day: '2-digit', month: '2-digit', year: 'numeric', 
@@ -60,7 +61,26 @@ class BookingPopup {
         currentTimeArray.pop();
         let formattedTime = currentTimeArray.join(':') + ":";
 
-       return currentDateArrey + formattedTime;
+        return currentDateArrey + formattedTime;
+    }
+
+    /** 
+    * @returns string "DD-MMM-YY"
+    */
+    getCurrentDateInThailand() {
+        let date = new Date();
+        const currentDateInThailand = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit', timeZone: 'Asia/Bangkok' }).replace(/ /g, '-');
+        return currentDateInThailand;
+    }
+
+    /** 
+    * @returns string Booking date without time, in format "DD-MMM-YY"
+    */
+    getBookingDateWithoutTime() {
+        return this.getBookingDate().then($el => {
+            const bookingDate = $el.text().split(' ')[0];
+            return bookingDate;
+        });
     }
 }
 export default BookingPopup;
