@@ -21,6 +21,7 @@ class Header {
     getLogoDropdownMenu = () => cy.get('.img-circle');
     getUserRole = () => cy.get('.pull-center');
     getLogoImgBackground = () => cy.get('.logo');
+    getAgentName = () => cy.get('.hidden-xs');
 
 // methods
     clickBurgerMenu() {
