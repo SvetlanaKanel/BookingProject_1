@@ -188,7 +188,7 @@ class CreateBookingPage {
     };
 
     clickSecondTripCard() {
-        cy.wait(1000)
+        cy.wait(1500)
         cy.intercept('/tools/**').as('getTrip');
         cy.intercept('POST', '/booking/**').as('getBooking');
         cy.wait('@getTrip');

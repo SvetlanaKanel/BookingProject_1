@@ -2,10 +2,11 @@
 
 import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
 import BookingPopup from "../../../pageObjects/BookingPopup";
-
+import Header from "../../../pageObjects/Header";
 
 const createBookingPage = new CreateBookingPage();
 const bookingPopup = new BookingPopup();
+const header = new Header();
 
 const BOOKING = require('../../../fixtures/createBookingPage.json');
 const AGENT = Cypress.env('agent');
@@ -42,4 +43,12 @@ describe('Popup window parameters verification after the booking was completed',
 
         bookingPopup.getBookingDateWithoutTime().should('eq', currentDate);
     });
+
+    it("CB_1.10 | Verify that the Channel field has Agent's name", function() {
+        header.getAgentName().then($el => {
+            const agentName = $el.text().split(':')[0];
+
+            bookingPopup.getChannelField().should('have.text', agentName);
+        }) 
+    })
 })

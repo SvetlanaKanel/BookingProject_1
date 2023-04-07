@@ -2,7 +2,7 @@
 
 import CreateBookingPage from "../../pageObjects/CreateBookingPage";
 import BookingPopup from "../../pageObjects/BookingPopup";
-import Header from "../../pageObjects/Header"
+import Header from "../../pageObjects/Header";
 
 const createBookingPage = new CreateBookingPage();
 const bookingPopup = new BookingPopup();
