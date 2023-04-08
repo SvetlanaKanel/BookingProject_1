@@ -51,4 +51,8 @@ describe('Popup window parameters verification after the booking was completed',
             bookingPopup.getChannelField().should('have.text', agentName);
         }) 
     })
+
+    it("CB_1.03 | Verify Trip Details record such as Route is equal to features data", function() {
+        bookingPopup.getBookingRoute().should('have.text', this.bookingPopup.defaultBookingDetails.route)
+    });
 })
