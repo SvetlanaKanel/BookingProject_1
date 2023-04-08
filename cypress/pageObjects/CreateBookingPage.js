@@ -50,6 +50,7 @@ class CreateBookingPage {
     getTicketsAvailableFirstTripCard = () => cy.get('.trip:first-child span.availability span.num');
     getLabelDepartureOnDate = () => cy.get('#label-departure-on #trips-selected-date');
     getNumberAllSeatsFirstTripCard = () => cy.get('div .trip:first-child .class');
+    getNumberSeatsAvailableTripCard = () => cy.get('div.trip span.num');
     getPriceOfTicket = () => cy.get('.vehclass-ferry.selected .price');
     getLabelTicketsAvailableSecondTripCard = () => cy.get('.trip:nth-child(2) span.availability');
     getDepartureTime = () => cy.get('.popup-trip div:nth-child(6) span');
@@ -62,6 +63,8 @@ class CreateBookingPage {
     getClassUnselectedTripCards = () => cy.get('.trips-list-wrapper > div.trip .class');
     getSelectedTripCard = () => cy.get('div.trip.selected');
     getSecondTripCardAvailability = () => cy.get('div .trip:nth-child(2) span.availability');
+    getTimeOfDepartureSelectedTripCard = () => cy.get('.trip.selected span[class="departure"]');
+    getBookedTripCard = () => cy.get('div.trips-list-wrapper div.trip.booked');
 
     //Arrival on
     getArrivalTime = () => cy.get('.popup-trip div:nth-child(7) span');
@@ -468,6 +471,36 @@ class CreateBookingPage {
         })
     }
 
+    clickOnAvailableTripCard() {
+        cy.wait(1500)
+        this.getDepartureTripCardsList().filter(':visible').then(($el) => {
+            if ($el.text().includes('tickets available')) {
+                this.getDepartureTripCardsList().filter(':visible').filter(':contains("tickets available")').first().click()
+                } else {
+                    this.getDaySelected().invoke('index').then((i) => {
+                        let ind = i 
+                        if (ind + 1 <= 6) {
+                            this.getCalendarDays().eq(ind + 1).click()
+                            cy.wait('@getTrip')
+                            cy.wait(1200)
+                            this.getDepartureTripCardsList().filter(':visible').filter(':contains("tickets available")').first().click()
+                        } else {
+                            this.clickCalendarNextButton()
+                            cy.wait('@getTrip')
+                            this.clickFridayButton()
+                            cy.wait('@getTrip')
+                            cy.wait(1200)
+                            this.getFirstTripCard().filter(':visible').click({ force: true })
+                        }
+                    })
+                }
+            })   
+    } 
+
+    clickOnBookedTripCard() {
+        this.getBookedTripCard().click().should('not.have.class', 'selected')
+    }
+
     /**
      * pass needed fareType in a function ('Adult, Child, Elder) to select option in dropdown
      * @param {*} fareType 
@@ -737,6 +770,13 @@ class CreateBookingPage {
             } 
         }
         return arrayOfDates
+    }
+
+    chooseBookingInfoAndBookTickets(passengerNames, passengerAmount, fareTypes) {
+        this.selectAmountPassengersDetailsDropdown(passengerAmount)
+        this.typePassengerNames(passengerNames)
+        this.selectFareTypes(fareTypes)
+        this.clickBookTicketsBtn()
     }
 }
 export default CreateBookingPage;

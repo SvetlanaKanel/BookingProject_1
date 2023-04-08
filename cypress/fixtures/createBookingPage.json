@@ -249,6 +249,16 @@
         "fareType" : "Adult"
     },
 
+    "namesForVipBusTrip": ["Terrence", "Arch","Alvera","Annabel","Aida","Anya",
+                          "Cierra","Alivia","Dell","Karolann","Gavin","Destany",
+                           "Furman","Adam","Archibald","Stefan","Adela","Bertram",
+                           "Libby","Lupe","Mike","Marlene","Garnet","Sabina"],
+
+    "fareTypesVipBusTrip": ["Adult","Adult","Adult","Adult","Adult","Adult",
+                           "Adult","Adult", "Adult","Adult","Child","Adult",
+                           "Child","Child","Child", "Adult", "Adult","Adult",
+                           "Adult","Adult","Adult", "Child","Child","Child"],
+
       "octWeek": "2 Oct - 8 Oct",
 
       "alerts": {
