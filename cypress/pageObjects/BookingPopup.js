@@ -18,6 +18,7 @@ class BookingPopup {
     getBookingDate = () => cy.get('.popup-booking :nth-child(4) span');
     getBookingRoute = () => cy.get('.popup-trip :nth-child(3) span');
     getBookingVehicle = () => cy.get('.popup-trip :nth-child(4) span');
+    getBookingPassengerSeat = () => cy.get('.col-sm-6.col-md-4:nth-child(2)');
 
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3')
