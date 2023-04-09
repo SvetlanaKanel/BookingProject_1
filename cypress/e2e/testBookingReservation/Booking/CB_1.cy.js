@@ -59,4 +59,8 @@ describe('Popup window parameters verification after the booking was completed',
     it("CB_1.07 | Verify Trip Details record such as Vehicle is equal to features data.", function() {
         bookingPopup.getBookingVehicle().should('have.text', this.bookingPopup.defaultBookingDetails.vehicle)
     });
+
+    it("CB_1.14 | Verify the Passenger name is correct", function() {
+        bookingPopup.getFirstPassengerName().should('have.text', this.bookingPopup.defaultBookingDetails.passengerName)
+    });       
 })

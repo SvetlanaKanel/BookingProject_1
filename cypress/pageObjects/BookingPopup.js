@@ -4,6 +4,7 @@ class BookingPopup {
     getPassengerTitle = () => cy.get('.popup-passengers h3');
     getOnePassengerTypeLabel = () => cy.get('div.passenger-info div:first-child label');
     getPassengersList = () => cy.get('.popup .passengers-box .passenger-info');
+    getFirstPassengerName = () => cy.get('.passengers-box > :nth-child(1) > :nth-child(1) > span');
     getCloseBtnBookingPopup = () => cy.get('.close-button');
     getBookingID = () => cy.get('.booking-id .booking-tracker');
     getPassengerTypeLabel = (labelTypeNumber) => cy.get(`.passengers-box > :nth-child(${labelTypeNumber}) > :nth-child(1) > label`)

@@ -19,6 +19,7 @@
         "departureStation" : "Ao Por Pier",
         "arrivalStation" : "Naka Island",
         "vehicle" : "Ferry",
-        "fareType" : "Adult"
+        "fareType" : "Adult",
+        "passengerName" : "Joanna Foster"
     }
 }
