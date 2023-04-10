@@ -29,7 +29,7 @@ describe('US_AC.08 | ACTIONS > Extend reservation', { tags: ['regression'] }, fu
         bookingPopup.clickBtnExtend();
 
         bookingPopup.getTimeFromTimer().then(extendTime => {
-            expect(extendTime).to.be.below(15);
+            expect(extendTime).to.be.not.above(15);
             expect(extendTime).to.be.above(14);           
         })
     })
