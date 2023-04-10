@@ -66,7 +66,7 @@ describe('Popup window parameters verification after the booking was completed',
         bookingPopup.getBookingPassengerSeat().should('have.text', this.bookingPopup.defaultBookingDetails.passengerSeat)
     }); 
     
-    it("CB_1.17 | Verify Message to operator is exists", function() {
+    it("CB_1.17 | Verify Button Message to operator is exists", function() {
         bookingPopup.getBookingBtnMessageToOperator().should('include.text', this.bookingPopup.messageToOperator)
     });     
 })
