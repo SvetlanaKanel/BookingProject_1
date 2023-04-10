@@ -26,6 +26,7 @@ describe('Popup window parameters verification after the booking was completed',
         cy.fixture('bookingPopup').then(bookingPopup => {
             this.bookingPopup = bookingPopup;
         });
+        header.getAgentNameText().as('agentName');
     });
     
     it('CB_1.01 | Verify Booking status is Pending', function () {
@@ -45,11 +46,8 @@ describe('Popup window parameters verification after the booking was completed',
     });
 
     it("CB_1.10 | Verify that the Channel field has Agent's name", function() {
-        header.getAgentName().then($el => {
-            const agentName = $el.text().split(':')[0];
-
-            bookingPopup.getChannelField().should('have.text', agentName);
-        }) 
+        
+        bookingPopup.getChannelField().should('have.text', this.agentName);   
     })
 
     it("CB_1.03 | Verify Trip Details record such as Route is equal to features data", function() {

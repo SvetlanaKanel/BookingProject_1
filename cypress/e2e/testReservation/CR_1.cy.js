@@ -32,6 +32,7 @@ describe('Popup window parameters verification after the reservation was complet
         cy.fixture('bookingPopup').then(bookingPopUpData => {
             this.bookingPopUpData = bookingPopUpData;
         })
+        header.getAgentNameText().as('agentName');
     })
 
     it('CR_1.01 | Verify Reservation status is Reserved', function() {
@@ -44,14 +45,10 @@ describe('Popup window parameters verification after the reservation was complet
         bookingPopup.getBookingDateWithoutTime().should('eq', currentDate);
     })
 
-    it("CR_1.03 | Verify that the Channel field has Agent's name", function() {        
-        header.getAgentName().then($el => {
-           const agentName = $el.text().split(':')[0];
-
-           bookingPopup.getChannelField().should('have.text', agentName);
-        })        
+    it("CR_1.03 | Verify that the Channel field has Agent's name", function() {       
+        
+           bookingPopup.getChannelField().should('have.text', this.agentName);               
     })
-
 })
 
  

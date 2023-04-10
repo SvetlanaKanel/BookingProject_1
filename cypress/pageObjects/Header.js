@@ -59,5 +59,12 @@ class Header {
     clickUserNavBar() {
         this.getUserNavBar().click();
     }
+
+    getAgentNameText() {
+        return this.getAgentName().then($el => {
+            const name = $el.text().split(':')[0];  
+            return name;
+        })
+    }
 }
 export default Header;
