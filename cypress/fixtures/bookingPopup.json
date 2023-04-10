@@ -22,5 +22,7 @@
         "fareType" : "Adult",
         "passengerName" : "Joanna Foster",
         "passengerSeat" : "Seat:1A"
-    }
+    },
+
+    "messageToOperator": "Message to operator"
 }
