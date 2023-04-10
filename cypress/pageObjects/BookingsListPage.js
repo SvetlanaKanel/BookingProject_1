@@ -47,7 +47,8 @@ class BookingsListPage {
     getColumnsSettingButton = () => cy.get('.table-columns-settings-link');
     getColumnsCheckbox = () => cy.get('input[type="checkbox');
     getColumnsOkButton = () => cy.get('.popup-table-columns-settings .btn-success');
-    getFirstRowBokTkt = () => cy.get('.odd:first-child');
+    getFirstRowBokTkt = () => cy.get('.odd:first-child')
+    getIdColums = () => cy.get('#data tbody tr td div')    
 
     // Methods
     clickPrintButton() {
