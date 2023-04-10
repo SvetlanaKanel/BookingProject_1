@@ -65,4 +65,8 @@ describe('Popup window parameters verification after the booking was completed',
     it("CB_1.16 | Verify the number Seat is equel", function() {
         bookingPopup.getBookingPassengerSeat().should('have.text', this.bookingPopup.defaultBookingDetails.passengerSeat)
     });     
+
+    it("CB_1.15 | Verify the Notes/Remark is empty", function() {
+        bookingPopup.getNotesRemarkField().should('be.empty')
+    }); 
 })
