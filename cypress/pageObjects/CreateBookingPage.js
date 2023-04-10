@@ -471,6 +471,10 @@ class CreateBookingPage {
         })
     }
 
+    /**
+     * @clicks on the first avaliable for booking (if any) trip card for the default selected day, or on the first avaliable trip card on the next day 
+     * if next day falls on the next week - on the first avaliable trip card on Wednesday, next week 
+     */
     clickOnAvailableTripCard() {
         cy.wait(1500)
         this.getDepartureTripCardsList().filter(':visible').then(($el) => {
@@ -487,7 +491,7 @@ class CreateBookingPage {
                         } else {
                             this.clickCalendarNextButton()
                             cy.wait('@getTrip')
-                            this.clickFridayButton()
+                            this.getCalendarDays().eq(2).click()
                             cy.wait('@getTrip')
                             cy.wait(1200)
                             this.getFirstTripCard().filter(':visible').click({ force: true })
@@ -496,10 +500,6 @@ class CreateBookingPage {
                 }
             })   
     } 
-
-    clickOnBookedTripCard() {
-        this.getBookedTripCard().click().should('not.have.class', 'selected')
-    }
 
     /**
      * pass needed fareType in a function ('Adult, Child, Elder) to select option in dropdown

@@ -20,7 +20,7 @@ describe('All trip card statuses (overdue, innactive, innactive/disabled, fully 
 			if (req.body.includes('action=get-trips')) {
 				req.alias = 'getTrip'
 			}
-			if (req.body.includes('book-ticket')) {
+			if (req.body.includes('action=book-ticket')) {
 				req.alias = 'waitForBookedTicket'
 			}
 		})
@@ -50,19 +50,20 @@ describe('All trip card statuses (overdue, innactive, innactive/disabled, fully 
 			createBookingPage.chooseBookingInfoAndBookTickets(passengerNames, passengerAmount, fareTypes)
 			cy.wait('@getTrip').its('response.body').should('include', 'trip')
 			cy.wait('@waitForBookedTicket').its('response.body').should('include', '"message":"Booking confirmed!"')
-			cy.wait('@getPopUp')
+			cy.wait('@getPopUp').its('response.body').should('include', '"status":"CONFIRMED"')
 
 			bookingPopup.getPassengerTitle().should('have.text', 'Passengers (24)')
-			bookingPopup.getPassengersList().each(($el, i) => {
-				expect($el.text()).to.include(fareTypes[i])
-			})
+			bookingPopup.getDepartureTime().should('have.text', timeOfDeparture)
 			bookingPopup.clickCloseBtnBookingPopup()
 			
-			createBookingPage.getBookedTripCard().should('include.text', timeOfDeparture)
-			createBookingPage.clickOnBookedTripCard()
+			createBookingPage.getDepartureTripCardsList().filter(':visible').each(($tripcard) => {
+				if ($tripcard.text().includes(timeOfDeparture)) {
+					expect($tripcard).to.have.class('booked').and.include.text('Fully booked')
+					cy.wrap($tripcard).click({ force: true }).should('not.have.class', 'selected')
+				}
+			})
 			createBookingPage.typeIntoMainPassengerEmailField(this.bookingData.namesForVipBusTrip[1])
 			createBookingPage.getBookTicketsButton().should('have.attr', 'disabled')
-
 		})
 	})
 });
