@@ -65,6 +65,7 @@ class CreateBookingPage {
     getSecondTripCardAvailability = () => cy.get('div .trip:nth-child(2) span.availability');
     getTimeOfDepartureSelectedTripCard = () => cy.get('.trip.selected span[class="departure"]');
     getBookedTripCard = () => cy.get('div.trips-list-wrapper div.trip.booked');
+    getVehicleClassSelectedTripCard = () => cy.get('.trip.selected span[class="class"]');
 
     //Arrival on
     getArrivalTime = () => cy.get('.popup-trip div:nth-child(7) span');
@@ -498,7 +499,10 @@ class CreateBookingPage {
                         }
                     })
                 }
-            })   
+            })
+        this.getLabelSeatSelection()
+            .should('be.visible')
+            .and('have.text', 'Seat selection')       
     } 
 
     /**
@@ -617,17 +621,17 @@ class CreateBookingPage {
         if (departureStationName !== 'Ao Por Pier' && arrivalStationName !== 'Naka Island'){
             this.selectDepartureStation(departureStationName)
             cy.wait('@getTrip')
-        
             this.selectArrivalStation(arrivalStationName)
-                if (departureStationName === 'Bangkok Khao San' && arrivalStationName === 'Chonburi') {
-                    this.clickCalendarNextButton()
-                    cy.wait('@getTrip')
-                    this.clickSaturdayButton()
-                } else {
-                    this.clickCalendarNextButton()
-                    cy.wait('@getTrip')
-                    this.clickFridayButton()
-                }
+
+            if (departureStationName === 'Bangkok Khao San' && arrivalStationName === 'Chonburi') {
+                this.clickCalendarNextButton()
+                cy.wait('@getTrip')
+                this.clickSaturdayButton()
+            } else {
+                this.clickCalendarNextButton()
+                cy.wait('@getTrip')
+                this.clickFridayButton()
+            }
             cy.wait('@getTrip')
         } else {
             this.clickCalendarNextButton()
@@ -639,8 +643,7 @@ class CreateBookingPage {
 
         cy.wait(1500);
         this.getTrips().each(($el) => {
-            const statusText = $el.text();
-            if (statusText !== 'Overdue') {
+            if ($el.text().includes('tickets available')) {
                 cy.wrap($el).click();
                 return false;
             }
@@ -654,7 +657,7 @@ class CreateBookingPage {
         this.selectFareTypes(fareType)
         
         this.clickBookTicketsBtn()
-    }
+    }	
 
     clickgetOctoberMondayButton() {
         this.getOctoberMondayButton().click({ force: true })
@@ -778,5 +781,42 @@ class CreateBookingPage {
         this.selectFareTypes(fareTypes)
         this.clickBookTicketsBtn()
     }
+
+    getTimeOfDepartureSelectedTripCardText() {
+        return this.getTimeOfDepartureSelectedTripCard().then(($time) => {
+            const timeOfDeparture = $time.text()
+            return timeOfDeparture
+        })
+    }
+
+    /**
+    * @returns DepartureOnDate from given in format "14-04-2023"
+    */
+    getLabelDepartureOnDateText() {
+        return this.getLabelDepartureOnDate().then(($date) => {
+            const departureOnDate = $date.text()
+            let now = new Date(departureOnDate)
+            let formatDepartureOnDate = now.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })
+            return formatDepartureOnDate.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2-$1-$3')
+        })
+    }
+
+    /**
+    * @returns VehicleClass without digits ("Ferry", "VIP bus", "Economy bus")
+    */
+    getVehicleClassSelectedTripCardText() {
+        return this.getVehicleClassSelectedTripCard().then(($vehicle) => {
+            const vehicleClass = $vehicle.text().replace(/([0-9])+/i, "").trimEnd()
+            return vehicleClass
+        })
+    }
+
+    getPassengerSeatNumberText() {
+        return this.getPassengerDetailsAssignedSeats().then(($seat) => {
+            const seatNumber = $seat.text()
+            return seatNumber
+        })
+    }
+ 
 }
 export default CreateBookingPage;

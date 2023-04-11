@@ -89,5 +89,27 @@ class BookingPopup {
             return bookingDate;
         });
     }
+
+    getBookingIDNumber() {
+        return this.getBookingID().then(($id) => {
+            const bookingID = $id.text()
+            return bookingID
+        })
+    }
+
+    getBookingDateWithTime() {
+        return this.getBookingDate().then($el => {
+            const bookingDate = $el.text();
+            return bookingDate;
+        });
+    }
+    
+    getBookingStatusText() {
+        return this.getBookingStatus().then(($status) => {
+            const bookingStatus = $status.text()
+            return bookingStatus
+        })
+    }
+
 }
 export default BookingPopup;

@@ -1,3 +1,5 @@
+import getCustomCalendarDate from "../support/utilities/getCustomCalendarDate";
+
 class BookingsListPage {
 
     getBookingListHeader = () => cy.get('.page-title');
@@ -61,6 +63,10 @@ class BookingsListPage {
 
     checkColumnsCheckbox(columns) {
         this.getColumnsCheckbox().check(columns);
+    }
+
+    checkAllColumnsCheckbox() {
+        this.getColumnsCheckbox().check();
     }
 
     uncheckColumnsCheckbox() {
@@ -361,6 +367,18 @@ class BookingsListPage {
         this.getRouteSelect()
             .select(route, {force: true})
     }
+
+    chooseCustomDatesRangeWithCount (startDayCount, endDayCount) {
+        let startDate = this.getDateOnly(this.DD_MMCommaYYYYFormat(getCustomCalendarDate(startDayCount)))
+        let startMonth = this.getMonthOnly(this.DD_MMCommaYYYYFormat(getCustomCalendarDate(startDayCount)))
+        let startYear = this.getYearOnly(this.DD_MMCommaYYYYFormat(getCustomCalendarDate(startDayCount)))
+        let endDate = this.getDateOnly(this.DD_MMCommaYYYYFormat(getCustomCalendarDate(endDayCount)))
+        let endMonth = this.getMonthOnly(this.DD_MMCommaYYYYFormat(getCustomCalendarDate(endDayCount)))
+        let endYear = this.getYearOnly(this.DD_MMCommaYYYYFormat(getCustomCalendarDate(endDayCount)))
+        this.clickDrdnDatesRangeArrow()
+        this.clickDrdnDatesRangeCustomRange()
+        this.clickCustomDates(startDate, startMonth, startYear, endDate, endMonth, endYear)
+      }
 
 }
 
