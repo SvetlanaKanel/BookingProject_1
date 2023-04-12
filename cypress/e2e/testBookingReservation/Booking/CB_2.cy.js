@@ -38,7 +38,7 @@ describe('Change of balance after booking', { tags: ['regression'] }, function (
 
         accountManagementPage.getBookingDateTime().should('have.text', this.expectedBookingDate)
         accountManagementPage.getBookingDescription().should('contain.text', this.expectedBookingId)
-        accountManagementPage.getBookingAmount().should('have.text', this.expectedNegativeBookingAmount)
+        accountManagementPage.getBookingAmountUSFormat().should('equal',this.expectedNegativeBookingAmount)
     })
 
 })
