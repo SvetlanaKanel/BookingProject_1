@@ -18,11 +18,19 @@ describe('Popup window parameters verification after the booking was completed',
         cy.cleanData();
         cy.loginWithSession(AGENT.email, AGENT.password);
         cy.visit('/');
-    
+
+        cy.intercept('POST', 'booking', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+          }).as('getTrip')
         createBookingPage.createCustomBooking(BOOKING.defaultBooking);
     });
     
     beforeEach(function () {
+        cy.fixture('createBookingPage').then(bookingData => {
+            this.bookingData = bookingData;
+        })
+
         cy.fixture('bookingPopup').then(bookingPopup => {
             this.bookingPopup = bookingPopup;
         });
@@ -34,9 +42,9 @@ describe('Popup window parameters verification after the booking was completed',
     });
 
     it('CB_1.06 | Verify Ticket price', function () {
-        bookingPopup.getTicketsPrice().should('have.text', this.bookingPopup.defaultBookingDetails.price)
-        bookingPopup.getFirstFareTypePrice().should('have.text', this.bookingPopup.defaultBookingDetails.price)
-        bookingPopup.getTotalPrice().should('have.text', this.bookingPopup.defaultBookingDetails.price)
+        bookingPopup.getTicketsPrice().should('have.text', this.bookingData.defaultBooking.price)
+        bookingPopup.getFirstFareTypePrice().should('have.text', this.bookingData.defaultBooking.price)
+        bookingPopup.getTotalPrice().should('have.text', this.bookingData.defaultBooking.price)
     });
 
     it('CB_1.02 | Verify Booking date is equal to current Thailand date (DD-MMM-YY)', () => {        

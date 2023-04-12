@@ -19,6 +19,11 @@ describe('Change of balance after booking', { tags: ['regression'] }, function (
         cy.cleanData()
         cy.loginWithSession(AGENT.email, AGENT.password)
         cy.visit('/')
+
+        cy.intercept('POST', 'booking', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+          }).as('getTrip')
         createBookingPage.createCustomBooking(BOOKING.defaultBooking)
 
         bookingPopup.getBookingDateWithTime().as('expectedBookingDate')

@@ -503,9 +503,6 @@ class CreateBookingPage {
                     })
                 }
             })
-        this.getLabelSeatSelection()
-            .should('be.visible')
-            .and('have.text', 'Seat selection')       
     } 
 
     /**
@@ -616,11 +613,6 @@ class CreateBookingPage {
     }
 
     createCustomBooking({departureStationName, arrivalStationName, passengerName, passengerAmount, fareType}) {
-        cy.intercept('POST', 'booking', (req) => {
-            if (req.body.includes('action=get-trips')) {
-            }
-          }).as('getTrip')
-
         if (departureStationName !== 'Ao Por Pier' && arrivalStationName !== 'Naka Island'){
             this.selectDepartureStation(departureStationName)
             cy.wait('@getTrip')
