@@ -111,5 +111,13 @@ class BookingPopup {
         })
     }
 
+    /**
+     * Change Ticket Price from booking popup to negative
+     * @returns  negative ticket price
+     */
+    getBookingNegativeFullTicketPrice() {
+        return this.getTicketsPrice().then($price => -Math.abs(parseFloat($price.text())))
+    }
+
 }
 export default BookingPopup;
