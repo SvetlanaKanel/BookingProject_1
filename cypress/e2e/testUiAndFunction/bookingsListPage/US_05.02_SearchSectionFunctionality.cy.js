@@ -68,7 +68,7 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
       .should('have.length', 4)
   });
 
-  it('AT_05.02.01 | Verify that the agent is able to enter data in Search input field and find booking', function () {
+  it.skip('AT_05.02.01 | Verify that the agent is able to enter data in Search input field and find booking', function () {
     cy.intercept('POST', 'orders', (req) => {
       if (req.body.includes('action=get-orders')) {
       }

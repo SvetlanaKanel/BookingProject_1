@@ -24,6 +24,7 @@ describe('All trip card statuses (overdue, innactive, innactive/disabled, fully 
 				req.alias = 'waitForBookedTicket'
 			}
 		})
+		cy.intercept('POST', '/booking/?get-layout').as('getLayout')
 		cy.intercept('POST', '/orders').as('getPopUp')
 
 		cy.fixture('createBookingPage').then(bookingData => {
@@ -55,6 +56,7 @@ describe('All trip card statuses (overdue, innactive, innactive/disabled, fully 
 			bookingPopup.getPassengerTitle().should('have.text', 'Passengers (24)')
 			bookingPopup.getDepartureTime().should('have.text', timeOfDeparture)
 			bookingPopup.clickCloseBtnBookingPopup()
+			cy.wait(400)
 			
 			createBookingPage.getDepartureTripCardsList().filter(':visible').each(($tripcard) => {
 				if ($tripcard.text().includes(timeOfDeparture)) {

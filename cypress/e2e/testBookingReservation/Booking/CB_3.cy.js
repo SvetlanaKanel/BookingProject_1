@@ -42,6 +42,8 @@ describe('Booking management', function () {
             }
         }).as('getTrip');
 
+        cy.intercept('POST', '/booking/?get-layout').as('getLayout')
+
         cy.intercept('POST', 'orders', (req) => {
             if (req.body.includes('action=get-booking')) {
             }

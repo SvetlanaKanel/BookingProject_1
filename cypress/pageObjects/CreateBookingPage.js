@@ -481,6 +481,7 @@ class CreateBookingPage {
         this.getDepartureTripCardsList().filter(':visible').then(($el) => {
             if ($el.text().includes('tickets available')) {
                 this.getDepartureTripCardsList().filter(':visible').filter(':contains("tickets available")').first().click()
+                cy.wait('@getLayout')
                 } else {
                     this.getDaySelected().invoke('index').then((i) => {
                         let ind = i 
@@ -489,6 +490,7 @@ class CreateBookingPage {
                             cy.wait('@getTrip')
                             cy.wait(1200)
                             this.getDepartureTripCardsList().filter(':visible').filter(':contains("tickets available")').first().click()
+                            cy.wait('@getLayout')
                         } else {
                             this.clickCalendarNextButton()
                             cy.wait('@getTrip')
@@ -496,6 +498,7 @@ class CreateBookingPage {
                             cy.wait('@getTrip')
                             cy.wait(1200)
                             this.getFirstTripCard().filter(':visible').click({ force: true })
+                            cy.wait('@getLayout')
                         }
                     })
                 }
