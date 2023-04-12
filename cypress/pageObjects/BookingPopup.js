@@ -18,11 +18,14 @@ class BookingPopup {
     getBookingDate = () => cy.get('.popup-booking :nth-child(4) span');
     getBookingRoute = () => cy.get('.popup-trip :nth-child(3) span');
     getBookingVehicle = () => cy.get('.popup-trip :nth-child(4) span');
+    getBookingDepartureStation = () => cy.get('.popup-trip :nth-child(8) span');
+    getDepartureTime = () => cy.get('div.popup-trip > div:nth-child(6) > span');
     getBookingPassengerSeat = () => cy.get('.col-sm-6.col-md-4:nth-child(2)');
     getBookingBtnMessageToOperator = () => cy.get('div.popup-buttons');
     
     // Booking Details
-    getBookingDetailsTitle = () => cy.get('.popup-booking > h3')
+    getBookingDetailsTitle = () => cy.get('.popup-booking > h3');
+    getBookingID = () => cy.get('.booking-tracker');
 
     //Passenger prices section
     getFirstFareType = () => cy.get('.passengers-prices div:nth-child(1) label');
@@ -87,5 +90,35 @@ class BookingPopup {
             return bookingDate;
         });
     }
+
+    getBookingIDNumber() {
+        return this.getBookingID().then(($id) => {
+            const bookingID = $id.text()
+            return bookingID
+        })
+    }
+
+    getBookingDateWithTime() {
+        return this.getBookingDate().then($el => {
+            const bookingDate = $el.text();
+            return bookingDate;
+        });
+    }
+    
+    getBookingStatusText() {
+        return this.getBookingStatus().then(($status) => {
+            const bookingStatus = $status.text()
+            return bookingStatus
+        })
+    }
+
+    /**
+     * Change Ticket Price from booking popup to negative
+     * @returns  negative ticket price
+     */
+    getBookingNegativeFullTicketPrice() {
+        return this.getTicketsPrice().then($price => -Math.abs(parseFloat($price.text())))
+    }
+
 }
 export default BookingPopup;

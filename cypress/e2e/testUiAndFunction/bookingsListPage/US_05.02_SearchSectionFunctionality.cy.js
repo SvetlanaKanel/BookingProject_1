@@ -6,7 +6,6 @@ import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
 import BookingPopup from '../../../pageObjects/BookingPopup';
 import getArray from "../../../support/utilities/getArray";
 import { faker } from '@faker-js/faker';
-import getCustomCalendarDate from "../../../support/utilities/getCustomCalendarDate";
 
 const bookingsListPage = new BookingsListPage();
 const leftMenuPanel = new LeftMenuPanel();
@@ -15,18 +14,6 @@ const bookingPopup = new BookingPopup();
 const AGENT = Cypress.env("agent");
 const BOOKING = require('../../../fixtures/createBookingPage.json');
 const randomWord = faker.word.adjective(5);
-
-function chooseCustomDatesRangeWithCount (startDayCount, endDayCount) {
-  let startDate = bookingsListPage.getDateOnly(bookingsListPage.DD_MMCommaYYYYFormat(getCustomCalendarDate(startDayCount)))
-  let startMonth = bookingsListPage.getMonthOnly(bookingsListPage.DD_MMCommaYYYYFormat(getCustomCalendarDate(startDayCount)))
-  let startYear = bookingsListPage.getYearOnly(bookingsListPage.DD_MMCommaYYYYFormat(getCustomCalendarDate(startDayCount)))
-  let endDate = bookingsListPage.getDateOnly(bookingsListPage.DD_MMCommaYYYYFormat(getCustomCalendarDate(endDayCount)))
-  let endMonth = bookingsListPage.getMonthOnly(bookingsListPage.DD_MMCommaYYYYFormat(getCustomCalendarDate(endDayCount)))
-  let endYear = bookingsListPage.getYearOnly(bookingsListPage.DD_MMCommaYYYYFormat(getCustomCalendarDate(endDayCount)))
-  bookingsListPage.clickDrdnDatesRangeArrow()
-  bookingsListPage.clickDrdnDatesRangeCustomRange()
-  bookingsListPage.clickCustomDates(startDate, startMonth, startYear, endDate, endMonth, endYear)
-}
 
 describe("US_05.02_Search section functionality", { tags: ['regression'] }, () => {
 
@@ -45,6 +32,15 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     cy.loginWithSession(AGENT.email, AGENT.password);
     cy.visit("/");
 
+    cy.intercept('POST', '/booking/', (req) => {
+			if (req.body.includes('action=get-trips')) {
+				req.alias = 'getTrip'
+			}
+			if (req.body.includes('action=book-ticket')) {
+				req.alias = 'waitForBookedTicket'
+			}
+		})
+
     cy.intercept('POST', 'orders', (req) => {
       if (req.body.includes('action=get-booking')) {
       }
@@ -53,6 +49,7 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     const bookingsDetails = BOOKING.bookingDetails
     for (const bookingDetails of bookingsDetails) {
       createBookingPage.createCustomBooking(bookingDetails)
+      cy.wait('@waitForBookedTicket')
       cy.wait('@getPopUp') 
       bookingPopup.clickCloseBtnBookingPopup()
     }
@@ -62,7 +59,7 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     }).as('orders')
     leftMenuPanel.clickBookingManagementIcon();
     cy.wait('@orders').its('response.body').should('include', '"recordsTotal"')
-    chooseCustomDatesRangeWithCount(-3, 3)
+    bookingsListPage.chooseCustomDatesRangeWithCount(-3, 3)
     cy.wait('@orders')
     bookingsListPage.getTableBodyRows()
       .should('have.length', 4)
@@ -76,7 +73,7 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
 
     bookingsListPage.typeInSearchField(`${this.bookingData.bookingDetails[2].passengerName}{enter}`)
     cy.wait('@orders').its('response.body').should('include', '"recordsTotal"')
-    bookingsListPage.getTableBodyRows()
+    bookingsListPage.getTableBodyRows().filter(':visible')
       .should('have.length', 1)
 
     bookingsListPage.getTableHeadersColumnsList().then(($header) => {
@@ -92,13 +89,19 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
 
   it('AT_05.02.02 | Verify that the agent is able to enter data in Booking ID input field and find booking', function () {
     //Precondition
-    leftMenuPanel.clickBookingIcon()
+    cy.intercept('POST', '/booking/', (req) => {
+			if (req.body.includes('action=get-trips')) {req.alias = 'getTrip'}
+			if (req.body.includes('action=book-ticket')) {req.alias = 'waitForBookedTicket'}
+		})
+
     cy.intercept('POST', 'orders', (req) => {
       if (req.body.includes('action=get-booking')) {
       }
     }).as('getPopUp')
-    
+
+    leftMenuPanel.clickBookingIcon()
     createBookingPage.createCustomBooking(this.bookingData.bookingDetailsTest)
+    cy.wait('@waitForBookedTicket')
     cy.wait('@getPopUp')
     bookingPopup.getBookingID().then(($id) => {
       let bookingID = $id.text()
@@ -110,14 +113,14 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
       leftMenuPanel.clickBookingManagementIcon()
 
       cy.wait('@orders').its('response.body').should('include', '"recordsTotal"')
-      chooseCustomDatesRangeWithCount(-3, 3)
+      bookingsListPage.chooseCustomDatesRangeWithCount(-3, 3)
       cy.wait('@orders')
       bookingsListPage.getTableBodyRows()
         .should('have.length', 5)
       
       bookingsListPage.typeInBookingIDField(`${bookingID}{enter}`)
       cy.wait('@orders')
-      bookingsListPage.getTableBodyRows()
+      bookingsListPage.getTableBodyRows().filter(':visible')
         .should('have.length', 1)
 
       bookingsListPage.getTableHeadersColumnsList().then(($header) => {
@@ -147,14 +150,14 @@ describe("US_05.02_Search section functionality", { tags: ['regression'] }, () =
     
     leftMenuPanel.clickBookingManagementIcon()
     cy.wait('@orders').its('response.body').should('include', '"recordsTotal"')
-    chooseCustomDatesRangeWithCount(-3, 3)
+    bookingsListPage.chooseCustomDatesRangeWithCount(-3, 3)
     cy.wait('@orders')
     bookingsListPage.getTableBodyRows()
       .should('have.length', 5)
 
     bookingsListPage.selectRoute(this.bookingData.bookingDetails[3].route)
     cy.wait('@orders')
-    bookingsListPage.getTableBodyRows()
+    bookingsListPage.getTableBodyRows().filter(':visible')
       .should('have.length', 1)
 
     bookingsListPage.getTableHeadersColumnsList().then(($header) => {

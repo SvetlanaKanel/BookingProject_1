@@ -246,7 +246,8 @@
         "arrivalStationName" : "Naka Island",
         "passengerName" : "Joanna Foster",
         "passengerAmount" : "1",
-        "fareType" : "Adult"
+        "fareType" : "Adult",        
+        "price" : "12.75 USD"
     },
 
     "namesForVipBusTrip": ["Terrence", "Arch","Alvera","Annabel","Aida","Anya",
