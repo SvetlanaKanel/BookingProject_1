@@ -128,7 +128,8 @@ class CreateBookingPage {
     getPricesSummary = () => cy.get('.total-wrapper > div.total-row span');
     getTotalPriceSummary = () => cy.get('.box-footer span.total-price.right');
     getTotalSummaryLabel = () => cy.get('div.box-footer > span:nth-child(1) > b');
-    getFareTypeColumnSummary = () => cy.get('div.total-row > div:nth-child(1)')
+    getFareTypeColumnSummary = () => cy.get('div.total-row > div:nth-child(1)');
+    getSummarySection = () => cy.get('.summary-box .col-lg-12')
 
     //Total - Footer section                  
     getReservationTicketArrow = () => cy.get('.btn-group .caret');
