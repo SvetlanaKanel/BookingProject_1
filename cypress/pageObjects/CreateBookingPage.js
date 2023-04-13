@@ -475,6 +475,13 @@ class CreateBookingPage {
     /**
      * @clicks on the first avaliable for booking (if any) trip card for the default selected day, or on the first avaliable trip card on the next day 
      * if next day falls on the next week - on the first avaliable trip card on Wednesday, next week 
+     * @param {*'@getLayout', *'@getTrip'} are called within file
+     *  cy.intercept('POST', '/booking/', (req) => {
+	 *	if (req.body.includes('action=get-trips')) {
+	 *		req.alias = 'getTrip'
+	 *	}
+     * })
+     * cy.intercept('POST', '/booking/?get-layout').as('getLayout')
      */
     clickOnAvailableTripCard() {
         cy.wait(1500)
@@ -611,7 +618,15 @@ class CreateBookingPage {
         const currentMonthAndYearThailand = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'Asia/Bangkok' });
         return currentMonthAndYearThailand;
     }
-
+  
+    /**
+        * @param {*'@getTrip' } is called within file
+        *  cy.intercept('POST', '/booking/', (req) => {
+        *	if (req.body.includes('action=get-trips')) {
+        *		req.alias = 'getTrip'
+        *	}
+        * })
+    */
     createCustomBooking({departureStationName, arrivalStationName, passengerName, passengerAmount, fareType}) {
         if (departureStationName !== 'Ao Por Pier' && arrivalStationName !== 'Naka Island'){
             this.selectDepartureStation(departureStationName)
