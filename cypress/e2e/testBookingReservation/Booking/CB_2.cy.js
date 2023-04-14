@@ -4,6 +4,7 @@ import CreateBookingPage from "../../../pageObjects/CreateBookingPage"
 import BookingPopup from "../../../pageObjects/BookingPopup"
 import AccountManagementPage from "../../../pageObjects/AccountManagementPage"
 import LeftMenuPanel from "../../../pageObjects/LeftMenuPanel"
+import getAmountFormat from "../../../support/utilities/getAmountFormat"
 
 const createBookingPage = new CreateBookingPage()
 const bookingPopup = new BookingPopup()
@@ -38,7 +39,7 @@ describe('Change of balance after booking', { tags: ['regression'] }, function (
 
         accountManagementPage.getBookingDateTime().should('have.text', this.expectedBookingDate)
         accountManagementPage.getBookingDescription().should('contain.text', this.expectedBookingId)
-        accountManagementPage.getBookingAmountUSFormat().should('equal',this.expectedNegativeBookingAmount)
+        getAmountFormat(accountManagementPage.getBookingAmount()).should('equal',this.expectedNegativeBookingAmount)
     })
 
 })
