@@ -52,4 +52,8 @@ describe('US_04.02_Default page UI', { tags: ['smoke'] }, () => {
     it('AT_04.02.09 | Verify Passenger details section exists/is visible.', function (){
         createBookingPage.getLabelPassengerDetails().should('have.text', 'Passengers details').and('be.visible'); 
     });
+
+    it('AT_04.02.10 | Verify Summary section exists/is visible', function (){
+        createBookingPage.getSummarySection().should('include.text', 'Summary').and('be.visible');
+    });
 })

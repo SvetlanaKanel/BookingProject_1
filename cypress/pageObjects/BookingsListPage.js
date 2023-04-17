@@ -368,6 +368,9 @@ class BookingsListPage {
             .select(route, {force: true})
     }
 
+    /**
+     *@returns range of dates are counted plus or minus from the current date
+   */
     chooseCustomDatesRangeWithCount (startDayCount, endDayCount) {
         let startDate = this.getDateOnly(this.DD_MMCommaYYYYFormat(getCustomCalendarDate(startDayCount)))
         let startMonth = this.getMonthOnly(this.DD_MMCommaYYYYFormat(getCustomCalendarDate(startDayCount)))

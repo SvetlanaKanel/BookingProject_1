@@ -22,7 +22,8 @@ class BookingPopup {
     getDepartureTime = () => cy.get('div.popup-trip > div:nth-child(6) > span');
     getBookingPassengerSeat = () => cy.get('.col-sm-6.col-md-4:nth-child(2)');
     getBookingBtnMessageToOperator = () => cy.get('div.popup-buttons');
-    
+    getTotalSumm = () => cy.get('.total > .summ');
+
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3');
     getBookingID = () => cy.get('.booking-tracker');
