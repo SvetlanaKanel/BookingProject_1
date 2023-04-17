@@ -35,6 +35,12 @@ class BookingPopup {
     getFirstFareTypePrice = () => cy.get('.passengers-prices :nth-child(1) .summ');
     getTotalPrice = () => cy.get('.passengers-prices .total .summ');
 
+    //popup-buttons
+    getBtnsPopUp = () => cy.get('.popup-buttons');
+    getBtnPrintTicket = () => cy.get('.popup-buttons .btn-print-ticket');
+    getBtnSendTicketByEmail = () => cy.get('.popup-buttons .btn-send-ticket-by-email');
+    getBtnSendTicketBySms = () => cy.get('.popup-buttons .btn-send-ticket-by-sms');
+
     // methods
     clickCloseBtnBookingPopup() {
         this.getCloseBtnBookingPopup().click()
