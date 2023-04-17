@@ -828,6 +828,5 @@ class CreateBookingPage {
             return seatNumber
         })
     }
- 
 }
 export default CreateBookingPage;
