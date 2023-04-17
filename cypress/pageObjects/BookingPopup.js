@@ -21,6 +21,7 @@ class BookingPopup {
     getBookingDepartureStation = () => cy.get('.popup-trip :nth-child(8) span');
     getDepartureTime = () => cy.get('div.popup-trip > div:nth-child(6) > span');
     getBookingPassengerSeat = () => cy.get('.col-sm-6.col-md-4:nth-child(2)');
+    getBookingArrivalStation = () => cy.get('div.popup-trip > div:nth-child(9) > span');
     getTotalSumm = () => cy.get('.total > .summ');
 
     // Booking Details

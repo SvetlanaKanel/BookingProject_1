@@ -81,4 +81,8 @@ describe('Popup window parameters verification after the booking was completed',
     it("CB_1.15 | Verify the Notes/Remark is empty", function() {
         bookingPopup.getNotesRemarkField().should('be.empty')
     }); 
+
+    it("CB_1.13 | Verify Trip Details record such as Arrival station is equal to features data.", function() {
+        bookingPopup.getBookingArrivalStation().should('have.text', this.bookingPopup.defaultBookingDetails.arrivalStation)
+    });
 })
