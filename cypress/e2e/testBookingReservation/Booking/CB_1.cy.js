@@ -95,4 +95,8 @@ describe('Popup window parameters verification after the booking was completed',
     it("CB_1.21 | Verify that when you click the Print ticket button, a pop-up appears where you can print the ticket", function() {
         bookingPopup.getBtnPrintTicket().should('not.exist');
     }); 
+
+    it("CB_1.05 | Verify the Fare type", function() {
+        bookingPopup.getFareType().should('contain.text', this.bookingPopup.defaultBookingDetails.fareType)
+    });     
 })
