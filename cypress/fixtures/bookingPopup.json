@@ -21,14 +21,10 @@
         "vehicle" : "Ferry",
         "fareType" : "Adult",
         "passengerName" : "Joanna Foster",
-<<<<<<< HEAD
-        "passengerSeat" : "Seat:1A"
+        "passengerSeat" : "Seat:1A",
+        "departureTime" : "08:00"
     },
 
     "messageToOperator": "Message to operator"
-=======
-        "passengerSeat" : "Seat:1A",
-        "departureTime" : "08:00"
-    }
->>>>>>> 514497e46b6ff0963c78fc86b193e8b7c2d723fa
+
 }
