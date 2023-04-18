@@ -22,7 +22,9 @@ class BookingPopup {
     getDepartureTime = () => cy.get('div.popup-trip > div:nth-child(6) > span');
     getBookingPassengerSeat = () => cy.get('.col-sm-6.col-md-4:nth-child(2)');
     getBookingBtnMessageToOperator = () => cy.get('div.popup-buttons');
+    getBookingArrivalStation = () => cy.get('div.popup-trip > div:nth-child(9) > span');
     getTotalSumm = () => cy.get('.total > .summ');
+    getFareType = () => cy.get('div.col-sm-12.col-md-4.passengers-prices > div:nth-child(1) > label');
 
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3');
@@ -34,6 +36,12 @@ class BookingPopup {
     getThirdFareType = () => cy.get('.passengers-prices div:nth-child(3) label');
     getFirstFareTypePrice = () => cy.get('.passengers-prices :nth-child(1) .summ');
     getTotalPrice = () => cy.get('.passengers-prices .total .summ');
+
+    //popup-buttons
+    getBtnsPopUp = () => cy.get('.popup-buttons');
+    getBtnPrintTicket = () => cy.get('.popup-buttons .btn-print-ticket');
+    getBtnSendTicketByEmail = () => cy.get('.popup-buttons .btn-send-ticket-by-email');
+    getBtnSendTicketBySms = () => cy.get('.popup-buttons .btn-send-ticket-by-sms');
 
     // methods
     clickCloseBtnBookingPopup() {

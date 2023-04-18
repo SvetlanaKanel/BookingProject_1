@@ -85,4 +85,26 @@ describe('Popup window parameters verification after the booking was completed',
     it("CB_1.15 | Verify the Notes/Remark is empty", function() {
         bookingPopup.getNotesRemarkField().should('be.empty')
     }); 
+
+    it("CB_1.13 | Verify Trip Details record such as Arrival station is equal to features data.", function() {
+        bookingPopup.getBookingArrivalStation().should('have.text', this.bookingPopup.defaultBookingDetails.arrivalStation)
+    });
+
+    it("CB_1.19 | Verify that when you click the Print ticket button, a pop-up appears where you can print the ticket", function() {
+        bookingPopup.getBtnSendTicketByEmail().should('not.exist');
+    }); 
+    it("CB_1.20 | Verify that when you click the Print ticket button, a pop-up appears where you can print the ticket", function() {
+        bookingPopup.getBtnSendTicketBySms().should('not.exist');
+    }); 
+    it("CB_1.21 | Verify that when you click the Print ticket button, a pop-up appears where you can print the ticket", function() {
+        bookingPopup.getBtnPrintTicket().should('not.exist');
+    }); 
+
+    it("CB_1.05 | Verify the Fare type", function() {
+        bookingPopup.getFareType().should('contain.text', this.bookingPopup.defaultBookingDetails.fareType)
+    });   
+    
+    it("CB_1.09 | Verify Trip Details record such as Departure time is equal to features data.", function() {
+        bookingPopup.getDepartureTime().should('have.text', this.bookingPopup.defaultBookingDetails.departureTime)
+    });
 })
