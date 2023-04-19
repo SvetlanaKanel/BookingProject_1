@@ -27,8 +27,6 @@ class BookingPopup {
     getArrivalTime = () => cy.get('div.popup-trip > div:nth-child(7) > span');
     getDepartureDate = () => cy.get('.popup-trip div:nth-child(5) span');
 
-
-
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3');
     getBookingID = () => cy.get('.booking-tracker');
