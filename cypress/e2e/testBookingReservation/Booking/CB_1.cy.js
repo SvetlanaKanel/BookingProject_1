@@ -98,5 +98,13 @@ describe('Popup window parameters verification after the booking was completed',
 
     it("CB_1.05 | Verify the Fare type", function() {
         bookingPopup.getFareType().should('contain.text', this.bookingPopup.defaultBookingDetails.fareType)
-    });     
+    });   
+    
+    it("CB_1.09 | Verify Trip Details record such as Departure time is equal to features data.", function() {
+        bookingPopup.getDepartureTime().should('have.text', this.bookingPopup.defaultBookingDetails.departureTime)
+    });
+
+    it("CB_1.11 | Verify Trip Details record such as Arrival time is equal to features data.", function() {
+        bookingPopup.getArrivalTime().should('have.text', this.bookingPopup.defaultBookingDetails.arrivalTime)
+    });
 })

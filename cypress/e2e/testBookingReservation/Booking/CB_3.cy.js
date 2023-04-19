@@ -133,25 +133,13 @@ describe('Booking management', function () {
     });
 
     it('CB_3.03 | Verify that the booking ticket has the correct Booking date', function () {
-        bookingsListPage.getIdColums().each($el => {
-            if ($el.text() == this.bookingDate) {
-                cy.wrap($el).click()
-            }
-        })
-
         bookingPopup.getBookingDate().then($el => {
             expect($el.text()).to.eq(this.bookingDate)
         })
     });
 
     it('CB_3.04 | Verify that the booking ticket has the correct Departure date', function () {
-        bookingsListPage.getIdColums().each($el => {
-            if ($el.text() == this.bookingID) {
-                cy.wrap($el).click()
-            }
-        })
-
-        bookingPopup.getDepartureDate().then($el => {
+       bookingPopup.getDepartureDate().then($el => {
             expect($el.text()).to.eq(this.departureOnDate)
         })
     });
