@@ -55,6 +55,18 @@ describe('Popup window parameters verification after the reservation was complet
 
         bookingPopup.getBookingRoute().should('have.text', route);
     })
+
+    it('CR_1.08 | Verify Arrival time field is equal to features data', function() {
+        bookingPopup.getArrivalTime().should('have.text', this.bookingPopUpData.defaultBookingDetails.arrivalSecondTripTime);
+    })
+
+    it('CR_1.09 | Verify Departure station field is equal to features data', function() {
+        bookingPopup.getBookingDepartureStation().should('have.text', this.bookingPopUpData.defaultBookingDetails.departureStation)
+    })
+
+    it('CR_1.10 | Verify Arrival station field is equal to features data', function() {
+        bookingPopup.getBookingArrivalStation().should('have.text', this.bookingPopUpData.defaultBookingDetails.arrivalStation)
+    })
 })
 
  
