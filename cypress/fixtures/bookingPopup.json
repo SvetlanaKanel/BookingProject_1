@@ -22,9 +22,10 @@
         "fareType" : "Adult",
         "passengerName" : "Joanna Foster",
         "passengerSeat" : "Seat:1A",
-        "departureTime" : "08:00"
+        "departureTime" : "08:00",
+        "arrivalTime" : "08:05"
     },
 
     "messageToOperator": "Message to operator"
-
+    
 }

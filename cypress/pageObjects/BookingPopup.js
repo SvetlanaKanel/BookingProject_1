@@ -25,6 +25,7 @@ class BookingPopup {
     getBookingArrivalStation = () => cy.get('div.popup-trip > div:nth-child(9) > span');
     getTotalSumm = () => cy.get('.total > .summ');
     getFareType = () => cy.get('div.col-sm-12.col-md-4.passengers-prices > div:nth-child(1) > label');
+    getArrivalTime = () => cy.get('div.popup-trip > div:nth-child(7) > span');
 
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3');
