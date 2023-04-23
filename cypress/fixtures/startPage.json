@@ -101,6 +101,7 @@
         "letterInPhoneNumber": "61616161A",
         "symbolsInCountryCode": "%@",
         "missingDomainEmail": "test@",
-        "missingDomainAndAtSignEmail": "test"
+        "missingDomainAndAtSignEmail": "test",
+        "symbolsInPhoneNumber": "@#$:%&*/"
     }
 }

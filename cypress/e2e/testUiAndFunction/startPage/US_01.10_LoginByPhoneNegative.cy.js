@@ -44,7 +44,7 @@ describe('US_01.10 | Login by phone negative', { tags: ['regression'] }, () => {
         loginPopup.getMessageAlert()
             .should('be.visible')
             .and('have.text', this.startPage.alert.loginPopupByPhoneMessageAlert);
-    })
+    });
 
     it('AT_01.10.04 | Login is not possible with any letters in "Phone number" input', function() {
         loginPopup.enterCountryCode(this.startPage.data.phoneNumber.code);
@@ -54,7 +54,7 @@ describe('US_01.10 | Login by phone negative', { tags: ['regression'] }, () => {
         loginPopup.getMessageAlert()
         .should('be.visible')
         .and('have.text', this.startPage.alert.loginPopupByPhoneWrongNumberAlert);
-    })
+    });
 
     it('AT_01.10.05 | Verify that registering is not possible with any symbols "Country code" input', function() {
         loginPopup.enterCountryCode(this.startPage.dataInvalid.symbolsInCountryCode);
@@ -65,4 +65,14 @@ describe('US_01.10 | Login by phone negative', { tags: ['regression'] }, () => {
             .should('be.visible')
             .and('have.text', this.startPage.alert.loginPopupByPhoneMessageAlert);
     });
-})
+
+    it('AT_01.10.06 | Verify that registering is not possible with any symbols "Phone number" input', function() {
+        loginPopup.enterCountryCode(this.startPage.data.phoneNumber.code);
+        loginPopup.enterPhoneNumber(this.startPage.dataInvalid.symbolsInPhoneNumber);
+        loginPopup.clickRequestCodeButton();
+
+        loginPopup.getMessageAlert()
+            .should('be.visible')
+            .and('have.text', this.startPage.alert.loginPopupByPhoneMessageAlert);
+    });
+});
