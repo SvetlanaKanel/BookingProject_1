@@ -72,6 +72,10 @@ describe('Popup window parameters verification after the booking was completed',
     
     it("CB_1.16 | Verify the number Seat is equel", function() {
         bookingPopup.getBookingPassengerSeat().should('have.text', this.bookingPopup.defaultBookingDetails.passengerSeat)
+    }); 
+    
+    it("CB_1.17 | Verify Button Message to operator is exists", function() {
+        bookingPopup.getBookingBtnMessageToOperator().should('include.text', this.bookingPopup.messageToOperator)
     });      
     
     it("CB_1.12 | Verify Trip Details record such as Departure station is equal to features data.", function() {
