@@ -137,4 +137,10 @@ describe('Booking management', function () {
             expect($el.text()).to.eq(this.bookingDate)
         })
     });
+
+    it('CB_3.04 | Verify that the booking ticket has the correct Departure date', function () {
+       bookingPopup.getDepartureDate().then($el => {
+            expect($el.text()).to.eq(this.departureOnDate)
+        })
+    });
 });
