@@ -143,4 +143,10 @@ describe('Booking management', function () {
             expect($el.text()).to.eq(this.departureOnDate)
         })
     });
+
+    it('CB_3.07 | Verify that the booking ticket has the correct Vehicle', function () {
+        bookingPopup.getBookingVehicle().then($el => {
+             expect($el.text()).to.eq(this.vehicle)
+         })
+     });
 });
