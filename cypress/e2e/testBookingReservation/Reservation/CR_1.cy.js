@@ -1,14 +1,14 @@
 /// <reference types = "Cypress" />
 
-import CreateBookingPage from "../../pageObjects/CreateBookingPage";
-import BookingPopup from "../../pageObjects/BookingPopup";
-import Header from "../../pageObjects/Header";
+import CreateBookingPage from "../../../pageObjects/CreateBookingPage";
+import BookingPopup from "../../../pageObjects/BookingPopup";
+import Header from "../../../pageObjects/Header";
 
 const createBookingPage = new CreateBookingPage();
 const bookingPopup = new BookingPopup();
 const header = new Header();
 
-const BOOKING = require('../../fixtures/createBookingPage.json');
+const BOOKING = require('../../../fixtures/createBookingPage.json');
 const AGENT = Cypress.env('agent')
 
 describe('Popup window parameters verification after the reservation was completed', { tags: ['regression'] }, function() {
@@ -66,6 +66,10 @@ describe('Popup window parameters verification after the reservation was complet
 
     it('CR_1.10 | Verify Arrival station field is equal to features data', function() {
         bookingPopup.getBookingArrivalStation().should('have.text', this.bookingPopUpData.defaultBookingDetails.arrivalStation)
+    })
+
+    it('CR_1.07 | Verify Departure time field is equal to features data', function () {
+        bookingPopup.getDepartureTime().should('have.text', this.bookingPopUpData.defaultBookingDetails.departureSecondTripTime)
     })
 })
 
