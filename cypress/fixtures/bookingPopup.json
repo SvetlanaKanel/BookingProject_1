@@ -25,7 +25,8 @@
         "departureTime" : "08:00",
         "departureSecondTripTime" : "15:00",
         "arrivalTime" : "08:05",
-        "arrivalSecondTripTime": "15:05"
+        "arrivalSecondTripTime": "15:05",
+        "quantity" : 1
     },
 
     "messageToOperator": "Message to operator"

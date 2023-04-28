@@ -61,15 +61,27 @@ describe('Popup window parameters verification after the reservation was complet
     })
 
     it('CR_1.09 | Verify Departure station field is equal to features data', function() {
-        bookingPopup.getBookingDepartureStation().should('have.text', this.bookingPopUpData.defaultBookingDetails.departureStation)
+        bookingPopup.getBookingDepartureStation().should('have.text', this.bookingPopUpData.defaultBookingDetails.departureStation);
     })
 
     it('CR_1.10 | Verify Arrival station field is equal to features data', function() {
-        bookingPopup.getBookingArrivalStation().should('have.text', this.bookingPopUpData.defaultBookingDetails.arrivalStation)
+        bookingPopup.getBookingArrivalStation().should('have.text', this.bookingPopUpData.defaultBookingDetails.arrivalStation);
     })
 
     it('CR_1.07 | Verify Departure time field is equal to features data', function () {
-        bookingPopup.getDepartureTime().should('have.text', this.bookingPopUpData.defaultBookingDetails.departureSecondTripTime)
+        bookingPopup.getDepartureTime().should('have.text', this.bookingPopUpData.defaultBookingDetails.departureSecondTripTime);
+    })
+
+    it('CR_1.11 | Verify the quantity of passengers is equal to features data', function() {
+        bookingPopup.getPassengerTitle().should('include.text', this.bookingPopUpData.defaultBookingDetails.quantity);
+    })
+
+    it('CR_1.12 | Verify fare type is adult (default data)', function() {
+        bookingPopup.getOnePassengerTypeLabel().should('contain', this.bookingPopUpData.defaultBookingDetails.fareType);
+    })
+
+    it("CR_1.13 | Verifay passenger's name is equal to features data", function() {
+        bookingPopup.getFirstPassengerName().should('have.text', this.bookingPopUpData.defaultBookingDetails.passengerName);
     })
 })
 
