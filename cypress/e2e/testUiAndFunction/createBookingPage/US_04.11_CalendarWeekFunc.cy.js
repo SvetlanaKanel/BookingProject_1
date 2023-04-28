@@ -45,7 +45,7 @@ describe('US_04.11 | Calendar week functionality', { tags: ['smoke', 'regression
 			createBookingPage.getLabelDepartureOnDate().then(($el) => {
 				let departureDateFullFormat = $el.text()
 
-				expect(departureDateFullFormat).to.deep.equal(dateChosen + " " + createBookingPage.getCurrentMonthAndYearThailand())
+				expect(departureDateFullFormat).to.deep.equal(dateChosen + " " + createBookingPage.getFirstAvailableForBookingDefaultMonthYear())
 			})
 		})
 	})
