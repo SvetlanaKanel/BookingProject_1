@@ -131,5 +131,12 @@ class BookingPopup {
         return this.getTicketsPrice().then($price => -Math.abs(parseFloat($price.text())))
     }
 
+    getFirstPassengerNameText() {
+        return this.getFirstPassengerName().then(($name) => {
+            const passengerName = $name.text()
+            return passengerName
+        })
+    }
+
 }
 export default BookingPopup;

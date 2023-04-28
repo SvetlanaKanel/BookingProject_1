@@ -70,6 +70,7 @@ describe('Booking management', function () {
         bookingPopup.getBookingIDNumber().as('bookingID')
         bookingPopup.getBookingDateWithTime().as('bookingDate')
         bookingPopup.getBookingStatusText().as('bookingStatus')
+        bookingPopup.getFirstPassengerNameText().as('bookingContact')
         bookingPopup.clickCloseBtnBookingPopup()
 
         leftMenuPanel.clickBookingManagementIcon()
@@ -149,4 +150,10 @@ describe('Booking management', function () {
              expect($el.text()).to.eq(this.vehicle)
          })
      });
+
+     it('CB_3.09 | Verify that the booking ticket has the correct Contact', function () {
+        bookingPopup.getFirstPassengerName().then($el => {
+            expect($el.text()).to.eq(this.bookingContact)
+        })
+    });
 });
