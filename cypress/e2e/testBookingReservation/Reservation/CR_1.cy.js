@@ -83,6 +83,10 @@ describe('Popup window parameters verification after the reservation was complet
     it("CR_1.13 | Verifay passenger's name is equal to features data", function() {
         bookingPopup.getFirstPassengerName().should('have.text', this.bookingPopUpData.defaultBookingDetails.passengerName);
     })
+
+    it ('CR_1.14 | Verify Message to operator is equal to features data', function() {
+        bookingPopup.getBookingBtnMessageToOperator().should('include.text', this.bookingPopUpData.messageToOperator);
+    })
 })
 
  
