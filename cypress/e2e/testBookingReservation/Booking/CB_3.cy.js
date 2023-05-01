@@ -155,5 +155,11 @@ describe('Booking management', function () {
         bookingPopup.getFirstPassengerName().then($el => {
             expect($el.text()).to.eq(this.bookingContact)
         })
-    });
+     });
+     
+     it('CB_3.08 | Verify that the booking ticket has the correct seat number', function () {
+        bookingPopup.getBookingPassengerSeatNumber().then($el => {
+             expect($el.text()).to.eq(this.seatNumber)
+         })
+     });
 });

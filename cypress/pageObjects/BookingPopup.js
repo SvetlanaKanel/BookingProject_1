@@ -27,7 +27,8 @@ class BookingPopup {
     getFareType = () => cy.get('div.col-sm-12.col-md-4.passengers-prices > div:nth-child(1) > label');
     getArrivalTime = () => cy.get('div.popup-trip > div:nth-child(7) > span');
     getDepartureDate = () => cy.get('.popup-trip div:nth-child(5) span');
-
+    getBookingPassengerSeatNumber = () => cy.get('.col-sm-6.col-md-4:nth-child(2) > span');
+    
     // Booking Details
     getBookingDetailsTitle = () => cy.get('.popup-booking > h3');
     getBookingID = () => cy.get('.booking-tracker');
