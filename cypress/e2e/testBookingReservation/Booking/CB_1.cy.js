@@ -111,4 +111,9 @@ describe('Popup window parameters verification after the booking was completed',
     it("CB_1.11 | Verify Trip Details record such as Arrival time is equal to features data.", function() {
         bookingPopup.getArrivalTime().should('have.text', this.bookingPopup.defaultBookingDetails.arrivalTime)
     });
+
+    it("CB_1.18 | Verify after clicking Message to operator opens new popup Start a discussion with QA Test OP about booking", function() {
+        bookingPopup.clickBookingBtnMessageToOperator()
+        bookingPopup.getHelpDeskPopupWindow().should('be.visible')
+    });   
 })
