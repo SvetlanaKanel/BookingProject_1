@@ -93,6 +93,10 @@ describe('Popup window parameters verification after the reservation was complet
         bookingPopup.getFirstFareTypePrice().should('have.text', this.bookingData.defaultBooking.price)
         bookingPopup.getTotalPrice().should('have.text', this.bookingData.defaultBooking.price)
     })
+
+    it("CR_1.16 | Verify the number Seat is equel", function() {
+        bookingPopup.getBookingPassengerSeat().should('have.text', this.bookingPopUpData.defaultBookingDetails.passengerSeat);
+    }); 
 })
 
  
