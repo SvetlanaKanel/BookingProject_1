@@ -150,16 +150,22 @@ describe('Booking management', function () {
              expect($el.text()).to.eq(this.vehicle)
          })
      });
+      
+     it('CB_3.08 | Verify that the booking ticket has the correct seat number', function () {
+        bookingPopup.getBookingPassengerSeatNumber().then($el => {
+             expect($el.text()).to.eq(this.seatNumber)
+         })
+     });
 
      it('CB_3.09 | Verify that the booking ticket has the correct Contact', function () {
         bookingPopup.getFirstPassengerName().then($el => {
             expect($el.text()).to.eq(this.bookingContact)
         })
      });
-     
-     it('CB_3.08 | Verify that the booking ticket has the correct seat number', function () {
-        bookingPopup.getBookingPassengerSeatNumber().then($el => {
-             expect($el.text()).to.eq(this.seatNumber)
+    
+     it('CB_3.15 | Verify that the booking ticket has the correct Departure time', function () {
+        bookingPopup.getDepartureTime().then($el => {
+             expect($el.text()).to.eq(this.timeOfDeparture)
          })
      });
 });
