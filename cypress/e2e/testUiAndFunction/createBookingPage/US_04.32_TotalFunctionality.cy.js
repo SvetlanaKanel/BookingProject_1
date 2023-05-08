@@ -21,7 +21,10 @@ describe('US_04.32 | Total functionality', () => {
         cy.visit('/');
     });
 
-    beforeEach(() => {
+    beforeEach(function () {
+        cy.fixture('bookingPopup').then(bookingPopup => {
+			this.bookingPopup = bookingPopup;
+		});
         cy.intercept('POST', '/booking/', (req) => {
             if (req.body.includes('action=get-trips')) {
             }
@@ -49,7 +52,33 @@ describe('US_04.32 | Total functionality', () => {
         createBookingPage.getNotesInputField().should('be.empty')
     })
 
-    it('AT_04.32.03 | Verify that the "Book tickets" button is clickable',() =>{
+    it('AT_04.32.03 | Verify that the "Book tickets" button is clickable', function () {
+        createBookingPage.typeIntoMainPassengerNameField(randomFullName)
+        createBookingPage.typeIntoMainPassengerEmailField(randomEmail)
+        createBookingPage.typeIntoMainPassengerPhoneField(randomPhoneNumber)
+        createBookingPage.typeNotesInputField(randomNotes)
+        createBookingPage.clickBookTicketsBtn()
+        bookingPopup.getBookingDetailsTitle().should('have.text', this.bookingPopup.sectionsPopup[0])
+    })
+})
+
+describe('US_04.32 | Total functionality', () => {
+    before(() => {
+        cy.loginWithSession(AGENT.email, AGENT.password);
+        cy.visit('/');
+    });
+
+    beforeEach(function () {
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-trips')) {
+            }
+        }).as('getTrip')
+        createBookingPage.clickCalendarNextButton()
+        cy.wait('@getTrip').its('response.body').should('include', 'trip') 
+        createBookingPage.clickOnFirstAvailableTripCard()
+    });
+    
+    it('AT_04.32.04 | Verify that after clicking the button “Book tickets” the window “ Booking Details” will pop up with the details',() =>{
         createBookingPage.typeIntoMainPassengerNameField(randomFullName)
         createBookingPage.typeIntoMainPassengerEmailField(randomEmail)
         createBookingPage.typeIntoMainPassengerPhoneField(randomPhoneNumber)
@@ -57,4 +86,4 @@ describe('US_04.32 | Total functionality', () => {
         createBookingPage.clickBookTicketsBtn()
         bookingPopup.getBookingPopupWindow().should('be.visible');
     })
-})
+});
