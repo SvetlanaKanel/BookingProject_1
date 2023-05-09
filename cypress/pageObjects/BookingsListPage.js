@@ -51,7 +51,8 @@ class BookingsListPage {
     getColumnsOkButton = () => cy.get('.popup-table-columns-settings .btn-success');
     getFirstRowBokTkt = () => cy.get('.odd:first-child')
     getIdColums = () => cy.get('#data tbody tr td div')    
-
+    getBookingRoute = () => cy.get('#data tbody tr :nth-child(4)')
+    
     // Methods
     clickPrintButton() {
         this.clickPrintButton().click();

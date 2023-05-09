@@ -145,6 +145,12 @@ describe('Booking management', function () {
         })
     });
 
+    it('CB_3.06 | Verify that the booking ticket has the correct Route', function () {
+        bookingsListPage.getBookingRoute().then($el => {
+             expect($el.text()).to.eq(this.bookingData.defaultBooking.departureStationName + " → " + this.bookingData.defaultBooking.arrivalStationName)
+         })
+     });
+
     it('CB_3.07 | Verify that the booking ticket has the correct Vehicle', function () {
         bookingPopup.getBookingVehicle().then($el => {
              expect($el.text()).to.eq(this.vehicle)
@@ -168,4 +174,5 @@ describe('Booking management', function () {
              expect($el.text()).to.eq(this.timeOfDeparture)
          })
      });
+     
 });
