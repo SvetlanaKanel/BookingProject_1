@@ -22,7 +22,7 @@ describe('Popup window parameters verification after the reservation was complet
         let passengerName = BOOKING.defaultBooking.passengerName;
         let passengerFareTypes = BOOKING.defaultBooking.fareType;
 
-        createBookingPage.reserveSecondTripDefaultDay(numberOfPassengers, passengerName, passengerFareTypes)
+        createBookingPage.reserveSecondTripDefaultDay(numberOfPassengers, passengerName, passengerFareTypes);
     });
 
     beforeEach(function() {
