@@ -10,7 +10,7 @@ const bookingPopup = new BookingPopup();
 const AGENT = Cypress.env('agent');
 
 
-describe('All trip card statuses (overdue, innactive, innactive/disabled, fully booked)', { tags: ['regression'] }, function () {
+describe('All trip card statuses (fully booked)', { tags: ['regression'] }, function () {
 
 	beforeEach(function () {
 		cy.cleanData();
@@ -65,6 +65,32 @@ describe('All trip card statuses (overdue, innactive, innactive/disabled, fully 
 				}
 			})
 			createBookingPage.typeIntoMainPassengerEmailField(this.bookingData.namesForVipBusTrip[1])
+			createBookingPage.getBookTicketsButton().should('have.attr', 'disabled')
+		})
+	})
+
+	describe('All trip card statuses (overdue, innactive, innactive/disabled)', { tags: ['regression'] }, function () {
+
+		before(function () {
+			cy.loginWithSession(AGENT.email, AGENT.password);
+			cy.visit('/');
+			cy.intercept('POST', '/booking/', (req) => {
+				if (req.body.includes('action=get-trips')) {
+					req.alias = 'getTrip'
+				}
+			})
+			cy.fixture('createBookingPage').then(bookingData => {
+				this.bookingData = bookingData;
+			})
+		});
+
+		it('CB_6.02 | Verify agent cannot book ticket if trip status is innactive/disable , trip: "Ayutthaya - Bangkok Khao San" ', function () {
+			createBookingPage.selectDepartureStation(this.bookingData.dropdowns.disableTrip.departureStation)
+			createBookingPage.selectArrivalStation(this.bookingData.dropdowns.disableTrip.arrivalStation)
+			cy.wait('@getTrip').its('response.body').should('include', 'trip')
+
+			createBookingPage.getStatusTripCard().should('have.text', this.bookingData.disabedStatus)
+			createBookingPage.getTicketsAvailabilityTripCard().should('have.text', this.bookingData.ticketsAvailabilityStatus)
 			createBookingPage.getBookTicketsButton().should('have.attr', 'disabled')
 		})
 	})

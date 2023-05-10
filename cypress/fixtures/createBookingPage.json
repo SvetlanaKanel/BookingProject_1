@@ -43,7 +43,12 @@
 
         "dialCode": {
             "byDefault": "+66"
-        } 
+        },
+
+        "disableTrip": {
+            "departureStation": "Ayutthaya",
+            "arrivalStation": "Bangkok Khao San"
+        }
     },
 
     "tripClass": {
@@ -287,5 +292,7 @@
     "alertZeroBalance" : "You balance must be greater than zero\nPlease try again",
     "zeroBalance" : "$0.00",
     "agentZeroEmail" : "zero@qatest.site",
-    "agentZeroPassword" : "12345678"
+    "agentZeroPassword" : "12345678",
+    "disabedStatus" : "Disabled", 
+    "ticketsAvailabilityStatus" : "Inactive"
 }
