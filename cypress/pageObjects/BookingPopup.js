@@ -147,5 +147,11 @@ class BookingPopup {
         this.getBookingBtnMessageToOperator().click({force: true})
     }
 
+    getTicketsPriceText() {
+        return this.getTicketsPrice().then(($price) => {
+            const ticketsPrice = $price.text()
+            return ticketsPrice
+        })
+    }
 }
 export default BookingPopup;
