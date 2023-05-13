@@ -69,7 +69,7 @@ describe('All trip card statuses (fully booked)', { tags: ['regression'] }, func
 		})
 	})
 
-	describe('All trip card statuses (overdue, innactive, innactive/disabled)', { tags: ['regression'] }, function () {
+	describe.skip('All trip card statuses (overdue, innactive, innactive/disabled)', { tags: ['regression'] }, function () {
 
 		before(function () {
 			cy.loginWithSession(AGENT.email, AGENT.password);

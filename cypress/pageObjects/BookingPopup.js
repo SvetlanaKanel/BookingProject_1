@@ -66,6 +66,16 @@ class BookingPopup {
             return extendTimeNumber;       
         })     
     }
+    /**
+    * this method returns string "hh:mm:"
+    */
+    getFormatTimeFromTimer() {        
+        return this.getCountdownClock().then($el => {
+            let extendTimeArray = $el.text().split(":"); 
+            let extendTimeStr = extendTimeArray[0].trim() + ":" + extendTimeArray[1].trim() + ":";
+            return extendTimeStr;       
+        })     
+    }
 
     /**
     * this method returns string "DD-MM-YYYY hh:mm:"

@@ -514,6 +514,16 @@ class CreateBookingPage {
                 }
             })
     } 
+    /**
+     * the precondition of this method is a click on an available trip
+     */
+    reserveAvailableTrip(passengerAmount, passengerNames, fareTypes) {
+        this.selectAmountPassengersDetailsDropdown(passengerAmount);
+        this.typePassengerNames(passengerNames);  
+        this.selectFareTypes(fareTypes);
+        this.clickReservationTicketArrow();
+        this.clickReservationTicketButton();
+    }
 
     /**
      * pass needed fareType in a function ('Adult, Child, Elder) to select option in dropdown
