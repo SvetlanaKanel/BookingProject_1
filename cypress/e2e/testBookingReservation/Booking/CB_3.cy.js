@@ -71,6 +71,7 @@ describe('Booking management', function () {
         bookingPopup.getBookingDateWithTime().as('bookingDate')
         bookingPopup.getBookingStatusText().as('bookingStatus')
         bookingPopup.getFirstPassengerNameText().as('bookingContact')
+        bookingPopup.getTicketsPriceText().as('bookingPrice')
         bookingPopup.clickCloseBtnBookingPopup()
 
         leftMenuPanel.clickBookingManagementIcon()
@@ -174,5 +175,11 @@ describe('Booking management', function () {
              expect($el.text()).to.eq(this.timeOfDeparture)
          })
      });
+
+     it('CB_3.10 | Verify that the booking ticket has the correct Price', function () {
+        bookingPopup.getTicketsPrice().then($el => {
+            expect($el.text()).to.eq(this.bookingPrice)
+        })
+    });
      
 });
