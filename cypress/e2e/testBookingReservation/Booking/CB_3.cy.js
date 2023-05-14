@@ -181,5 +181,10 @@ describe('Booking management', function () {
             expect($el.text()).to.eq(this.bookingPrice)
         })
     });
-     
+
+    it('CB_3.13 | Verify that the booking ticket has the correct Status', function () {
+        bookingPopup.getBookingStatus().then($el => {
+            expect($el.text()).to.eq(this.bookingStatus)
+        })
+    });  
 });
