@@ -97,6 +97,10 @@ describe('Popup window parameters verification after the reservation was complet
     it("CR_1.16 | Verify the number Seat is equel", function() {
         bookingPopup.getBookingPassengerSeat().should('have.text', this.bookingPopUpData.defaultBookingDetails.passengerSeat);
     }); 
+
+    it("CB_1.17 | Verify Button Message to operator is exists", function() {
+        bookingPopup.getBookingBtnMessageToOperator().should('include.text', this.bookingPopUpData.messageToOperator)
+    });   
 })
 
  
