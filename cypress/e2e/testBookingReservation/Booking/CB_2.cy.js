@@ -14,8 +14,6 @@ const accountManagementPage = new AccountManagementPage()
 const BOOKING = require('../../../fixtures/createBookingPage.json')
 const AGENT = Cypress.env('agent')
 
-const extractDigits = (str) => str.replace(/[^\d.+]/g, '')
-
 describe('Change of balance after booking', { tags: ['regression'] }, function () {
 
     before(() => {
@@ -29,9 +27,6 @@ describe('Change of balance after booking', { tags: ['regression'] }, function (
             if (req.body.includes('action=book-ticket')) {
                 req.alias = 'waitForBookedTicket'
             }
-            if (req.body.includes('action=get-balance')) {
-                req.alias = 'getBalance'
-            }
         });
         cy.intercept('POST', '/orders').as('getPopUp');
 
@@ -42,18 +37,21 @@ describe('Change of balance after booking', { tags: ['regression'] }, function (
 
         createBookingPage.getBalanceAmountOnBookingPage().should('include.text', '$');
         getAmountFormat(createBookingPage.getBalanceAmountOnBookingPage()).as('ACB');
-
+        cy.intercept('POST', '/booking/', (req) => {
+            if (req.body.includes('action=get-balance')) {
+                req.alias = 'getFinalBalance'
+            }
+        })
         createBookingPage.createCustomBooking(BOOKING.defaultBooking)
         cy.wait('@waitForBookedTicket')
-        cy.wait('@getBalance')
         cy.wait('@getPopUp')
+        cy.wait('@getFinalBalance')
 
         getAmountFormat(bookingPopup.getTotalSumm()).as('TTS');
         bookingPopup.getBookingDateWithTime().as('expectedBookingDate')
         bookingPopup.getBookingIDNumber().as('expectedBookingId')
         bookingPopup.getBookingNegativeFullTicketPrice().as('expectedNegativeBookingAmount')
         bookingPopup.clickCloseBtnBookingPopup()
-        cy.wait(400)
     });
 
     it('CB_2.01 | Verify Credit balance after booking decrease correctly', function () {
