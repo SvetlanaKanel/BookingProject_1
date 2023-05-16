@@ -68,7 +68,7 @@ class CreateBookingPage {
     getVehicleClassSelectedTripCard = () => cy.get('.trip.selected span[class="class"]');
     getStatusTripCard = () => cy.get('.trips-list-wrapper .booked .price');
     getTicketsAvailabilityTripCard = () => cy.get('.trip:first-child span.availability');
-
+    getAvailabilityTripStatus = () => cy.get('span.availability')
     //Arrival on
     getArrivalTime = () => cy.get('.popup-trip div:nth-child(7) span');
     getArrivalTimeLabel = () => cy.get('.popup-trip div:nth-child(7) label');
@@ -839,6 +839,19 @@ class CreateBookingPage {
             const seatNumber = $seat.text()
             return seatNumber
         })
+    }
+
+    /**
+     * If trip card don't have status Inactive press Next 
+     */
+    isAllTripOverdueClickNext(inactiveStatus) {
+        this.getAvailabilityTripStatus().then(($status) => { 
+            if ($status.text().includes(inactiveStatus)) {
+                return false;
+            } else {
+                this.clickCalendarNextButton()
+            }
+         })
     }
 }
 export default CreateBookingPage;

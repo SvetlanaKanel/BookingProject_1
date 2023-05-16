@@ -294,5 +294,5 @@
     "agentZeroEmail" : "zero@qatest.site",
     "agentZeroPassword" : "12345678",
     "disabedStatus" : "Disabled", 
-    "ticketsAvailabilityStatus" : "Inactive"
+    "ticketsAvailabilityStatusInactive" : "Inactive"
 }

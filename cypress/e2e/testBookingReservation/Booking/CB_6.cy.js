@@ -68,10 +68,10 @@ describe('All trip card statuses (fully booked)', { tags: ['regression'] }, func
 			createBookingPage.getBookTicketsButton().should('have.attr', 'disabled')
 		})
 	})
+});
+	describe('All trip card statuses (overdue, innactive, innactive/disabled)', { tags: ['regression'] }, function () {
 
-	describe.skip('All trip card statuses (overdue, innactive, innactive/disabled)', { tags: ['regression'] }, function () {
-
-		before(function () {
+		beforeEach(function () {
 			cy.loginWithSession(AGENT.email, AGENT.password);
 			cy.visit('/');
 			cy.intercept('POST', '/booking/', (req) => {
@@ -84,14 +84,19 @@ describe('All trip card statuses (fully booked)', { tags: ['regression'] }, func
 			})
 		});
 
-		it('CB_6.02 | Verify agent cannot book ticket if trip status is innactive/disable , trip: "Ayutthaya - Bangkok Khao San" ', function () {
+		it('CB_6.02 | Verify agent cannot book ticket if trip status is inactive/disable , trip: "Ayutthaya - Bangkok Khao San" ', function () {
 			createBookingPage.selectDepartureStation(this.bookingData.dropdowns.disableTrip.departureStation)
 			createBookingPage.selectArrivalStation(this.bookingData.dropdowns.disableTrip.arrivalStation)
+			createBookingPage.isAllTripOverdueClickNext(this.bookingData.ticketsAvailabilityStatusInactive)
 			cy.wait('@getTrip').its('response.body').should('include', 'trip')
-
-			createBookingPage.getStatusTripCard().should('have.text', this.bookingData.disabedStatus)
-			createBookingPage.getTicketsAvailabilityTripCard().should('have.text', this.bookingData.ticketsAvailabilityStatus)
-			createBookingPage.getBookTicketsButton().should('have.attr', 'disabled')
-		})
+			
+			createBookingPage.getAvailabilityTripStatus()
+				.should('include.text', this.bookingData.ticketsAvailabilityStatusInactive)
+				.filter(`:contains(${this.bookingData.ticketsAvailabilityStatusInactive})`) 
+				.parent()
+				.within(($tripCard) => {
+					expect($tripCard.find('.price')).to.have.text('Disabled')
+				});
+				createBookingPage.getBookTicketsButton().should('be.disabled')
+			})		
 	})
-});
