@@ -101,6 +101,14 @@ describe('Popup window parameters verification after the reservation was complet
     it("CB_1.17 | Verify Button Message to operator is exists", function() {
         bookingPopup.getBookingBtnMessageToOperator().should('include.text', this.bookingPopUpData.messageToOperator)
     });   
+
+    it('CR_1.18 | Verify that after clicking on the button "Confirm ticket" status is chenged on pending', function() {
+        bookingPopup.getBookingStatus().should('have.text', this.bookingPopUpData.status[0]);
+
+        bookingPopup.getConfirmTicketButton().click();
+
+        bookingPopup.getBookingStatus().should('have.text', this.bookingPopUpData.status[1]);
+    })
 })
 
  

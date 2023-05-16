@@ -29,6 +29,8 @@
         "quantity" : 1
     },
 
-    "messageToOperator": "Message to operator"
+    "messageToOperator": "Message to operator", 
+
+    "status" : ["Reserved", "Pending", "Confirmed"]    
     
 }
