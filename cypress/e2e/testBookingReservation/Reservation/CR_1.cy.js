@@ -33,6 +33,7 @@ describe('Popup window parameters verification after the reservation was complet
             this.bookingPopUpData = bookingPopUpData;
         })
         header.getAgentNameText().as('agentName');
+        createBookingPage.getLabelDepartureOnDateText().as('departureOnDate');
     })
 
     it('CR_1.01 | Verify Reservation status is Reserved', function() {
@@ -108,6 +109,10 @@ describe('Popup window parameters verification after the reservation was complet
         bookingPopup.getConfirmTicketButton().click();
 
         bookingPopup.getBookingStatus().should('have.text', this.bookingPopUpData.status[1]);
+    })
+
+    it('CR_1.06 | Verify Departure time field is equal to features data', function () {
+        bookingPopup.getDepartureDate().should('have.text', this.departureOnDate);
     })
 })
 
