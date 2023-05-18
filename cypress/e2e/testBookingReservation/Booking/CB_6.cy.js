@@ -94,9 +94,10 @@ describe('All trip card statuses (fully booked)', { tags: ['regression'] }, func
 				.should('include.text', this.bookingData.ticketsAvailabilityStatusInactive)
 				.filter(`:contains(${this.bookingData.ticketsAvailabilityStatusInactive})`) 
 				.parent()
-				.within(($tripCard) => {
-					expect($tripCard.find('.price')).to.have.text('Disabled')
-				});
-				createBookingPage.getBookTicketsButton().should('be.disabled')
-			})		
+				.each(($tripCard) => {
+					expect($tripCard.find('.price')).to.have.text(this.bookingData.disabedStatus)
+					cy.wrap($tripCard).click()
+					createBookingPage.getBookTicketsButton().should('be.disabled')
+				});	
+		})	
 	})
