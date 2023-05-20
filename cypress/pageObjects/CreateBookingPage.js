@@ -643,21 +643,23 @@ class CreateBookingPage {
         * })
     */
     createCustomBooking({departureStationName, arrivalStationName, passengerName, passengerAmount, fareType}) {
-        if (departureStationName !== 'Ao Por Pier' && arrivalStationName !== 'Naka Island'){
-            this.selectDepartureStation(departureStationName)
-            cy.wait('@getTrip')
-            this.selectArrivalStation(arrivalStationName)
+        if ((departureStationName !== 'Ao Por Pier' && arrivalStationName !== 'Naka Island') || 
+            (departureStationName !== 'Ao Por Pier' && arrivalStationName === 'Naka Island') ||
+            (departureStationName === 'Ao Por Pier' && arrivalStationName !== 'Naka Island')){
+                this.selectDepartureStation(departureStationName)
+                cy.wait('@getTrip')
+                this.selectArrivalStation(arrivalStationName)
 
-            if (departureStationName === 'Bangkok Khao San' && arrivalStationName === 'Chonburi') {
-                this.clickCalendarNextButton()
+                if (departureStationName === 'Bangkok Khao San' && arrivalStationName === 'Chonburi') {
+                    this.clickCalendarNextButton()
+                    cy.wait('@getTrip')
+                    this.clickSaturdayButton()
+                } else {
+                    this.clickCalendarNextButton()
+                    cy.wait('@getTrip')
+                    this.clickFridayButton()
+                }
                 cy.wait('@getTrip')
-                this.clickSaturdayButton()
-            } else {
-                this.clickCalendarNextButton()
-                cy.wait('@getTrip')
-                this.clickFridayButton()
-            }
-            cy.wait('@getTrip')
         } else {
             this.clickCalendarNextButton()
             cy.wait('@getTrip')

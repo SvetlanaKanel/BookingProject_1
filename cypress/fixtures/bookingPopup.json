@@ -31,6 +31,8 @@
 
     "messageToOperator": "Message to operator", 
 
-    "status" : ["Reserved", "Pending", "Confirmed"]    
+    "status" : ["Reserved", "Pending", "Confirmed"],
+    
+    "confirmMessage" : "Are you sure you want to CONFIRM this booking?"
     
 }

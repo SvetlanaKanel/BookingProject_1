@@ -163,5 +163,9 @@ class BookingPopup {
             return ticketsPrice
         })
     }
+
+    clickConfirmTicketButton() {
+        this.getConfirmTicketButton().click()
+    }
 }
 export default BookingPopup;

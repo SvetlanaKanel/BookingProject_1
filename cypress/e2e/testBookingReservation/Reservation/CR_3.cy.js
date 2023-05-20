@@ -8,7 +8,8 @@ import Header from "../../../pageObjects/Header";
 import getArray from "../../../support/utilities/getArray";
 
 import { defaultBooking } from "../../../fixtures/createBookingPage.json";
-import { columns } from "../../../fixtures/bookingsListPage.json"
+import { columns } from "../../../fixtures/bookingsListPage.json";
+import { status, confirmMessage } from "../../../fixtures/bookingPopup.json";
 
 const createBookingPage = new CreateBookingPage();
 const bookingPopup = new BookingPopup();
@@ -33,12 +34,12 @@ describe('Booking management', { tags: ['regression'] }, function () {
             }
         }).as('getTrip');
 
-        cy.intercept('POST', 'orders', (req) => {
+        cy.intercept('POST', '/orders', (req) => {
             if (req.body.includes('action=get-booking')) {
             }
         }).as('getPopUp');
 
-        cy.intercept('POST', 'orders', (req) => {
+        cy.intercept('POST', '/orders', (req) => {
             if (req.body.includes('action=get-orders')) {
             }
         }).as('orders');
@@ -121,5 +122,48 @@ describe('Booking management', { tags: ['regression'] }, function () {
         bookingPopup.getBookingDate().then($el => {
             expect($el.text()).to.eq(this.bookingDate);
         });
+    });
+
+    //This test should be the last one in the describe
+    it('CR_3.04 | Verify that agent can confirm reservation and book ticket', function () {
+        cy.intercept('POST', '/orders', (req) => {
+            if (req.body.includes('action=get-booking')) {
+                req.alias = 'getBookingPopup'
+            }
+            if (req.body.includes('action=get-orders')) {
+                req.alias = 'getOrders'
+            }
+        })
+        let statusReserved = status[0]
+        let statusPending = status[1]
+
+        bookingPopup.clickCloseBtnBookingPopup()
+        let indexOfStatus
+        bookingsListPage.getTableHeadersColumnsList().then(($header) => {
+            let tableHeaderArray = getArray($header)
+            indexOfStatus = tableHeaderArray.indexOf(columns.status[1])
+
+            bookingsListPage.getTableBodyCells().then(($cell) => {
+                let tableDataArray = getArray($cell)
+                expect(tableDataArray[indexOfStatus].trim()).to.eq(statusReserved)
+            })
+        })
+
+        bookingsListPage.getTableBodyRows().contains(this.bookingID).click()
+        cy.wait('@getBookingPopup').its('response.body').should('include', 'RESERVED')
+
+        bookingPopup.clickConfirmTicketButton()
+        cy.on('window:confirm', (str) => {
+            expect(str).to.equal(confirmMessage)
+        })
+        cy.wait('@getBookingPopup').its('response.body').should('include', 'PENDING')
+        
+        bookingPopup.clickCloseBtnBookingPopup()
+        cy.wait('@getOrders')
+        
+        bookingsListPage.getTableBodyCells().then(($cell) => {
+            let tableDataArray = getArray($cell)
+            expect(tableDataArray[indexOfStatus].trim()).to.eq(statusPending)
+        })
     });
 });
