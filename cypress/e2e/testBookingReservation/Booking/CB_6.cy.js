@@ -87,6 +87,7 @@ describe('All trip card statuses (fully booked)', { tags: ['regression'] }, func
 		it('CB_6.02 | Verify agent cannot book ticket if trip status is inactive/disable , trip: "Ayutthaya - Bangkok Khao San" ', function () {
 			createBookingPage.selectDepartureStation(this.bookingData.dropdowns.disableTrip.departureStation)
 			createBookingPage.selectArrivalStation(this.bookingData.dropdowns.disableTrip.arrivalStation)
+			createBookingPage.getTripsPrice().should('contain.text',this.bookingData.disabedStatus)			
 			createBookingPage.isAllTripOverdueClickNext(this.bookingData.ticketsAvailabilityStatusInactive)
 			cy.wait('@getTrip').its('response.body').should('include', 'trip')
 			
