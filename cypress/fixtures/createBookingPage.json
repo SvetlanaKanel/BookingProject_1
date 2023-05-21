@@ -294,5 +294,13 @@
     "agentZeroEmail" : "zero@qatest.site",
     "agentZeroPassword" : "12345678",
     "disabedStatus" : "Disabled", 
-    "ticketsAvailabilityStatusInactive" : "Inactive"
+    "ticketsAvailabilityStatusInactive" : "Inactive", 
+    "bookedClass" : "booked", 
+    "selectedClass" : "selected",
+    "textFullyBooked" : "Fully booked", 
+    "textTwentyFourPassengers" : "Passengers (24)",
+    "bookingConfirmedMessage":  "\"message\":\"Booking confirmed!\"", 
+    "statusConfirmedMessage" :  "\"status\":\"CONFIRMED\"",
+    "zeroSeats" : "\"seats\":0"
+    
 }

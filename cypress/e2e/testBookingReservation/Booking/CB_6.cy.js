@@ -14,19 +14,15 @@ describe('All trip card statuses (fully booked)', { tags: ['regression'] }, func
 
 	beforeEach(function () {
 		cy.cleanData();
-		cy.loginWithSession(AGENT.email, AGENT.password);
-		cy.visit('/');
 		cy.intercept('POST', '/booking/', (req) => {
-			if (req.body.includes('action=get-trips')) {
-				req.alias = 'getTrip'
-			}
 			if (req.body.includes('action=book-ticket')) {
 				req.alias = 'waitForBookedTicket'
 			}
 		})
 		cy.intercept('POST', '/booking/?get-layout').as('getLayout')
 		cy.intercept('POST', '/orders').as('getPopUp')
-
+		cy.loginWithSession(AGENT.email, AGENT.password);
+	    cy.visit('/');
 		cy.fixture('createBookingPage').then(bookingData => {
 			this.bookingData = bookingData;
 		})
@@ -38,30 +34,35 @@ describe('All trip card statuses (fully booked)', { tags: ['regression'] }, func
 		const passengerAmount = 24
 
 		createBookingPage.selectDepartureStation(this.bookingData.dropdowns.departureStation.stationsNames[2])
+		cy.intercept('POST', '/booking/', (req) => {
+			if (req.body.includes('action=get-trips')) {
+				req.alias = 'getTrip'
+			}
+		})
 		createBookingPage.selectArrivalStation(this.bookingData.dropdowns.arrivalStation.stationsNames[3])
-		cy.wait('@getTrip').its('response.body').should('include', 'trip')
+		cy.wait('@getTrip')
 		createBookingPage.getTripClassDropdown().select(this.bookingData.tripClass.VIP_Bus)
 		createBookingPage.clickOnAvailableTripCard()
+		
 		createBookingPage.getNumberSeatsAvailableTripCard().filter(':visible').each(($el) => {
 			expect($el.text()).to.include('24')
 		 })
 		createBookingPage.getTimeOfDepartureSelectedTripCard().then(($time) => {
 			let timeOfDeparture = $time.text()
-
+			
 			createBookingPage.chooseBookingInfoAndBookTickets(passengerNames, passengerAmount, fareTypes)
-			cy.wait('@getTrip').its('response.body').should('include', 'trip')
-			cy.wait('@waitForBookedTicket').its('response.body').should('include', '"message":"Booking confirmed!"')
-			cy.wait('@getPopUp').its('response.body').should('include', '"status":"CONFIRMED"')
+			cy.wait('@getTrip').its('response.body').should('include', this.bookingData.zeroSeats)
+			cy.wait('@waitForBookedTicket').its('response.body').should('include', this.bookingData.bookingConfirmedMessage)
+			cy.wait('@getPopUp').its('response.body').should('include', this.bookingData.statusConfirmedMessage)
 
-			bookingPopup.getPassengerTitle().should('have.text', 'Passengers (24)')
+			bookingPopup.getPassengerTitle().should('have.text', this.bookingData.textTwentyFourPassengers)
 			bookingPopup.getDepartureTime().should('have.text', timeOfDeparture)
 			bookingPopup.clickCloseBtnBookingPopup()
-			cy.wait(400)
-			
+
 			createBookingPage.getDepartureTripCardsList().filter(':visible').each(($tripcard) => {
 				if ($tripcard.text().includes(timeOfDeparture)) {
-					expect($tripcard).to.have.class('booked').and.include.text('Fully booked')
-					cy.wrap($tripcard).click({ force: true }).should('not.have.class', 'selected')
+					expect($tripcard).to.have.class(this.bookingData.bookedClass).and.include.text(this.bookingData.textFullyBooked)
+					cy.wrap($tripcard).click({ force: true }).should('not.have.class', this.bookingData.selectedClass)
 				}
 			})
 			createBookingPage.typeIntoMainPassengerEmailField(this.bookingData.namesForVipBusTrip[1])
